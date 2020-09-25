@@ -1,0 +1,66 @@
+.nav-container{
+  height: 100%;
+}
+
+.nav-side {
+  width: 240px;
+  overflow: auto;
+}
+
+.nav-side a {
+  text-align: left;
+  height: 48px;
+  width: 100%;
+  padding: 0 30px;
+  color: #868686;
+  line-height: 50px;
+}
+
+.nav-side a span {
+  padding-right: 10px;
+}
+
+.nav-side .big-icon {
+  font-size: 150px;
+  text-align: center;
+  width: 100%;
+  padding: 20px 0;
+  color: #8800a3;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #868686;
+}
+
+.nav-side a:hover {
+  color: #686ad4;
+}
+
+.active {
+  background-color: #dfe3f7 !important;
+}
+
+.nav-header {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+  box-shadow: 0 3px 1px -1px rgba(0, 0, 0, 0.055), 0 6px 10px 0 rgba(0,0,0,.10), 0 1px 18px 0 rgba(0,0,0,.08);
+}
+
+.nav-header a {
+  padding: 0 16px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.btn {
+  margin-bottom: 20px;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.logout {
+  margin-right:20px;
+}

@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "webtech"
+  "defaultProject": "webtech",
+  "cli": {
+    "analytics": false
+  }
 }
