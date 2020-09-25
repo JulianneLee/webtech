@@ -18,4 +18,10 @@
   white-space: nowrap;
 }
 
+.btnPatient {
+  margin-right: 10px;
+}
 
+h2 {
+  padding-top: 15px;
+}

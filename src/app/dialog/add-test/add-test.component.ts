@@ -4,13 +4,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 @Component({
   selector: 'dialog-add-patient',
-  templateUrl: 'add-patient.component.html',
-  styleUrls: ['add-patient.component.css'],
+  templateUrl: 'add-test.component.html',
+  styleUrls: ['add-test.component.css'],
 })
 
-export class AddPatientDialog {
+export class AddTestDialog {
   constructor(
-    public dialogRef: MatDialogRef<AddPatientDialog>,
+    public dialogRef: MatDialogRef<AddTestDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     onClose(): void {

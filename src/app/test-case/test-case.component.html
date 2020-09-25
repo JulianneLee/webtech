@@ -42,8 +42,11 @@
 </div>
 
 <mat-card class="form-card">
-  <button mat-button mat-raised-button color="primary" (click)="openDialog()" class="btn">Add Patient</button>
+  <button mat-button mat-raised-button color="primary" (click)="openDialogPatient()" class="btnPatient">Add Patient</button>
+  <button mat-button mat-raised-button color="primary" (click)="openDialogTest()" class="btnTest">Add Test</button>
+
   <div class="table">
+    <h2 mat-dialog-title>Test Table</h2>
     <!-- <div class="mat-elevation-z8"> -->
       <table mat-table [dataSource]="dataSource">
 
@@ -90,6 +93,54 @@
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
     </div>
   <!-- </div> -->
+
+  <div class="table">
+    <h2 mat-dialog-title>Test Table</h2>
+    <!-- <div class="mat-elevation-z8"> -->
+      <table mat-table [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="testID">
+          <th mat-header-cell *matHeaderCellDef> Test ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.testID}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Patient Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Patient Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symptom">
+          <th mat-header-cell *matHeaderCellDef> Symptom </th>
+          <td mat-cell *matCellDef="let element"> {{element.symptom}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
 </mat-card>
 
 
