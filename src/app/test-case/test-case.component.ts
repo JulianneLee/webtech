@@ -4,8 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-
-//import { AddPatientDialog } from '../dialog/add-patient/add-patient.component';
+import { AddPatientDialog } from '../dialog/add-patient/add-patient.component';
 
 @Component({
   selector: 'app-test-case',
@@ -32,15 +31,15 @@ export class TestCaseComponent implements AfterViewInit {
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
-    // const dialogRef = this.dialog.open(AddPatientDialog, {
-    //   width: '250px',
-    //   // data: {name: this.name, animal: this.animal}
-    // });
+    const dialogRef = this.dialog.open(AddPatientDialog, {
+      width: '250px',
+      // data: {name: this.name, animal: this.animal}
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 
   ngOnInit() {
