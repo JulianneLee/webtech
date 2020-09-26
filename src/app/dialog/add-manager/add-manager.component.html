@@ -3,17 +3,16 @@
 <div mat-dialog-content>
   <form>
     <mat-form-field>
-      <label>Username</label>
+      <mat-label>Username</mat-label>
       <input matInput
         type="text"
         name="username"
         ngModel
         required
-        minlength="3"
         placeholder="Username">
     </mat-form-field>
     <mat-form-field>
-    <label>Password</label>
+    <mat-label>Password</mat-label>
       <input matInput
         type="password"
         name="password"
@@ -22,10 +21,13 @@
         placeholder="Password">
     </mat-form-field>
     <mat-form-field>
-    <label>Position</label>
-      <mat-select ngModel required>
-        <mat-option value="option">Manager</mat-option>
-      </mat-select>
+      <mat-label>Name</mat-label>
+      <input matInput
+        type="text"
+        name="name"
+        ngModel
+        required
+        placeholder="Name">
     </mat-form-field>
   </form>
 </div>

@@ -8,5 +8,10 @@ import { FormControl } from '@angular/forms'
 })
 export class AppComponent {
   title = 'webtech';
+  headerTitle = 'Dashboard';
   mode = new FormControl('push');
+
+  changeTitle(headerTitle): void {
+    this.headerTitle = headerTitle;
+  }
 }

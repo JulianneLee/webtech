@@ -5,16 +5,12 @@ import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { DemoMaterialModule } from './material-module';
 
-// import { MatPaginatorModule } from '@angular/material/paginator'
-//import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-// import { MatSidenavModule } from '@angular/material/sidenav'
-// import { MatGridListModule } from '@angular/material/grid-list'
-// import { MatCardModule } from '@angular/material/card'
-// import { MatTableModule } from '@angular/material/table';
-// import { MatDialogModule } from '@angular/material/dialog'
-
 import { AppComponent } from './app.component';
 import { TestCaseComponent } from './test-case/test-case.component'
+import { ManagerComponent } from './manager/manager.component'
+import { TestKitComponent } from './test-kit/test-kit.component'
+import { TestCenterComponent } from './test-center/test-center.component'
+
 import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
 import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
 import { AddTestDialog } from './dialog/add-test/add-test.component'
@@ -24,6 +20,9 @@ import { AddTestDialog } from './dialog/add-test/add-test.component'
     AppComponent,
     routingComponents,
     TestCaseComponent,
+    ManagerComponent,
+    TestKitComponent,
+    TestCenterComponent,
     AddPatientDialog,
     AddManagerDialog,
     AddTestDialog,
@@ -34,12 +33,6 @@ import { AddTestDialog } from './dialog/add-test/add-test.component'
     AppRoutingModule,
     DemoMaterialModule,
     FormsModule,
-    // MatSidenavModule,
-    // MatPaginatorModule,
-    // MatGridListModule,
-    // MatCardModule,
-    // MatTableModule,
-    // MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

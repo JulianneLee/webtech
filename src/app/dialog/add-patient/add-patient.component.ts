@@ -5,7 +5,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 @Component({
   selector: 'dialog-add-patient',
   templateUrl: 'add-patient.component.html',
-  styleUrls: ['add-patient.component.css'],
 })
 
 export class AddPatientDialog {

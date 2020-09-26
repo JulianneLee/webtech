@@ -8,10 +8,6 @@
   width: 100%;
 }
 
-.mat-card {
-  margin: 20px;
-}
-
 .text-oneline {
   text-overflow: ellipsis;
   overflow: hidden;

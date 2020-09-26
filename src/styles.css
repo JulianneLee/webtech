@@ -14,3 +14,18 @@ table {
   width: 100%;
 }
 
+.floatRight {
+  float: right;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent
+}
+
+.mat-card {
+  margin: 20px;
+}
