@@ -19,7 +19,7 @@ export class TestCaseComponent implements AfterViewInit {
   displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
   dataTestCase = new MatTableDataSource<TestCaseElement>(TESTCASE);
 
-  displayedPatientCol: string[] = ['testID', 'name', 'type', 'symptom'];
+  displayedPatientCol: string[] = ['patientID', 'name', 'username'];
   dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -84,16 +84,15 @@ const TESTCASE: TestCaseElement[] = [
 ];
 
 export interface PatientElement {
-  testID: string;
+  patientID: string;
   name: string;
-  type: string;
-  symptom: string;
+  username: string;
 }
 
 const PATIENT: PatientElement[] = [
-  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing"},
-  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing"},
-  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing"},
-  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing"},
-  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing"}
+  {patientID: "1", name: 'Hydrogen', username: "Lillia"},
+  {patientID: "2", name: 'Helium', username: "Yone"},
+  {patientID: "3", name: 'Lithium', username: "Alex"},
+  {patientID: "4", name: 'Beryllium', username: "Samira"},
+  {patientID: "5", name: 'Boron', username: "Lux"}
 ];
