@@ -13,8 +13,8 @@ import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.c
 })
 
 export class TestCenterComponent implements AfterViewInit {
-  displayedColumns: string[] = ['no', 'username', 'name', 'position'];
-  dataSource = new MatTableDataSource<Manager>(User);
+  displayedColumns: string[] = ['no', 'name'];
+  dataSource = new MatTableDataSource<TestCenter>(TESTCENTER);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -50,16 +50,14 @@ export class TestCenterComponent implements AfterViewInit {
   }
 }
 
-export interface Manager {
+export interface TestCenter {
   no: number;
   name: string;
-  username: string;
-  position: string;
 }
 
-const User: Manager[] = [
-  {no: 1, username: 'Manager3', name: 'Manager3', position: "Manager"},
-  {no: 2, username: 'Manager1', name: 'Manager1', position: "Manager"},
-  {no: 3, username: 'Manager2', name: 'Manager2', position: "Manager"},
+const TESTCENTER: TestCenter[] = [
+  {no: 1, name: 'Clinic Tan'},
+  {no: 2, name: 'Ali Baba'},
+  {no: 3, name: 'People Center'},
 ];
 

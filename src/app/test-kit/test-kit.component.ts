@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
 
 import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
+import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.component';
 
 @Component({
   selector: 'app-test-kit',
@@ -13,8 +14,8 @@ import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component'
 })
 
 export class TestKitComponent implements AfterViewInit {
-  displayedColumns: string[] = ['no', 'username', 'name', 'position'];
-  dataSource = new MatTableDataSource<Manager>(User);
+  displayedColumns: string[] = ['no', 'kitID', 'name', 'stock', 'action'];
+  dataSource = new MatTableDataSource<TestKit>(TESTKIT);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,11 +34,15 @@ export class TestKitComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(AddTestKitDialog, {
       width: '300px',
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+  openDialogUpdate(): void {
+    const dialogRef = this.dialog.open(UpdateTestKitDialog, {
+      width: '300px',
     });
+  }
+
+  onDelete(): void {
   }
 
   applyFilterTestKit(event: Event) {
@@ -50,16 +55,16 @@ export class TestKitComponent implements AfterViewInit {
   }
 }
 
-export interface Manager {
+export interface TestKit {
   no: number;
   name: string;
-  username: string;
-  position: string;
+  kitID: string;
+  stock: number;
 }
 
-const User: Manager[] = [
-  {no: 1, username: 'Manager3', name: 'Manager3', position: "Manager"},
-  {no: 2, username: 'Manager1', name: 'Manager1', position: "Manager"},
-  {no: 3, username: 'Manager2', name: 'Manager2', position: "Manager"},
+const TESTKIT: TestKit[] = [
+  {no: 1, kitID: 'KIT001', name: 'KIT 1', stock: 773},
+  {no: 2, kitID: 'KIT332', name: 'KIT 2', stock: 345},
+  {no: 3, kitID: 'KIT052', name: 'KIT 3', stock: 523},
 ];
 

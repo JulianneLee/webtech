@@ -18,6 +18,7 @@ import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
 import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
 import { AddTestDialog } from './dialog/add-test/add-test.component'
 import { AddTestKitDialog } from './dialog/add-test-kit/add-test-kit.component';
+import { UpdateTestKitDialog } from './dialog/update-test-kit/update-test-kit.component';
 import { AddTestCenterDialog } from './dialog/add-test-center/add-test-center.component';
 import { AddOfficerDialog } from './dialog/add-officer/add-officer.component';
 import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
@@ -37,6 +38,7 @@ import { UpdateTestDialog } from './dialog/update-test/update-test.component'
     AddManagerDialog,
     AddTestDialog,
     AddTestKitDialog,
+    UpdateTestKitDialog,
     AddTestCenterDialog,
     AddOfficerDialog,
     EditInfoDialog,

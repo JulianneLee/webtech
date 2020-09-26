@@ -1,24 +1,13 @@
-<h1 mat-dialog-title>Add Manager</h1>
+<h1 mat-dialog-title>Add Test Kit</h1>
 
 <div mat-dialog-content>
   <form>
     <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input matInput
-        type="text"
-        name="username"
-        ngModel
-        required
-        placeholder="Username">
-    </mat-form-field>
-    <mat-form-field>
-    <mat-label>Password</mat-label>
-      <input matInput
-        type="password"
-        name="password"
-        ngModel
-        required
-        placeholder="Password">
+      <mat-label>Test Center</mat-label>
+      <mat-select required>
+        <mat-option value="">Test Center 1</mat-option>
+        <mat-option value="">Test Center 2</mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -28,6 +17,16 @@
         ngModel
         required
         placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Stock</mat-label>
+      <input matInput
+        type="number"
+        name="stock"
+        ngModel
+        required
+        min="0"
+        placeholder="Ex. 10">
     </mat-form-field>
   </form>
 </div>

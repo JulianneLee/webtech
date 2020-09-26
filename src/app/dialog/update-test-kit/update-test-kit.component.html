@@ -1,15 +1,16 @@
-<h1 mat-dialog-title>Add Test Center</h1>
+<h1 mat-dialog-title>Update Stock</h1>
 
 <div mat-dialog-content>
   <form>
     <mat-form-field>
-      <mat-label>Name</mat-label>
+      <mat-label>Stock</mat-label>
       <input matInput
-        type="text"
-        name="name"
+        type="number"
+        name="stock"
         ngModel
         required
-        placeholder="Name">
+        min="0"
+        placeholder="Ex. 10">
     </mat-form-field>
   </form>
 </div>

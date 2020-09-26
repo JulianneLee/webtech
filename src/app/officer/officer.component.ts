@@ -46,8 +46,8 @@ export interface Manager {
 }
 
 const User: Manager[] = [
-  {no: 1, username: 'Manager3', name: 'Manager3', position: "Manager"},
-  {no: 2, username: 'Manager1', name: 'Manager1', position: "Manager"},
-  {no: 3, username: 'Manager2', name: 'Manager2', position: "Manager"},
+  {no: 1, username: 'tester1', name: 'tester 1', position: "Tester"},
+  {no: 2, username: 'tester3', name: 'tester 3', position: "Tester"},
+  {no: 3, username: 'tester2', name: 'tester 2', position: "Tester"},
 ];
 
