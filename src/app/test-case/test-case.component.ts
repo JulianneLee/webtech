@@ -17,13 +17,16 @@ export class TestCaseComponent implements AfterViewInit {
   //mode = new FormControl('push');
   breakpoint: number;
 
-  displayedColumns: string[] = ['testID', 'name', 'type', 'symptom', 'status'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedTest: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
+  displayedPatient: string[] = ['patientID', 'username', 'name'];
+  dataTest = new MatTableDataSource<TestElement>(TEST_DATA);
+  labPatient = new MatTableDataSource<PatientElement>(PATIENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataTest.paginator = this.paginator;
+    // this.dataPatient.paginator = this.paginator;
   }
 
   animal: string;
@@ -64,7 +67,7 @@ export class TestCaseComponent implements AfterViewInit {
   }
 }
 
-export interface PeriodicElement {
+export interface TestElement {
   testID: string;
   name: string;
   type: string;
@@ -72,11 +75,24 @@ export interface PeriodicElement {
   status: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing", status: "Pending"},
-  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing", status: "Completed"},
-  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing", status: "Pending"},
-  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing", status: "Completed"},
-  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing", status: "Pending"}
+const TEST_DATA: TestElement[] = [
+  {testID: "T1", name: 'Samira', type: "Returnee", symptom: "testing", status: "Pending"},
+  {testID: "T2", name: 'Alex', type: "Quarantined", symptom: "testing", status: "Completed"},
+  {testID: "T3", name: 'Yone', type: "Infected", symptom: "testing", status: "Pending"},
+  {testID: "T4", name: 'Lillia', type: "Suspected", symptom: "testing", status: "Completed"},
+  {testID: "T5", name: 'Steve', type: "Infected", symptom: "testing", status: "Pending"}
 ];
 
+export interface PatientElement {
+  patientID: string;
+  username: string;
+  name: string;
+}
+
+const PATIENT_DATA: PatientElement[] = [
+  {patientID: "P1", username: "Alex07", name: "Alex"},
+  {patientID: "P2", username: "Lillia1", name: "Lillia"},
+  {patientID: "P3", username: "Steve99", name: "Steve"},
+  {patientID: "P4", username: "Samira", name: "Samira"},
+  {patientID: "P5", username: "YoneYas", name: "Yone"}
+];
