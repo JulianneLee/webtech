@@ -25,7 +25,7 @@ export class TestCaseComponent implements AfterViewInit {
   displayedPatientCol: string[] = ['no', 'name', 'username'];
   dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
   @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
-  @ViewChild('table2', {read: MatSort}) additionalSort: MatSort;
+  @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
 
   ngAfterViewInit() {
     this.dataTestCase.paginator = this.paginator;

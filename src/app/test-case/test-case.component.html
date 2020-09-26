@@ -45,7 +45,7 @@
   <button mat-button mat-raised-button color="primary" (click)="openDialogPatient()" class="btnPatient">Add Patient</button>
   <button mat-button mat-raised-button color="primary" (click)="openDialogTest()" class="btnTest">Add Test</button>
 
-  <div class="table">
+  <div>
     <h2 mat-dialog-title>Test Case</h2>
     <!-- <div class="mat-elevation-z8"> -->
 
@@ -118,14 +118,14 @@
     </div>
   <!-- </div> -->
 
-  <div class="table2">
+  <div>
     <h2 mat-dialog-title>Patient</h2>
     <!-- <div class="mat-elevation-z8"> -->
       <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilterPatient($event)" placeholder="Ex. Mia" #input>
       </mat-form-field>
-      <table mat-table [dataSource]="dataPatient" matSort>
+      <table mat-table [dataSource]="dataPatient" matSort #table2="matSort">
 
         <!-- Test ID Column -->
         <ng-container matColumnDef="no">
