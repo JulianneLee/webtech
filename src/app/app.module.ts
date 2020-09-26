@@ -13,6 +13,7 @@ import { TestCenterComponent } from './test-center/test-center.component'
 import { OfficerComponent } from './officer/officer.component'
 import { TestKitComponent } from './test-kit/test-kit.component'
 import { ReportComponent } from './report/report.component'
+import { TestHistoryComponent } from './test-history/test-history.component'
 
 import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
 import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
@@ -41,6 +42,7 @@ import { UpdateTestDialog } from './dialog/update-test/update-test.component'
     AddOfficerDialog,
     EditInfoDialog,
     UpdateTestDialog,
+    TestHistoryComponent,
   ],
   imports: [
     BrowserModule,

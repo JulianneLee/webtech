@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 
+//import {  }
+
 @Component({
   selector: 'app-test-center',
   templateUrl: 'test-history.component.html',
@@ -12,14 +14,22 @@ import { MatSort } from '@angular/material/sort';
 })
 
 export class TestHistoryComponent implements AfterViewInit{
-  displayedTestHisCol: string[] = ['no', 'testDate', 'symptom', 'action'];
-  dataTestHis = new MatTableDataSource<TestCaseElement>(TESTCASE);
+  displayedTestHisPen: string[] = ['no', 'testDate', 'symptom', 'action'];
+  dataTestHisPen = new MatTableDataSource<TestHisPenElement>(TESTHISPEN);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  displayedTestHisComp: string[] = ['no', 'testDate', 'symptom', 'action'];
+  dataTestHisComp = new MatTableDataSource<TestHisCompElement>(TESTHISCOMP);
+  @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
+  @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
+
   ngAfterViewInit(){
-    this.dataTestHis.paginator = this.paginator;
-    this.dataTestHis.sort = this.sort;
+    this.dataTestHisPen.paginator = this.paginator;
+    this.dataTestHisPen.sort = this.sort;
+
+    this.dataTestHisComp.sort = this.additionalSort;
+    this.dataTestHisComp.paginator = this.additionalPaginator;
   }
 
   // openDialogEdit(): void {
@@ -31,26 +41,42 @@ export class TestHistoryComponent implements AfterViewInit{
 
   applyFilterPending(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataTestHis.filter = filterValue.trim().toLowerCase();
+    this.dataTestHisPen.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataTestHis.paginator) {
-      this.dataTestHis.paginator.firstPage();
+    if (this.dataTestHisPen.paginator) {
+      this.dataTestHisPen.paginator.firstPage();
+    }
+  }
+
+  applyFilterCompleted(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataTestHisComp.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataTestHisComp.paginator) {
+      this.dataTestHisComp.paginator.firstPage();
     }
   }
 }
 
-export interface TestCaseElement {
+export interface TestHisPenElement {
   no: number;
-  name: string;
-  type: string;
+  testDate: string;
   symptom: string;
-  status: string;
 }
 
-const TESTCASE: TestCaseElement[] = [
-  {no: 1, name: 'Alex', type: "Returnee", symptom: "testing", status: "Pending"},
-  {no: 2, name: 'Lillia', type: "Quarantined", symptom: "testing", status: "Completed"},
-  {no: 3, name: 'Samira', type: "Infected", symptom: "testing", status: "Pending"},
-  {no: 4, name: 'Yone', type: "Suspected", symptom: "testing", status: "Completed"},
-  {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
+const TESTHISPEN: TestHisPenElement[] = [
+  {no: 1, testDate: '27/07/2020', symptom: "testing"},
+  {no: 2, testDate: '10/08/2020', symptom: "testing"},
+  {no: 3, testDate: '5/09/2020', symptom: "testing"}
+];
+
+export interface TestHisCompElement {
+  no: number;
+  testDate: string;
+  symptom: string;
+}
+
+const TESTHISCOMP: TestHisCompElement[] = [
+  {no: 1, testDate: '04/07/2020', symptom: "testing"},
+  {no: 2, testDate: '10/09/2020', symptom: "testing"}
 ];

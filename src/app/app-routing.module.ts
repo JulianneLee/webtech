@@ -6,6 +6,7 @@ import { OfficerComponent } from './officer/officer.component'
 import { TestKitComponent } from './test-kit/test-kit.component'
 import { TestCenterComponent } from './test-center/test-center.component'
 import { ReportComponent } from './report/report.component'
+import { TestHistoryComponent } from './test-history/test-history.component'
 
 const routes: Routes = [
   { path: 'testcase', component: TestCaseComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'testkit', component: TestKitComponent},
   { path: 'testcenter', component: TestCenterComponent},
   { path: 'report', component: ReportComponent},
+  { path: 'testhistory', component: TestHistoryComponent},
 ];
 
 @NgModule({
