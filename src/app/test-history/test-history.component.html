@@ -1,0 +1,99 @@
+<mat-accordion multi = "true">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Pending</mat-panel-title>
+      <mat-panel-description>
+        Waiting for test result
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div>
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilterPending($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataTestHisPen" matSort >
+
+        <!-- Test ID Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let testHistory"> {{testHistory.no}} </td>
+        </ng-container>
+
+        <!-- Test Date Column -->
+        <ng-container matColumnDef="testDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Test Date </th>
+          <td mat-cell *matCellDef="let testHistory"> {{testHistory.testDate}} </td>
+        </ng-container>
+
+        <!-- Symptom Column -->
+        <ng-container matColumnDef="symptom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Symptom </th>
+          <td mat-cell *matCellDef="let testHistory"> {{testHistory.symptom}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let testHistory">
+            <button mat-raised-button color="primary">View</button>
+          </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedTestHisPen"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedTestHisPen;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Completed</mat-panel-title>
+      <mat-panel-description>
+        View the test result
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div>
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilterCompleted($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataTestHisComp" matSort #table2="matSort">
+
+        <!-- Test ID Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let testHisComp"> {{testHisComp.no}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="testDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Test Date </th>
+          <td mat-cell *matCellDef="let testHisComp"> {{testHisComp.testDate}} </td>
+        </ng-container>
+
+        <!-- Patient Type Column -->
+        <ng-container matColumnDef="symptom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Symptom </th>
+          <td mat-cell *matCellDef="let testHisComp"> {{testHisComp.symptom}} </td>
+        </ng-container>
+
+          <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let testHisComp">
+            <button mat-raised-button color="primary">View</button>
+          </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedTestHisComp"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedTestHisComp;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+  </mat-expansion-panel>
+</mat-accordion>
