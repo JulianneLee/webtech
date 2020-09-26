@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>New Test</h1>
+
+<div mat-dialog-content>
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a patient</mat-label>
+      <mat-select>
+        <mat-option value="">Patient 1</mat-option>
+        <mat-option value="">Patient 2</mat-option>
+        <mat-option value="">Patient 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Symptom</mat-label>
+      <input matInput
+        type="textarea"
+        name="username"
+        ngModel
+        required
+        minlength="3"
+        placeholder="e.g. alice">
+    </mat-form-field>
+    <!-- <mat-error *ngIf = "username.invalid">Please enter a post title</mat-error> -->
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput
+        type="text"
+        name="password"
+        ngModel
+        required
+        minlength="8"
+        placeholder="e.g. abcd1234">
+    </mat-form-field>
+    <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput
+        type="text"
+        name="name"
+        ngModel
+        required
+        placeholder="e.g. Alice Tan">
+    </mat-form-field>
+    <!-- <mat-error *ngIf = "name.invalid">Please enter a post title</mat-error> -->
+  </form>
+</div>
+
+<div mat-dialog-actions class="floatRight">
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+</div>
+

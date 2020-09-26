@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Add Manager</h1>
+
+<div mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <label>Username</label>
+      <input matInput
+        type="text"
+        name="username"
+        ngModel
+        required
+        minlength="3"
+        placeholder="Username">
+    </mat-form-field>
+    <mat-form-field>
+    <label>Password</label>
+      <input matInput
+        type="password"
+        name="password"
+        ngModel
+        required
+        placeholder="Password">
+    </mat-form-field>
+    <mat-form-field>
+    <label>Position</label>
+      <mat-select ngModel required>
+        <mat-option value="option">Manager</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions class="floatRight">
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+</div>
+

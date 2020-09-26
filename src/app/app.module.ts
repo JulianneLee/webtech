@@ -15,12 +15,18 @@ import { DemoMaterialModule } from './material-module';
 
 import { AppComponent } from './app.component';
 import { TestCaseComponent } from './test-case/test-case.component'
+import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
+import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
+import { AddTestDialog } from './dialog/add-test/add-test.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     TestCaseComponent,
+    AddPatientDialog,
+    AddManagerDialog,
+    AddTestDialog,
   ],
   imports: [
     BrowserModule,
