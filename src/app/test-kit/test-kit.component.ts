@@ -3,6 +3,7 @@ import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort'
 
 import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
 
@@ -16,9 +17,11 @@ export class TestKitComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Manager>(User);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   animal: string;
@@ -35,6 +38,15 @@ export class TestKitComponent implements AfterViewInit {
       console.log('The dialog was closed');
       this.animal = result;
     });
+  }
+
+  applyFilterTestKit(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
 

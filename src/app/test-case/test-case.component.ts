@@ -3,10 +3,12 @@ import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-
-import { AddPatientDialog } from '../dialog/add-patient/add-patient.component';
-import { AddTestDialog } from '../dialog/add-test/add-test.component'
 import { MatSort } from '@angular/material/sort';
+
+import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
+import { AddTestDialog } from '../dialog/add-test/add-test.component'
+import { EditInfoDialog } from '../dialog/edit-info/edit-info.component'
+import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 
 @Component({
   selector: 'app-test-case',
@@ -42,7 +44,7 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogPatient(): void {
     const dialogRef = this.dialog.open(AddPatientDialog, {
-      width: '300px',
+      width: '400px',
       // data: {name: this.name, animal: this.animal}
     });
 
@@ -54,7 +56,33 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogTest(): void {
     const dialogRef = this.dialog.open(AddTestDialog, {
-      width: '600px',
+      width: '400px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  openDialogEdit(): void {
+    const dialogRef = this.dialog.open(EditInfoDialog, {
+      width: '100%',
+      height: '60%',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  openDialogUpdateTest(): void {
+    const dialogRef = this.dialog.open(UpdateTestDialog, {
+      width: '100%',
+      height: '60%',
       // data: {name: this.name, animal: this.animal}
     });
 
