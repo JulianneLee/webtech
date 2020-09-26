@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component';
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-test-case',
@@ -23,10 +24,14 @@ export class TestCaseComponent implements AfterViewInit {
   dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
     this.dataTestCase.paginator = this.paginator;
     this.dataPatient.paginator = this.paginator;
+
+    this.dataTestCase.sort = this.sort;
+    this.dataPatient.sort = this.sort;
   }
 
   animal: string;
@@ -56,6 +61,15 @@ export class TestCaseComponent implements AfterViewInit {
       console.log('The dialog was closed');
       this.animal = result;
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataTestCase.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataTestCase.paginator) {
+      this.dataTestCase.paginator.firstPage();
+    }
   }
 
   ngOnInit() {

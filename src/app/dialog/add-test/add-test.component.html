@@ -2,7 +2,7 @@
 
 <div mat-dialog-content>
   <form>
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Choose a patient</mat-label>
       <mat-select required>
         <mat-option value="">Patient 1</mat-option>
@@ -12,26 +12,26 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Symptom</mat-label>
-      <input matInput
-        type="textarea"
-        name="username"
-        ngModel
-        required
-        minlength="3"
-        placeholder="e.g. alice">
+      <mat-label>Patient Type</mat-label>
+      <mat-select required>
+        <mat-option value="">Returnee</mat-option>
+        <mat-option value="">Quarantined</mat-option>
+        <mat-option value="">Close Contact</mat-option>
+        <mat-option value="">Infected</mat-option>
+        <mat-option value="">Suspected</mat-option>
+      </mat-select>
     </mat-form-field>
     <!-- <mat-error *ngIf = "username.invalid">Please enter a post title</mat-error> -->
 
     <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput
-        type="text"
-        name="password"
+      <mat-label>Symptom</mat-label>
+      <textarea
+        matInput
+        row="4"
+        name="symptom"
         ngModel
         required
-        minlength="8"
-        placeholder="e.g. abcd1234">
+        placeholder="e.g. Description of the sickness "></textarea>
     </mat-form-field>
     <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
 
