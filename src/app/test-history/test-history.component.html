@@ -36,7 +36,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action </th>
           <td mat-cell *matCellDef="let testHistory">
-            <button mat-raised-button color="primary">View</button>
+            <button mat-raised-button color="primary" (click)="openDialogViewPending()">View</button>
           </td>
         </ng-container>
 

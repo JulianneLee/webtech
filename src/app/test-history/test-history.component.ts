@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 
-//import {  }
+import { ViewPendingDialog } from '../dialog/view-pending/view-pending.component'
 
 @Component({
   selector: 'app-test-center',
@@ -32,12 +32,14 @@ export class TestHistoryComponent implements AfterViewInit{
     this.dataTestHisComp.paginator = this.additionalPaginator;
   }
 
-  // openDialogEdit(): void {
-  //   const dialogRef = this.dialog.open(EditInfoDialog, {
-  //     width: '100%',
-  //     height: '60%',
-  //     // data: {name: this.name, animal: this.animal}
-  //   });
+  constructor(public dialog: MatDialog) {}
+
+  openDialogViewPending(): void {
+    const dialogRef = this.dialog.open(ViewPendingDialog, {
+      width: '100%',
+      height: '60%',
+    });
+  }
 
   applyFilterPending(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

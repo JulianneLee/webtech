@@ -13,7 +13,6 @@ import { TestCenterComponent } from './test-center/test-center.component'
 import { OfficerComponent } from './officer/officer.component'
 import { TestKitComponent } from './test-kit/test-kit.component'
 import { ReportComponent } from './report/report.component'
-import { TestHistoryComponent } from './test-history/test-history.component'
 
 import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
 import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
@@ -24,6 +23,8 @@ import { AddTestCenterDialog } from './dialog/add-test-center/add-test-center.co
 import { AddOfficerDialog } from './dialog/add-officer/add-officer.component';
 import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
 import { UpdateTestDialog } from './dialog/update-test/update-test.component'
+import { TestHistoryComponent } from './test-history/test-history.component'
+import { ViewPendingDialog } from './dialog/view-pending/view-pending.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { UpdateTestDialog } from './dialog/update-test/update-test.component'
     EditInfoDialog,
     UpdateTestDialog,
     TestHistoryComponent,
+    ViewPendingDialog,
   ],
   imports: [
     BrowserModule,
