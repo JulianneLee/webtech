@@ -14,19 +14,19 @@ import { AddTestDialog } from '../dialog/add-test/add-test.component'
 })
 
 export class TestCaseComponent implements AfterViewInit {
-  //mode = new FormControl('push');
   breakpoint: number;
 
-  displayedTest: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
-  displayedPatient: string[] = ['patientID', 'username', 'name'];
-  dataTest = new MatTableDataSource<TestElement>(TEST_DATA);
-  labPatient = new MatTableDataSource<PatientElement>(PATIENT_DATA);
+  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
+  dataTestCase = new MatTableDataSource<TestCaseElement>(TESTCASE);
+
+  displayedPatientCol: string[] = ['testID', 'name', 'type', 'symptom'];
+  dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataTest.paginator = this.paginator;
-    // this.dataPatient.paginator = this.paginator;
+    this.dataTestCase.paginator = this.paginator;
+    this.dataPatient.paginator = this.paginator;
   }
 
   animal: string;
@@ -67,7 +67,7 @@ export class TestCaseComponent implements AfterViewInit {
   }
 }
 
-export interface TestElement {
+export interface TestCaseElement {
   testID: string;
   name: string;
   type: string;
@@ -75,24 +75,25 @@ export interface TestElement {
   status: string;
 }
 
-const TEST_DATA: TestElement[] = [
-  {testID: "T1", name: 'Samira', type: "Returnee", symptom: "testing", status: "Pending"},
-  {testID: "T2", name: 'Alex', type: "Quarantined", symptom: "testing", status: "Completed"},
-  {testID: "T3", name: 'Yone', type: "Infected", symptom: "testing", status: "Pending"},
-  {testID: "T4", name: 'Lillia', type: "Suspected", symptom: "testing", status: "Completed"},
-  {testID: "T5", name: 'Steve', type: "Infected", symptom: "testing", status: "Pending"}
+const TESTCASE: TestCaseElement[] = [
+  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing", status: "Pending"},
+  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing", status: "Completed"},
+  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing", status: "Pending"},
+  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing", status: "Completed"},
+  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing", status: "Pending"}
 ];
 
 export interface PatientElement {
-  patientID: string;
-  username: string;
+  testID: string;
   name: string;
+  type: string;
+  symptom: string;
 }
 
-const PATIENT_DATA: PatientElement[] = [
-  {patientID: "P1", username: "Alex07", name: "Alex"},
-  {patientID: "P2", username: "Lillia1", name: "Lillia"},
-  {patientID: "P3", username: "Steve99", name: "Steve"},
-  {patientID: "P4", username: "Samira", name: "Samira"},
-  {patientID: "P5", username: "YoneYas", name: "Yone"}
+const PATIENT: PatientElement[] = [
+  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing"},
+  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing"},
+  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing"},
+  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing"},
+  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing"}
 ];
