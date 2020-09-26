@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
 import { EditInfoDialog } from '../dialog/edit-info/edit-info.component'
+import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 
 @Component({
   selector: 'app-test-case',
@@ -55,7 +56,7 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogTest(): void {
     const dialogRef = this.dialog.open(AddTestDialog, {
-      width: '300px',
+      width: '400px',
       // data: {name: this.name, animal: this.animal}
     });
 
@@ -67,7 +68,21 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogEdit(): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
-      width: '300px',
+      width: '100%',
+      height: '60%',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  openDialogUpdateTest(): void {
+    const dialogRef = this.dialog.open(UpdateTestDialog, {
+      width: '100%',
+      height: '60%',
       // data: {name: this.name, animal: this.animal}
     });
 

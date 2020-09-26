@@ -15,6 +15,7 @@ import { AddPatientDialog } from './dialog/add-patient/add-patient.component'
 import { AddManagerDialog } from './dialog/add-manager/add-manager.component'
 import { AddTestDialog } from './dialog/add-test/add-test.component'
 import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
+import { UpdateTestDialog } from './dialog/update-test/update-test.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
     AddManagerDialog,
     AddTestDialog,
     EditInfoDialog,
+    UpdateTestDialog,
   ],
   imports: [
     BrowserModule,
