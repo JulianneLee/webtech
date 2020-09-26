@@ -9,9 +9,9 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- Number Column -->
-    <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let user"> {{user.no}} </td>
+    <ng-container matColumnDef="password">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let user"> {{user.password}} </td>
     </ng-container>
 
     <!-- Username Column -->

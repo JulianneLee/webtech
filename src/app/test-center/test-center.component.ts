@@ -5,10 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
 
+import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.component';
+
 @Component({
   selector: 'app-test-center',
   templateUrl: 'test-center.component.html',
-  styleUrls: ['test-center.component.css'],
 })
 
 export class TestCenterComponent implements AfterViewInit {
@@ -23,21 +24,21 @@ export class TestCenterComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  // animal: string;
-  // name: string;
+  animal: string;
+  name: string;
 
-  // constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(AddManagerDialog, {
-  //     width: '300px',
-  //   });
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddTestCenterDialog, {
+      width: '300px',
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //     this.animal = result;
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
 
   applyFilterTestCenter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
