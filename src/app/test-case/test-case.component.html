@@ -46,9 +46,9 @@
   <button mat-button mat-raised-button color="primary" (click)="openDialogTest()" class="btnTest">Add Test</button>
 
   <div class="table">
-    <h2 mat-dialog-title>Test Table</h2>
+    <h2 mat-dialog-title>Test Case</h2>
     <!-- <div class="mat-elevation-z8"> -->
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataTestCase">
 
         <!-- Position Column -->
         <ng-container matColumnDef="testID">
@@ -83,11 +83,29 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>help</mat-icon>
+                <span>Edit Info</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>receipt_long</mat-icon>
+                <span>Update Result</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>delete_forever</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedTestCaseCol"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedTestCaseCol;"></tr>
       </table>
 
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
@@ -95,9 +113,9 @@
   <!-- </div> -->
 
   <div class="table">
-    <h2 mat-dialog-title>Test Table</h2>
+    <h2 mat-dialog-title>Patient</h2>
     <!-- <div class="mat-elevation-z8"> -->
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataPatient">
 
         <!-- Position Column -->
         <ng-container matColumnDef="testID">
@@ -129,14 +147,9 @@
           <td mat-cell *matCellDef="let element"> {{element.status}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedPatientCol"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedPatientCol;"></tr>
       </table>
 
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

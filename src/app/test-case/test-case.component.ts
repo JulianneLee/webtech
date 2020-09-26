@@ -14,16 +14,19 @@ import { AddTestDialog } from '../dialog/add-test/add-test.component'
 })
 
 export class TestCaseComponent implements AfterViewInit {
-  //mode = new FormControl('push');
   breakpoint: number;
 
-  displayedColumns: string[] = ['testID', 'name', 'type', 'symptom', 'status'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
+  dataTestCase = new MatTableDataSource<TestCaseElement>(TESTCASE);
+
+  displayedPatientCol: string[] = ['testID', 'name', 'type', 'symptom'];
+  dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataTestCase.paginator = this.paginator;
+    this.dataPatient.paginator = this.paginator;
   }
 
   animal: string;
@@ -64,7 +67,7 @@ export class TestCaseComponent implements AfterViewInit {
   }
 }
 
-export interface PeriodicElement {
+export interface TestCaseElement {
   testID: string;
   name: string;
   type: string;
@@ -72,7 +75,7 @@ export interface PeriodicElement {
   status: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const TESTCASE: TestCaseElement[] = [
   {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing", status: "Pending"},
   {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing", status: "Completed"},
   {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing", status: "Pending"},
@@ -80,3 +83,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {testID: "5", name: 'Boron', type: "Infected", symptom: "testing", status: "Pending"}
 ];
 
+export interface PatientElement {
+  testID: string;
+  name: string;
+  type: string;
+  symptom: string;
+}
+
+const PATIENT: PatientElement[] = [
+  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing"},
+  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing"},
+  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing"},
+  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing"},
+  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing"}
+];
