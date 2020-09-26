@@ -17,21 +17,22 @@ import { MatSort } from '@angular/material/sort';
 export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
 
-  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
+  displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
   dataTestCase = new MatTableDataSource<TestCaseElement>(TESTCASE);
-
-  displayedPatientCol: string[] = ['patientID', 'name', 'username'];
-  dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  displayedPatientCol: string[] = ['no', 'name', 'username'];
+  dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
+  @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
+  @ViewChild('table2', {read: MatSort}) additionalSort: MatSort;
+
   ngAfterViewInit() {
     this.dataTestCase.paginator = this.paginator;
-    this.dataPatient.paginator = this.paginator;
-
     this.dataTestCase.sort = this.sort;
-    this.dataPatient.sort = this.sort;
+
+    this.dataPatient.sort = this.additionalSort;
+    this.dataPatient.paginator = this.additionalPaginator;
   }
 
   animal: string;
@@ -63,12 +64,21 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  applyFilter(event: Event) {
+  applyFilterTestCase(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataTestCase.filter = filterValue.trim().toLowerCase();
 
     if (this.dataTestCase.paginator) {
       this.dataTestCase.paginator.firstPage();
+    }
+  }
+
+  applyFilterPatient(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataPatient.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataPatient.paginator) {
+      this.dataPatient.paginator.firstPage();
     }
   }
 
@@ -82,7 +92,7 @@ export class TestCaseComponent implements AfterViewInit {
 }
 
 export interface TestCaseElement {
-  testID: string;
+  no: number;
   name: string;
   type: string;
   symptom: string;
@@ -90,23 +100,23 @@ export interface TestCaseElement {
 }
 
 const TESTCASE: TestCaseElement[] = [
-  {testID: "1", name: 'Hydrogen', type: "Returnee", symptom: "testing", status: "Pending"},
-  {testID: "2", name: 'Helium', type: "Quarantined", symptom: "testing", status: "Completed"},
-  {testID: "3", name: 'Lithium', type: "Infected", symptom: "testing", status: "Pending"},
-  {testID: "4", name: 'Beryllium', type: "Suspected", symptom: "testing", status: "Completed"},
-  {testID: "5", name: 'Boron', type: "Infected", symptom: "testing", status: "Pending"}
+  {no: 1, name: 'Alex', type: "Returnee", symptom: "testing", status: "Pending"},
+  {no: 2, name: 'Lillia', type: "Quarantined", symptom: "testing", status: "Completed"},
+  {no: 3, name: 'Samira', type: "Infected", symptom: "testing", status: "Pending"},
+  {no: 4, name: 'Yone', type: "Suspected", symptom: "testing", status: "Completed"},
+  {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
 ];
 
 export interface PatientElement {
-  patientID: string;
+  no: number;
   name: string;
   username: string;
 }
 
 const PATIENT: PatientElement[] = [
-  {patientID: "1", name: 'Hydrogen', username: "Lillia"},
-  {patientID: "2", name: 'Helium', username: "Yone"},
-  {patientID: "3", name: 'Lithium', username: "Alex"},
-  {patientID: "4", name: 'Beryllium', username: "Samira"},
-  {patientID: "5", name: 'Boron', username: "Lux"}
+  {no: 1, name: 'Lillia12', username: "Lillia"},
+  {no: 2, name: 'YoneYas', username: "Yone"},
+  {no: 3, name: 'Alex12', username: "Alex"},
+  {no: 4, name: 'SamiraS', username: "Samira"},
+  {no: 5, name: 'LuxEzreal', username: "Lux"}
 ];
