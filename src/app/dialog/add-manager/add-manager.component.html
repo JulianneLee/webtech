@@ -1,7 +1,6 @@
 <h1 mat-dialog-title>Add Manager</h1>
-
-<div mat-dialog-content>
-  <form>
+<form (submit)="onAddManager(addManagerForm)" #addManagerForm="ngForm">
+  <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput
@@ -9,7 +8,9 @@
         name="username"
         ngModel
         required
-        placeholder="Username">
+        placeholder="Username"
+        #username="ngModel">
+        <mat-error *ngIf="username.invalid">Please enter username</mat-error>
     </mat-form-field>
     <mat-form-field>
     <mat-label>Password</mat-label>
@@ -18,7 +19,9 @@
         name="password"
         ngModel
         required
-        placeholder="Password">
+        placeholder="Password"
+        #password="ngModel">
+        <mat-error *ngIf="password.invalid">Please enter password</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -27,13 +30,14 @@
         name="name"
         ngModel
         required
-        placeholder="Name">
+        placeholder="Name"
+        #name="ngModel">
+        <mat-error *ngIf="name.invalid">Please enter name</mat-error>
     </mat-form-field>
-  </form>
-</div>
+  </div>
 
-<div mat-dialog-actions class="floatRight">
-  <button mat-button (click)="onClose()">Close</button>
-  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
-</div>
-
+  <div mat-dialog-actions class="floatRight">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+  </div>
+</form>

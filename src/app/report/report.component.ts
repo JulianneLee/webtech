@@ -4,14 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
-
 @Component({
-  selector: 'app-test-kit',
-  templateUrl: 'test-kit.component.html',
+  selector: 'app-report',
+  templateUrl: 'report.component.html',
 })
 
-export class TestKitComponent implements AfterViewInit {
+export class ReportComponent implements AfterViewInit {
   displayedColumns: string[] = ['no', 'username', 'name', 'position'];
   dataSource = new MatTableDataSource<Manager>(User);
 
@@ -19,22 +17,6 @@ export class TestKitComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-  }
-
-  animal: string;
-  name: string;
-
-  constructor(public dialog: MatDialog) {}
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddTestKitDialog, {
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
   }
 }
 

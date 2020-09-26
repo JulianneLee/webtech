@@ -54,7 +54,7 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogTest(): void {
     const dialogRef = this.dialog.open(AddTestDialog, {
-      width: '300px',
+      width: '600px',
       // data: {name: this.name, animal: this.animal}
     });
 

@@ -4,14 +4,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
+import { AddOfficerDialog } from '../dialog/add-officer/add-officer.component';
 
 @Component({
-  selector: 'app-test-kit',
-  templateUrl: 'test-kit.component.html',
+  selector: 'app-officer',
+  templateUrl: 'officer.component.html',
 })
 
-export class TestKitComponent implements AfterViewInit {
+export class OfficerComponent implements AfterViewInit {
   displayedColumns: string[] = ['no', 'username', 'name', 'position'];
   dataSource = new MatTableDataSource<Manager>(User);
 
@@ -27,7 +27,7 @@ export class TestKitComponent implements AfterViewInit {
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddTestKitDialog, {
+    const dialogRef = this.dialog.open(AddOfficerDialog, {
       width: '300px',
     });
 

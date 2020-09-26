@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { TestCaseComponent } from './test-case/test-case.component'
 import { ManagerComponent } from './manager/manager.component'
+import { OfficerComponent } from './officer/officer.component'
 import { TestKitComponent } from './test-kit/test-kit.component'
 import { TestCenterComponent } from './test-center/test-center.component'
+import { ReportComponent } from './report/report.component'
 
 const routes: Routes = [
   { path: 'testcase', component: TestCaseComponent},
   { path: 'manager', component: ManagerComponent},
+  { path: 'officer', component: OfficerComponent},
   { path: 'testkit', component: TestKitComponent},
   { path: 'testcenter', component: TestCenterComponent},
+  { path: 'report', component: ReportComponent},
 ];
 
 @NgModule({
@@ -29,6 +33,8 @@ export class AppRoutingModule{
 export const routingComponents = [
   TestCaseComponent,
   ManagerComponent,
+  OfficerComponent,
   TestKitComponent,
   TestCenterComponent,
+  ReportComponent,
 ]
