@@ -16,7 +16,7 @@ import { AddManagerDialog } from '../dialog/add-manager/add-manager.component';
 })
 
 export class ManagerComponent implements AfterViewInit {
-  managers: Manager[] = [];
+  managers: Manager[] = this.appService.getManagers();
   displayedColumns: string[] = ['password', 'username', 'name', 'position'];
   dataSource = new MatTableDataSource<Manager>(this.managers);
 
@@ -41,7 +41,12 @@ export class ManagerComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(AddManagerDialog, {
       width: '300px',
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+        this.dataSource.data = this.managers;
+    });
   }
+
 
   applyFilterManager(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

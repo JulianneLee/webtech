@@ -7,6 +7,6 @@ export interface Manager {
 
 export interface Patient {
   username: string;
-  password; string;
+  password: string;
   name: string;
 }

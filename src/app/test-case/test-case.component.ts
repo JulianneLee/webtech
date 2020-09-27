@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
 import { MatSort } from '@angular/material/sort'
+
+import { AppService } from '../app-service'
+import { Patient } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
 import { EditInfoDialog } from '../dialog/edit-info/edit-info.component'
 import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
+
 
 @Component({
   selector: 'app-test-case',
@@ -17,12 +21,6 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 })
 
 export class TestCaseComponent implements AfterViewInit {
-  username: string;
-  password: string;
-  name: string;
-  dialogConfig = MatDialogConfig;
-  dialogWithForm: MatDialogRef<AddPatientDialog>;
-
   breakpoint: number;
 
   displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
@@ -30,8 +28,9 @@ export class TestCaseComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  patients: Patient[] = this.appService.getPatients();
   displayedPatientCol: string[] = ['no', 'name', 'username'];
-  dataPatient = new MatTableDataSource<PatientElement>(PATIENT);
+  dataPatient = new MatTableDataSource<Patient>(this.patients);
   @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
   @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
 
@@ -43,27 +42,23 @@ export class TestCaseComponent implements AfterViewInit {
     this.dataPatient.paginator = this.additionalPaginator;
   }
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public appService: AppService,
+    ) {}
+
+  ngOnInit(){
+    this.patients = this.appService.getPatients();
+    this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
+  }
 
   openDialogPatient(): void {
     const dialogRef = this.dialog.open(AddPatientDialog, {
       width: '400px',
-      data: {
-        username: this.username,
-        password: this.password,
-        name: this.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result) {
-        this.username = result.username;
-        this.password = result.password;
-        this.name = result.name;
-        console.log(result.username);
-        console.log(result.password);
-        console.log(result.name);
-      }
+      this.dataPatient.data = this.patients;
     });
   }
 
@@ -120,10 +115,6 @@ export class TestCaseComponent implements AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
-  }
-
   onResize(event) {
     this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
   }
@@ -145,16 +136,16 @@ const TESTCASE: TestCaseElement[] = [
   {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
 ];
 
-export interface PatientElement {
-  no: number;
-  name: string;
-  username: string;
-}
+// export interface PatientElement {
+//   no: number;
+//   name: string;
+//   username: string;
+// }
 
-const PATIENT: PatientElement[] = [
-  {no: 1, name: 'Lillia12', username: "Lillia"},
-  {no: 2, name: 'YoneYas', username: "Yone"},
-  {no: 3, name: 'Alex12', username: "Alex"},
-  {no: 4, name: 'SamiraS', username: "Samira"},
-  {no: 5, name: 'LuxEzreal', username: "Lux"}
-];
+// const PATIENT: PatientElement[] = [
+//   {no: 1, name: 'Lillia12', username: "Lillia"},
+//   {no: 2, name: 'YoneYas', username: "Yone"},
+//   {no: 3, name: 'Alex12', username: "Alex"},
+//   {no: 4, name: 'SamiraS', username: "Samira"},
+//   {no: 5, name: 'LuxEzreal', username: "Lux"}
+// ];

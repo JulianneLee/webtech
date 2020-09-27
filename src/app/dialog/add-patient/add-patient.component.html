@@ -1,49 +1,55 @@
 <h1 mat-dialog-title>New Patient</h1>
 
-<div mat-dialog-content>
-  <form>
+<form (submit)="onAddPatient(addPatientForm)" #addPatientForm="ngForm">
+  <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput
         type="text"
         name="username"
-        [(ngModel)] = "data.username"
+        ngModel
         required
         minlength="3"
-        placeholder="e.g. alice">
+        placeholder="e.g. alice"
+        #username="ngModel">
+        <mat-error *ngIf = "username.invalid">Please enter username</mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "username.invalid">Please enter a post title</mat-error> -->
+
 
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput
         [type]="hide ? 'password' : 'text'"
         name="password"
-        [(ngModel)] = "data.password"
+        ngModel
         required
         minlength="8"
-        placeholder="e.g. abcd1234">
+        placeholder="e.g. abcd1234"
+        #password="ngModel">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
+      <mat-error *ngIf = "password.invalid">Please enter password</mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
+
 
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput
         type="text"
         name="name"
-        [(ngModel)] = "data.name"
+        ngModel
         required
-        placeholder="e.g. Alice Tan">
+        placeholder="e.g. Alice Tan"
+        #name="ngModel">
+        <mat-error *ngIf = "name.invalid">Please enter name</mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "name.invalid">Please enter a post title</mat-error> -->
-  </form>
-</div>
 
-<div mat-dialog-actions class="floatRight">
-  <button mat-button (click)="onClose()">Close</button>
-  <button mat-button mat-raised-button color="accent" [mat-dialog-close] = "data" cdkFocusInitial type="submit">Add</button>
-</div>
 
+  </div>
+
+  <div mat-dialog-actions class="floatRight">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+  </div>
+</form>
