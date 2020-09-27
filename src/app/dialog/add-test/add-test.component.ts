@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppService } from '../../app-service'
+import { Patient } from '../../app-model'
 
 @Component({
   selector: 'dialog-add-patient',
@@ -8,17 +10,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 export class AddTestDialog {
+  patients: Patient [] = [];
   constructor(
-    public dialogRef: MatDialogRef<AddTestDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public appService: AppService,
+    public dialogRef: MatDialogRef<AddTestDialog>){}
 
     onClose(): void {
     this.dialogRef.close();
   }
 
-}
+  ngOnInit(){
+    this.patients = this.appService.getPatients()
+    console.log(this.patients)
+  }
 
-export interface DialogData {
-  animal: string;
-  name: string;
+  onAddTest(form: NgForm){
+    if(form.valid){
+      this.appService.addTest(form.value.patientID, form.value.type, form.value.symptom, form.value.officerID, form.value.officerID);
+      this.dialogRef.close();
+    }
+  }
 }

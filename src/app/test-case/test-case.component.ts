@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { Patient } from '../app-model'
+import { Patient, Test } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -23,8 +23,9 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
 
+  tests: Test[] = this.appService.getTests();
   displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
-  dataTestCase = new MatTableDataSource<TestCaseElement>(TESTCASE);
+  dataTestCase = new MatTableDataSource<Test>(this.tests);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -49,7 +50,10 @@ export class TestCaseComponent implements AfterViewInit {
 
   ngOnInit(){
     this.patients = this.appService.getPatients();
+    this.tests = this.appService.getTests();
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
+
+    this.appService.addPatient("Lillia", "Lillia12", "Lillia")
   }
 
   openDialogPatient(): void {
@@ -65,11 +69,10 @@ export class TestCaseComponent implements AfterViewInit {
   openDialogTest(): void {
     const dialogRef = this.dialog.open(AddTestDialog, {
       width: '400px',
-      // data: {name: this.name, animal: this.animal}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.dataTestCase.data = this.tests;
     });
   }
 
@@ -120,21 +123,21 @@ export class TestCaseComponent implements AfterViewInit {
   }
 }
 
-export interface TestCaseElement {
-  no: number;
-  name: string;
-  type: string;
-  symptom: string;
-  status: string;
-}
+// export interface TestCaseElement {
+//   no: number;
+//   name: string;
+//   type: string;
+//   symptom: string;
+//   status: string;
+// }
 
-const TESTCASE: TestCaseElement[] = [
-  {no: 1, name: 'Alex', type: "Returnee", symptom: "testing", status: "Pending"},
-  {no: 2, name: 'Lillia', type: "Quarantined", symptom: "testing", status: "Completed"},
-  {no: 3, name: 'Samira', type: "Infected", symptom: "testing", status: "Pending"},
-  {no: 4, name: 'Yone', type: "Suspected", symptom: "testing", status: "Completed"},
-  {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
-];
+// const TESTCASE: TestCaseElement[] = [
+//   {no: 1, name: 'Alex', type: "Returnee", symptom: "testing", status: "Pending"},
+//   {no: 2, name: 'Lillia', type: "Quarantined", symptom: "testing", status: "Completed"},
+//   {no: 3, name: 'Samira', type: "Infected", symptom: "testing", status: "Pending"},
+//   {no: 4, name: 'Yone', type: "Suspected", symptom: "testing", status: "Completed"},
+//   {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
+// ];
 
 // export interface PatientElement {
 //   no: number;

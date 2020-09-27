@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core'
+import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { AppService } from '../../app-service'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'dialog-add-patient',
@@ -19,7 +19,9 @@ export class AddPatientDialog {
   }
 
   onAddPatient(form: NgForm){
-    this.appService.addPatient(form.value.username, form.value.password, form.value.name);
+    if(form.valid){
+      this.appService.addPatient(form.value.username, form.value.password, form.value.name);
+      this.dialogRef.close();
+    }
   }
-
 }
