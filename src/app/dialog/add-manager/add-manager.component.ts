@@ -18,8 +18,10 @@ export class AddManagerDialog {
   }
 
   onAddManager(form: NgForm){
-    this.appService.addManager(form.value.username, form.value.password, form.value.name);
-    // form.resetForm();
+    if(form.valid){
+      this.appService.addManager(form.value.username, form.value.password, form.value.name);
+      this.dialogRef.close();
+    }
   }
 }
 
