@@ -9,6 +9,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 
 export class AddManagerDialog {
+  hide = true;
   constructor(
     public appService: AppService,
     public dialogRef: MatDialogRef<AddManagerDialog>) {}

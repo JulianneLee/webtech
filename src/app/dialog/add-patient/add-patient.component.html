@@ -9,10 +9,9 @@
         name="username"
         ngModel
         required
-        minlength="3"
         placeholder="e.g. alice"
         #username="ngModel">
-        <mat-error *ngIf = "username.invalid">Please enter username</mat-error>
+      <mat-error *ngIf = "username.invalid">Please enter username</mat-error>
     </mat-form-field>
 
 

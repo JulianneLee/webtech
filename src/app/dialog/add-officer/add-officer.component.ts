@@ -8,7 +8,9 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 
 export class AddOfficerDialog {
+  hide = true;
   constructor(
+
     public dialogRef: MatDialogRef<AddOfficerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
