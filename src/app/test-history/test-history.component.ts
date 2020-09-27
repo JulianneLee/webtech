@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { ViewPendingDialog } from '../dialog/view-pending/view-pending.component'
 
 @Component({
-  selector: 'app-test-center',
+  selector: 'app-test-history',
   templateUrl: 'test-history.component.html',
   styleUrls: ['test-history.component.css'],
 })
@@ -36,8 +36,7 @@ export class TestHistoryComponent implements AfterViewInit{
 
   openDialogViewPending(): void {
     const dialogRef = this.dialog.open(ViewPendingDialog, {
-      width: '100%',
-      height: '60%',
+      width: '100%'
     });
   }
 
