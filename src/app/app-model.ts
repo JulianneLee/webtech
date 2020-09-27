@@ -19,18 +19,14 @@ export interface Test {
   symptom: string;
   officerID: string;
   testCreated: string;
-  status:string;
+  status: string;
 }
 
 export interface PatientTest {
-  patientID: string;
   testID: string;
-  username: string;
-  password: string;
   name: string;
   type: string;
   symptom: string;
-  officerID: string;
   testCreated: string;
-  status:string;
+  status: string;
 }

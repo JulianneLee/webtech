@@ -42,24 +42,17 @@ export class AppService {
   }
 
   getPatientTest(){
-    return this.patientTests;
-  }
+    let patients = this.getPatients();
+    let tests = this.getTests();
+    let patientTest = [];
+    let i;
 
-  addPatientTest(patientID: string, testID: string, username: string, password: string, name: string, type: string,
-    symptom: string, officerID: string, testCreated: string, status:string){
-      // let arr3 = this.getPatients().map((item, i) => Object.assign({}, item, this.getTestByID[i])));
-      const patientTest: model.PatientTest = {patientID:patientID, testID:testID, username:username, password:password, name:name,
-        type:type, symptom:symptom, officerID:officerID, testCreated:testCreated, status:status}
-      this.patientTests.push(patientTest);
+    for(i=0; i < tests.length; i++){
+      let pName = patients.find(x => x.patientID == tests[i].patientID).name;
+      patientTest.push({testID:tests[i].testID, name:pName, type:tests[i].type,
+        symptom:tests[i].symptom, testCreated:tests[i].testCreated, status:tests[i].status})
+    }
+    return patientTest;
+    // return this.getTests().map((item, i) => Object.apply({}, item, this.getPatients()[i]));
   }
 }
-
-
-
-
-
-
-
-
-
-

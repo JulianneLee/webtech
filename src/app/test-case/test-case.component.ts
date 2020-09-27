@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { Patient, Test } from '../app-model'
+import { Patient, Test, PatientTest } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -23,9 +23,10 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
 
-  tests: Test[] = this.appService.getTests();
+  tests: PatientTest[] = this.appService.getPatientTest();
+  // tests: Test[] = this.appService.getTests();
   displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
-  dataTestCase = new MatTableDataSource<Test>(this.tests);
+  dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -50,7 +51,7 @@ export class TestCaseComponent implements AfterViewInit {
 
   ngOnInit(){
     this.patients = this.appService.getPatients();
-    this.tests = this.appService.getTests();
+    this.tests = this.appService.getPatientTest();
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
 
     this.appService.addPatient("Lillia", "Lillia12", "Lillia")
@@ -73,6 +74,7 @@ export class TestCaseComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.dataTestCase.data = this.tests;
+      console.log(this.appService.getPatientTest());
     });
   }
 
