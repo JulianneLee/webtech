@@ -5,3 +5,8 @@ export interface Manager {
   position: string;
 }
 
+export interface Patient {
+  username: string;
+  password; string;
+  name: string;
+}

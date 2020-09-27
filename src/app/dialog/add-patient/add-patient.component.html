@@ -7,7 +7,7 @@
       <input matInput
         type="text"
         name="username"
-        ngModel
+        [(ngModel)] = "data.username"
         required
         minlength="3"
         placeholder="e.g. alice">
@@ -17,12 +17,15 @@
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput
-        type="text"
+        [type]="hide ? 'password' : 'text'"
         name="password"
-        ngModel
+        [(ngModel)] = "data.password"
         required
         minlength="8"
         placeholder="e.g. abcd1234">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
     </mat-form-field>
     <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
 
@@ -31,7 +34,7 @@
       <input matInput
         type="text"
         name="name"
-        ngModel
+        [(ngModel)] = "data.name"
         required
         placeholder="e.g. Alice Tan">
     </mat-form-field>
@@ -41,6 +44,6 @@
 
 <div mat-dialog-actions class="floatRight">
   <button mat-button (click)="onClose()">Close</button>
-  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+  <button mat-button mat-raised-button color="accent" [mat-dialog-close] = "data" cdkFocusInitial type="submit">Add</button>
 </div>
 

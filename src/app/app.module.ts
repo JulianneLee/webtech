@@ -55,6 +55,9 @@ import { ViewPendingDialog } from './dialog/view-pending/view-pending.component'
     DemoMaterialModule,
     FormsModule,
   ],
+  entryComponents: [
+    AddPatientDialog,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

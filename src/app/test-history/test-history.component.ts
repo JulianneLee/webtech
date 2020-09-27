@@ -39,6 +39,10 @@ export class TestHistoryComponent implements AfterViewInit{
       width: '100%',
       height: '60%',
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   applyFilterPending(event: Event) {

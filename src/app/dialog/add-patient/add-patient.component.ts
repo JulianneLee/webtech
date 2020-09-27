@@ -8,6 +8,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 export class AddPatientDialog {
+
+
+  hide = true;
   constructor(
     public dialogRef: MatDialogRef<AddPatientDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
@@ -16,9 +19,11 @@ export class AddPatientDialog {
     this.dialogRef.close();
   }
 
+
 }
 
 export interface DialogData {
-  animal: string;
+  username: string;
+  password: string;
   name: string;
 }

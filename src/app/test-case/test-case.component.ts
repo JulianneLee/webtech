@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
+import { MatSort } from '@angular/material/sort'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -17,6 +17,12 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 })
 
 export class TestCaseComponent implements AfterViewInit {
+  username: string;
+  password: string;
+  name: string;
+  dialogConfig = MatDialogConfig;
+  dialogWithForm: MatDialogRef<AddPatientDialog>;
+
   breakpoint: number;
 
   displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
@@ -37,20 +43,27 @@ export class TestCaseComponent implements AfterViewInit {
     this.dataPatient.paginator = this.additionalPaginator;
   }
 
-  animal: string;
-  name: string;
-
   constructor(public dialog: MatDialog) {}
 
   openDialogPatient(): void {
     const dialogRef = this.dialog.open(AddPatientDialog, {
       width: '400px',
-      // data: {name: this.name, animal: this.animal}
+      data: {
+        username: this.username,
+        password: this.password,
+        name: this.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+      if (result) {
+        this.username = result.username;
+        this.password = result.password;
+        this.name = result.name;
+        console.log(result.username);
+        console.log(result.password);
+        console.log(result.name);
+      }
     });
   }
 
@@ -62,7 +75,6 @@ export class TestCaseComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
@@ -75,7 +87,6 @@ export class TestCaseComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
@@ -88,7 +99,6 @@ export class TestCaseComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
