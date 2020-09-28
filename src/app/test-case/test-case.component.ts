@@ -71,13 +71,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-<<<<<<< HEAD
-      this.dataTestCase.data = this.tests;
-      console.log(this.appService.getPatientTest());
-      console.log(this.dataTestCase);
-=======
       this.dataTestCase.data = this.appService.getPatientTest();
->>>>>>> ab755cce17e92262a2ff08183eac13ddce23aa2c
     });
   }
 
