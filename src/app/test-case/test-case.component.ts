@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { Patient, Test, PatientTest } from '../app-model'
+import { Patient, PatientTest } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -75,6 +75,7 @@ export class TestCaseComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       this.dataTestCase.data = this.tests;
       console.log(this.appService.getPatientTest());
+      console.log(this.dataTestCase);
     });
   }
 

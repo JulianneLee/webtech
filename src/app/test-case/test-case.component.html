@@ -51,7 +51,7 @@
 
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilterTestCase($event)" placeholder="Ex. Mia" #input>
+        <input matInput (keyup)="applyFilterTestCase($event)" placeholder="e.g. Mia" #input>
       </mat-form-field>
 
       <table mat-table [dataSource]="dataTestCase" matSort>
@@ -123,7 +123,7 @@
     <!-- <div class="mat-elevation-z8"> -->
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilterPatient($event)" placeholder="Ex. Mia" #input>
+        <input matInput (keyup)="applyFilterPatient($event)" placeholder="e.g. Mia" #input>
       </mat-form-field>
       <table mat-table [dataSource]="dataPatient" matSort #table2="matSort">
 

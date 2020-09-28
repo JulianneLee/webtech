@@ -2,6 +2,9 @@ import { Component, Inject } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { AppService } from '../../app-service'
+import { PatientTest } from '../../app-model'
+
 @Component({
   selector: 'dialog-view-pending',
   templateUrl: 'view-pending.component.html',
