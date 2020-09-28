@@ -1,14 +1,24 @@
 <h1 mat-dialog-title>Edit Information</h1>
 
-<div mat-dialog-content>
-  <form>
+<form (submit)="editInfo(editInfoForm)" #editInfoForm="ngForm">
+  <div mat-dialog-content>
+
+    <mat-form-field>
+      <mat-label>Test ID</mat-label>
+      <input matInput
+      type="text"
+      name="testID"
+      value="{{ testCase.testID }}"
+      readonly>
+    </mat-form-field>
+
     <mat-form-field>
       <mat-label>Patient ID</mat-label>
       <input matInput
       type="text"
       name="patientID"
-      disabled
-      > PID1
+      value="{{ testCase.patientID }}"
+      readonly>
     </mat-form-field>
 
     <mat-form-field>
@@ -16,21 +26,16 @@
       <input matInput
       type="text"
       name="name"
-      disabled
-      > Lillia
+      readonly
+      value="{{ user }}">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Patient Type</mat-label>
-      <mat-select required>
-        <mat-option value="">Returnee</mat-option>
-        <mat-option value="">Quarantined</mat-option>
-        <mat-option value="">Close Contact</mat-option>
-        <mat-option value="">Infected</mat-option>
-        <mat-option value="">Suspected</mat-option>
+      <mat-select [(value)]="selectedType" required>
+        <mat-option [value]="option.value" *ngFor="let option of type">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "username.invalid">Please enter a post title</mat-error> -->
 
     <mat-form-field>
       <mat-label>Symptom</mat-label>
@@ -40,15 +45,25 @@
         name="symptom"
         ngModel
         required
-        placeholder="e.g. Description of the sickness"></textarea>
+        placeholder="e.g. Description of the sickness">{{ testCase.symptom }}</textarea>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
 
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input type="date" name="dateCreated" matInput [matDatepicker]="picker" disabled>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field>
+      <mat-label>Tester incharge</mat-label>
+      <input matInput
+        type="text"
+        name="officerID"
+        readonly
+        value="{{ tester }}">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Test Created</mat-label>
+      <input matInput
+        type="text"
+        name="testCreated"
+        readonly
+        value="{{ testCase.testCreated }}">
     </mat-form-field>
 
     <mat-form-field>
@@ -56,32 +71,14 @@
       <input matInput
       type="text"
       name="status"
-      disabled
-      > Pending
+      readonly
+      value="{{ testCase.status }}">
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Location</mat-label>
-      <input matInput
-      type="text"
-      name="location"
-      disabled
-      > Cheras Branch
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Tester Incharge</mat-label>
-      <input matInput
-      type="text"
-      name="testerIncharge"
-      disabled
-      > Manager1
-    </mat-form-field>
-
-  </form>
 </div>
 
 <div mat-dialog-actions class="floatRight">
   <button mat-button (click)="onClose()">Close</button>
   <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
 </div>
+</form>

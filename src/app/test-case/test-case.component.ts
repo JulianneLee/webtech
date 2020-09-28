@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { User, TestCenter, PatientTest } from '../app-model'
+import { User, PatientTest } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -23,15 +23,15 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
 
-  tests: PatientTest[] = this.appService.getPatientTest();
+  tests: PatientTest[] = [];
   displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
-  dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
+  dataTestCase = new MatTableDataSource<PatientTest>();
   @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
   @ViewChild('table1', {read: MatSort, static: true}) sort: MatSort;
 
-  patients: User[] = this.appService.getPatients();
+  patients: User[] = [];
   displayedPatientCol: string[] = ['patientID', 'name', 'username'];
-  dataPatient = new MatTableDataSource<User>(this.patients);
+  dataPatient = new MatTableDataSource<User>();
   @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
   @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
 
@@ -49,6 +49,14 @@ export class TestCaseComponent implements AfterViewInit {
     ) {}
 
   ngOnInit(){
+    this.tests = this.appService.getPatientTest();
+    this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
+
+
+    this.patients = this.appService.getPatients();
+    this.dataPatient = new MatTableDataSource<User>(this.patients);
+
+
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
   }
 
@@ -72,12 +80,12 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  openDialogEdit(): void {
+  openDialogEdit(id): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
-      width: '100%',
-      // data: {name: this.name, animal: this.animal}
-    });
 
+      width: '100%',
+    });
+    dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });

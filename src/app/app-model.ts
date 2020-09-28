@@ -4,26 +4,28 @@ export class User {
   password: string;
   name: string;
   position: string;
-  centerID: string;
+  centerID: number;
 }
 
 export interface TestCase {
-  testID: string;
-  patientID: string;
+  testID: number;
+  patientID: number;
   type: string;
   symptom: string;
-  officerID: string;
+  officerID: number;
   testCreated: string;
   status: string;
+  result: string;
+  resultCreated: string;
 }
 
 export interface TestCenter {
-  centerID: string;
+  centerID: number;
   name: string;
 }
 
 export interface PatientTest {
-  testID: string;
+  testID: number;
   name: string;
   type: string;
   symptom: string;

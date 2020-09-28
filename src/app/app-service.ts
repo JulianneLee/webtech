@@ -13,12 +13,12 @@ export class AppService {
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
     this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
-    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', '1');
+    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', 1);
     this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
     this.addTestCenter('Center 1');
     // this.setCurrentUserID(1); //admin
-    this.setCurrentUserID(2); //manager
-    // this.setCurrentUserID(3); //tester
+    // this.setCurrentUserID(2); //manager
+    this.setCurrentUserID(3); //tester
     // this.setCurrentUserID(4); //patient
   }
 
@@ -50,13 +50,18 @@ export class AppService {
     return this.users.filter(x => x.position == 'Patient');
   }
 
+  //get user by id
+  getUserByID(id:number){
+    return this.users.find(x => x.userID == id).name
+  }
+
   // get all users
   getUsers(){
     return this.users;
   }
 
   // add user
-  addUser(username:string, password:string, name:string, position:string, centerID:string){
+  addUser(username:string, password:string, name:string, position:string, centerID:number){
     const user: model.User = {
       userID:(this.getUsers().length + 1),
       username:username,
@@ -76,7 +81,7 @@ export class AppService {
   // add test center
   addTestCenter(name:string){
     const testCenter: model.TestCenter = {
-      centerID:(this.getTestCenter().length + 1).toString(),
+      centerID:this.getTestCenter().length + 1,
       name:name
     };
     this.testCenters.push(testCenter);
@@ -88,16 +93,16 @@ export class AppService {
   }
 
   // add test case
-  addTest(patientID:string, type:string, symptom:string, officerID:string){
-    const test: model.TestCase = {testID:(this.getTests().length + 1).toString(),
+  addTest(patientID:number, type:string, symptom:string, officerID:number){
+    const test: model.TestCase = {testID:this.getTests().length + 1,
       patientID:patientID, type:type, symptom:symptom, officerID:officerID,
-      testCreated: new Date().toString(), status: 'Pending'}
+      testCreated: new Date().toString(), status: 'Pending', result:null, resultCreated:null}
     this.testCases.push(test);
   }
 
   // get test case by id
-  getTestByID(id:string){
-    return this.testCases.filter(s => s.testID == id);
+  getTestByID(id:number){
+    return this.testCases.find(s => s.testID == id);
   }
 
   // return list of joined tables on test case and user
@@ -107,10 +112,20 @@ export class AppService {
     let patientTest = [];
 
     for(let i = 0; i < tests.length; i++){
-      let pName = patients.find(x => x.userID.toString() == tests[i].patientID).name;
+      let pName = patients.find(x => x.userID == tests[i].patientID).name;
       patientTest.push({testID:tests[i].testID, name:pName, type:tests[i].type,
         symptom:tests[i].symptom, testCreated:tests[i].testCreated, status:tests[i].status})
     }
     return patientTest;
+  }
+
+  updateTest(id:number, result:string, status:string, resultCreated:string,
+    type:string, symptom:string){
+    let upTest = this.getTestByID(id);
+    upTest.status = status;
+    upTest.resultCreated = resultCreated;
+    upTest.result = result;
+    upTest.type = type;
+    upTest.symptom = symptom;
   }
 }

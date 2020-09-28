@@ -84,11 +84,11 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDialogEdit()">
+              <button mat-menu-item (click)="openDialogEdit(element.testID)">
                 <mat-icon>edit</mat-icon>
                 <span>Edit Info</span>
               </button>

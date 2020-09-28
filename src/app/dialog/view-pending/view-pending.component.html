@@ -14,7 +14,18 @@
 
     <mat-form-field>
       <mat-label>Patient Type</mat-label>
-      <input readonly value="Suspected" matInput type="text">
+      <mat-select
+      required
+      name="type"
+      ngModel>
+        <!-- <mat-option selected
+        value="{{}}"> {{  }}</mat-option>
+        <mat-option value="Returnee">Returnee</mat-option>
+        <mat-option value="Quarantined">Quarantined</mat-option>
+        <mat-option value="Close Contact">Close Contact</mat-option>
+        <mat-option value="Infected">Infected</mat-option>
+        <mat-option value="Suspected">Suspected</mat-option>-->
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>

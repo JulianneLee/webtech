@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppService } from '../../app-service'
 import { User } from '../../app-model'
 
+
+
 @Component({
   selector: 'dialog-add-patient',
   templateUrl: 'add-test.component.html',
@@ -11,6 +13,7 @@ import { User } from '../../app-model'
 
 export class AddTestDialog {
   patients: User [] = [];
+
   constructor(
     public appService: AppService,
     public dialogRef: MatDialogRef<AddTestDialog>){}
@@ -20,7 +23,8 @@ export class AddTestDialog {
   }
 
   ngOnInit(){
-    this.patients = this.appService.getPatients()
+    this.patients = this.appService.getPatients();
+
   }
 
   onAddTest(form: NgForm){
@@ -29,9 +33,12 @@ export class AddTestDialog {
         form.value.patientID,
         form.value.type,
         form.value.symptom,
-        this.appService.getCurrentUser() ? this.appService.getCurrentUser().userID.toString() : null
+        this.appService.getCurrentUser() ? this.appService.getCurrentUser().userID : null
         );
       this.dialogRef.close();
     }
   }
+
+
+
 }

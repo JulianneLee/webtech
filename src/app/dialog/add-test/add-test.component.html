@@ -6,9 +6,11 @@
       <mat-select
       required
       name="patientID"
-      ngModel>
+      ngModel
+      #patientID="ngModel">
         <mat-option value="{{ patient.userID }}" *ngFor="let patient of patients"> {{ patient.name }}</mat-option>
       </mat-select>
+      <mat-error *ngIf = "patientID.invalid">Please choose a patient</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -16,15 +18,16 @@
       <mat-select
       required
       name="type"
-      ngModel>
+      ngModel
+      #type="ngModel">
         <mat-option value="Returnee">Returnee</mat-option>
         <mat-option value="Quarantined">Quarantined</mat-option>
         <mat-option value="Close Contact">Close Contact</mat-option>
         <mat-option value="Infected">Infected</mat-option>
         <mat-option value="Suspected">Suspected</mat-option>
       </mat-select>
+      <mat-error *ngIf = "type.invalid">Please choose a type</mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "username.invalid">Please enter a post title</mat-error> -->
 
     <mat-form-field>
       <mat-label>Symptom</mat-label>
@@ -34,11 +37,10 @@
         name="symptom"
         ngModel
         required
-        placeholder="e.g. Description of the sickness"></textarea>
+        placeholder="e.g. Description of the sickness"
+        #symptom="ngModel"></textarea>
+        <mat-error *ngIf = "symptom.invalid">Please enter a post title</mat-error>
     </mat-form-field>
-    <!-- <mat-error *ngIf = "password.invalid">Please enter a post title</mat-error> -->
-
-
 </div>
 
 
