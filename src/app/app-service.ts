@@ -13,7 +13,7 @@ export class AppService {
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
     this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
-    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', null);
+    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', '1');
     this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
     this.addTestCenter('Center 1');
     // this.setCurrentUserID(1); //admin
