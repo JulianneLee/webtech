@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms'
+import { AppService } from './app-service'
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,13 @@ export class AppComponent {
 
   changeTitle(headerTitle): void {
     this.headerTitle = headerTitle;
+  }
+
+  constructor(
+    public appService: AppService
+  ){}
+
+  ngOnInit(){
+    this.appService.addSampleData();
   }
 }

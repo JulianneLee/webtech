@@ -4,34 +4,66 @@ import { Injectable } from '@angular/core';
 @Injectable({providedIn:'root'})
 
 export class AppService {
-  private managers: model.Manager[] = [];
-  private patients: model.Patient[] = [];
+  private users: model.User[] = [];
   private tests: model.Test[] = [];
   private patientTests: model.PatientTest[] = [];
+  private currentUser: model.User;
 
-  getManagers(){
-    return this.managers;
+  addSampleData(){
+    this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
+    this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
+    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', null);
+    this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
   }
 
-  addManager(username:string, password:string, name:string){
-    const manager: model.Manager = {username:username, password:password, name:name, position:'Manager'};
-    this.managers.push(manager);
+  getManagers(){
+    return this.users.filter(x => x.position == 'Manager');
+  }
+
+  getTesters(){
+    return this.users.filter(x => x.position == 'Tester');
   }
 
   getPatients(){
-    return this.patients;
+    return this.users.filter(x => x.position == 'Patient');
   }
 
-  addPatient(username:string, password:string, name:string){
-    const patient: model.Patient = {patientID:(this.getPatients().length+1).toString(), username:username, password:password, name:name};
-    this.patients.push(patient);
+  getCurrentUser(){
+    return this.currentUser;
+  }
+
+  setCurrentUser(userID:number, username:string, password:string, name:string, position:string, centerID:string){
+    this.currentUser = {
+      userID:userID,
+      username:username,
+      password:password,
+      name:name,
+      position:position,
+      centerID:centerID
+    }
+  }
+
+  getUsers(){
+    return this.users;
+  }
+
+  addUser(username:string, password:string, name:string, position:string, centerID:string){
+    const user: model.User = {
+      userID:(this.getUsers().length+1),
+      username:username,
+      password:password,
+      name:name,
+      position:position,
+      centerID:centerID,
+    };
+    this.users.push(user);
   }
 
   getTests(){
     return this.tests;
   }
 
-  addTest(patientID:string, type:string, symptom:string, officerID:string, testCreated: string){
+  addTest(patientID:string, type:string, symptom:string, officerID:string){
     const test: model.Test = {testID:(this.getTests().length+1).toString(), patientID:patientID, type:type, symptom:symptom,
       officerID:officerID, testCreated: new Date().toString(), status: 'Pending'}
     this.tests.push(test);
@@ -48,7 +80,7 @@ export class AppService {
     let i;
 
     for(i=0; i < tests.length; i++){
-      let pName = patients.find(x => x.patientID == tests[i].patientID).name;
+      let pName = patients.find(x => x.userID.toString() == tests[i].patientID).name;
       patientTest.push({testID:tests[i].testID, name:pName, type:tests[i].type,
         symptom:tests[i].symptom, testCreated:tests[i].testCreated, status:tests[i].status})
     }

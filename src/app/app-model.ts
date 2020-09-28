@@ -1,15 +1,10 @@
-export interface Manager {
+export class User {
+  userID: number;
   username: string;
   password: string;
   name: string;
   position: string;
-}
-
-export interface Patient {
-  patientID: string;
-  username: string;
-  password: string;
-  name: string;
+  centerID: string;
 }
 
 export interface Test {

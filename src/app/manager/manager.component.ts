@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service';
-import { Manager } from '../app-model';
+import { User } from '../app-model';
 
 import { AddManagerDialog } from '../dialog/add-manager/add-manager.component';
 
@@ -16,9 +16,9 @@ import { AddManagerDialog } from '../dialog/add-manager/add-manager.component';
 })
 
 export class ManagerComponent implements AfterViewInit {
-  managers: Manager[] = this.appService.getManagers();
-  displayedColumns: string[] = ['password', 'username', 'name', 'position'];
-  dataSource = new MatTableDataSource<Manager>(this.managers);
+  managers: User[] = this.appService.getManagers();
+  displayedColumns: string[] = ['id', 'username', 'name', 'position'];
+  dataSource = new MatTableDataSource<User>(this.managers);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -34,7 +34,7 @@ export class ManagerComponent implements AfterViewInit {
     ) {}
 
   ngOnInit(){
-    this.managers = this.appService.getManagers()
+    this.managers = this.appService.getManagers();
   }
 
   openDialog(): void {
@@ -43,7 +43,7 @@ export class ManagerComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        this.dataSource.data = this.managers;
+        this.dataSource.data = this.appService.getManagers();
     });
   }
 
