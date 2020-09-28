@@ -26,4 +26,8 @@ export class AppComponent {
     this.currentUser = this.appService.getCurrentUser();
     console.log(this.appService.getCurrentUser());
   }
+
+  onLogout(): void {
+    this.appService.logout();
+  }
 }
