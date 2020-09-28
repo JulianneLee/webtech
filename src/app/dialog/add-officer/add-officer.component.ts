@@ -1,6 +1,8 @@
-import {Component, Inject} from '@angular/core';
-
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component } from '@angular/core'
+import { NgForm } from '@angular/forms'
+import { MatDialogRef } from '@angular/material/dialog';
+import { AppService } from '../../app-service'
+import { TestCenter } from '../../app-model'
 
 @Component({
   selector: 'dialog-add-officer',
@@ -8,18 +10,32 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 
 export class AddOfficerDialog {
+  centers: TestCenter [] = [];
   hide = true;
-  constructor(
 
-    public dialogRef: MatDialogRef<AddOfficerDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  constructor(
+    public appService: AppService,
+    public dialogRef: MatDialogRef<AddOfficerDialog>
+  ){}
+
+  ngOnInit(){
+    this.centers = this.appService.getTestCenter()
+  }
 
   onClose(): void {
     this.dialogRef.close();
   }
-}
 
-export interface DialogData {
-  animal: string;
-  name: string;
+  onAddTester(form: NgForm){
+    if(form.valid){
+      this.appService.addUser(
+        form.value.username,
+        form.value.password,
+        form.value.name,
+        'Tester',
+        form.value.centerID
+      )
+      this.dialogRef.close();
+    }
+  }
 }

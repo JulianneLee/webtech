@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
 
+import { AppService } from '../app-service';
+import { TestCenter } from '../app-model';
 import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.component';
 
 @Component({
@@ -13,8 +15,9 @@ import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.c
 })
 
 export class TestCenterComponent implements AfterViewInit {
-  displayedColumns: string[] = ['no', 'name'];
-  dataSource = new MatTableDataSource<TestCenter>(TESTCENTER);
+  testCenters: TestCenter[] = this.appService.getTestCenter();
+  displayedColumns: string[] = ['centerID', 'name'];
+  dataSource = new MatTableDataSource<TestCenter>(this.testCenters);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,10 +27,10 @@ export class TestCenterComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  animal: string;
-  name: string;
-
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public appService: AppService
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddTestCenterDialog, {
@@ -35,12 +38,11 @@ export class TestCenterComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      this.testCenters = this.appService.getTestCenter();
     });
   }
 
-  applyFilterTestCenter(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -49,15 +51,3 @@ export class TestCenterComponent implements AfterViewInit {
     }
   }
 }
-
-export interface TestCenter {
-  no: number;
-  name: string;
-}
-
-const TESTCENTER: TestCenter[] = [
-  {no: 1, name: 'Clinic Tan'},
-  {no: 2, name: 'Ali Baba'},
-  {no: 3, name: 'People Center'},
-];
-

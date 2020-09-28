@@ -9,12 +9,14 @@ import { AppService } from './app-service'
 })
 export class AppComponent {
   title = 'webtech';
-  headerTitle = 'Dashboard';
+  headerTitle = 'CTS';
   mode = new FormControl('push');
   currentUser = null;
+  indexPage = true;
 
   changeTitle(headerTitle): void {
     this.headerTitle = headerTitle;
+    this.indexPage = false;
   }
 
   constructor(

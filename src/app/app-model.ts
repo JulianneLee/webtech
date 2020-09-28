@@ -7,7 +7,7 @@ export class User {
   centerID: string;
 }
 
-export interface Test {
+export interface TestCase {
   testID: string;
   patientID: string;
   type: string;
@@ -15,6 +15,11 @@ export interface Test {
   officerID: string;
   testCreated: string;
   status: string;
+}
+
+export interface TestCenter {
+  centerID: string;
+  name: string;
 }
 
 export interface PatientTest {

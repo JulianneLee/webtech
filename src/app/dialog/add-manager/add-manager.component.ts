@@ -1,7 +1,7 @@
-import {Component, Inject} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AppService } from '../../app-service';
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'dialog-add-manager',
@@ -10,9 +10,11 @@ import {MatDialogRef} from '@angular/material/dialog';
 
 export class AddManagerDialog {
   hide = true;
+
   constructor(
     public appService: AppService,
-    public dialogRef: MatDialogRef<AddManagerDialog>) {}
+    public dialogRef: MatDialogRef<AddManagerDialog>
+  ) {}
 
   onClose(): void {
     this.dialogRef.close();
@@ -20,8 +22,13 @@ export class AddManagerDialog {
 
   onAddManager(form: NgForm){
     if(form.valid){
-      this.appService.addUser(form.value.username, form.value.password, form.value.name, 'Manager', null)
-      // this.appService.addManager(form.value.username, form.value.password, form.value.name);
+      this.appService.addUser(
+        form.value.username,
+        form.value.password,
+        form.value.name,
+        'Manager',
+        null
+      )
       this.dialogRef.close();
     }
   }

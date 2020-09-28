@@ -1,6 +1,7 @@
-import {Component, Inject} from '@angular/core';
-
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component } from '@angular/core'
+import { NgForm } from '@angular/forms'
+import { MatDialogRef } from '@angular/material/dialog';
+import { AppService } from '../../app-service'
 
 @Component({
   selector: 'dialog-add-test-center',
@@ -9,15 +10,18 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export class AddTestCenterDialog {
   constructor(
-    public dialogRef: MatDialogRef<AddTestCenterDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public appService: AppService,
+    public dialogRef: MatDialogRef<AddTestCenterDialog>
+  ){}
 
   onClose(): void {
     this.dialogRef.close();
   }
-}
 
-export interface DialogData {
-  animal: string;
-  name: string;
+  onAddTestCenter(form: NgForm){
+    if(form.valid){
+      this.appService.addTestCenter(form.value.name)
+      this.dialogRef.close();
+    }
+  }
 }

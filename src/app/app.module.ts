@@ -7,6 +7,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { DemoMaterialModule } from './material-module';
 
 import { AppComponent } from './app.component';
+import { IndexComponent } from './index/index.component'
 import { TestCaseComponent } from './test-case/test-case.component'
 import { ManagerComponent } from './manager/manager.component'
 import { TestCenterComponent } from './test-center/test-center.component'
@@ -30,6 +31,7 @@ import { ViewPendingDialog } from './dialog/view-pending/view-pending.component'
   declarations: [
     AppComponent,
     routingComponents,
+    IndexComponent,
     TestCaseComponent,
     ManagerComponent,
     OfficerComponent,

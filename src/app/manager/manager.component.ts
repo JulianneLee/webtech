@@ -7,7 +7,6 @@ import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service';
 import { User } from '../app-model';
-
 import { AddManagerDialog } from '../dialog/add-manager/add-manager.component';
 
 @Component({
@@ -33,10 +32,6 @@ export class ManagerComponent implements AfterViewInit {
     public appService: AppService,
     ) {}
 
-  ngOnInit(){
-    this.managers = this.appService.getManagers();
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(AddManagerDialog, {
       width: '300px',
@@ -47,8 +42,7 @@ export class ManagerComponent implements AfterViewInit {
     });
   }
 
-
-  applyFilterManager(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 

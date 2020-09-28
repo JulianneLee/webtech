@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav [mode]="mode.value" class="nav-side">
     <div class="logo"><span class="material-icons big-icon">local_hospital</span><p class="brand">CTS</p></div>
     <div *ngIf="currentUser.position == 'Tester'">
-      <a routerLink="/testcase" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Case')"><span class="material-icons">list_alt</span>Test Case</a>
+      <a routerLink="/testcase" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Case');"><span class="material-icons">list_alt</span>Test Case</a>
     </div>
     <div *ngIf="currentUser.position == 'Admin'">
       <a routerLink="/manager" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Manager')"><span class="material-icons">supervisor_account</span>Manager</a>
@@ -37,6 +37,9 @@
     <mat-sidenav-container class="nav-container">
 
       <mat-sidenav-content>
+        <div *ngIf="indexPage">
+          <app-index></app-index>
+        </div>
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>

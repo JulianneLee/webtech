@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { User, Test, PatientTest } from '../app-model'
+import { User, TestCenter, PatientTest } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -25,7 +25,7 @@ export class TestCaseComponent implements AfterViewInit {
 
   tests: PatientTest[] = this.appService.getPatientTest();
   // tests: Test[] = this.appService.getTests();
-  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
+  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
   dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
   @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
   @ViewChild('table1', {read: MatSort, static: true}) sort: MatSort;
