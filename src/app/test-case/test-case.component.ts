@@ -24,7 +24,6 @@ export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
 
   tests: PatientTest[] = this.appService.getPatientTest();
-  // tests: Test[] = this.appService.getTests();
   displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
   dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
   @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
@@ -50,8 +49,6 @@ export class TestCaseComponent implements AfterViewInit {
     ) {}
 
   ngOnInit(){
-    this.patients = this.appService.getPatients();
-    this.tests = this.appService.getPatientTest();
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
   }
 
@@ -89,7 +86,6 @@ export class TestCaseComponent implements AfterViewInit {
   openDialogUpdateTest(): void {
     const dialogRef = this.dialog.open(UpdateTestDialog, {
       width: '100%',
-      height: '60%',
       // data: {name: this.name, animal: this.animal}
     });
 

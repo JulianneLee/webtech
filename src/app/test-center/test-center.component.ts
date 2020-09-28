@@ -38,7 +38,7 @@ export class TestCenterComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.testCenters = this.appService.getTestCenter();
+      this.dataSource.data = this.appService.getTestCenter();
     });
   }
 
