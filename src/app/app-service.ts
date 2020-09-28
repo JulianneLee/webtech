@@ -103,7 +103,7 @@ export class AppService {
 
   // get test kit stock by id
   getTestKitStockById(id:number){
-    return this.testKits.find(x => x.kitID == id).stock;
+    return this.testKits.find(x => x.kitID == id);
   }
 
   // get all test kits that have active status with center name
@@ -160,6 +160,7 @@ export class AppService {
     return patientTest;
   }
 
+  //
   updateTest(id:number, result:string, status:string, resultCreated:string,
     type:string, symptom:string){
     let upTest = this.getTestByID(id);

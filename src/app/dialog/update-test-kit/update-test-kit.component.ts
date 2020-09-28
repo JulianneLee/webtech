@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
+import { TestKit } from 'src/app/app-model';
 import { AppService } from '../../app-service'
 
 @Component({
@@ -10,7 +11,8 @@ import { AppService } from '../../app-service'
 
 export class UpdateTestKitDialog {
   testKitID:number = 0;
-  stock:number = 0;
+  testKit: TestKit;
+  // stock:number = 0;
 
   constructor(
     public appService: AppService,
@@ -18,7 +20,8 @@ export class UpdateTestKitDialog {
   ){}
 
   ngOnInit(){
-    this.stock = this.appService.getTestKitStockById(this.testKitID);
+    this.testKit = this.appService.getTestKitStockById(this.testKitID);
+
   }
 
   onClose(): void {
@@ -30,5 +33,6 @@ export class UpdateTestKitDialog {
       this.appService.updateTestKit(this.testKitID, form.value.stock);
       this.dialogRef.close();
     }
+
   }
 }

@@ -3,8 +3,8 @@
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Stock</mat-label>
-      <input matInput type="number" value="{{ stock }}" name="stock" ngModel
-        required min="0" placeholder="Ex. 10" #stock="ngModel">
+      <input matInput type="number" [(ngModel)]="testKit.stock"
+        required min="0" placeholder="Ex. 10" #stock="ngModel" name="stock">
       <mat-error *ngIf="stock.invalid">Please enter stock number</mat-error>
     </mat-form-field>
   </div>
