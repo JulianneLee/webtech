@@ -13,15 +13,6 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Patient ID</mat-label>
-      <input matInput
-      type="text"
-      name="patientID"
-      value="{{ testCase.patientID }}"
-      readonly>
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>Patient Name</mat-label>
       <input matInput
       type="text"
@@ -32,8 +23,11 @@
 
     <mat-form-field>
       <mat-label>Patient Type</mat-label>
-      <mat-select [(value)]="selectedType" required>
-        <mat-option [value]="option.value" *ngFor="let option of type">{{ option.viewValue }}</mat-option>
+      <mat-select [(value)]="selectedType"
+      required name="type"
+      [(ngModel)]="selectedType">
+        <mat-option [value]="option.value"
+        *ngFor="let option of type">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -41,11 +35,11 @@
       <mat-label>Symptom</mat-label>
       <textarea
         matInput
-        row="4"
+        rows="4"
         name="symptom"
-        ngModel
+        [(ngModel)]="testCase.symptom"
         required
-        placeholder="e.g. Description of the sickness">{{ testCase.symptom }}</textarea>
+        placeholder="e.g. Description of the sickness"></textarea>
     </mat-form-field>
 
     <mat-form-field>

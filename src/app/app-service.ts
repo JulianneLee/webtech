@@ -168,5 +168,7 @@ export class AppService {
     upTest.result = result;
     upTest.type = type;
     upTest.symptom = symptom;
+
+    return upTest;
   }
 }

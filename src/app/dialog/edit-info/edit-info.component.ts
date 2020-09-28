@@ -28,10 +28,8 @@ export class EditInfoDialog {
     public appService: AppService) {}
 
 
-    onClose(): void {
+  onClose(): void {
     this.dialogRef.close();
-    //console.log(this.appService.getTestByID(this.testID));
-
   }
 
   ngOnInit(){
@@ -39,11 +37,27 @@ export class EditInfoDialog {
     this.user = this.appService.getUserByID(this.testCase.patientID);
     this.tester = this.appService.getUserByID(this.testCase.officerID);
 
+    console.log(this.testCase.symptom)
     this.selectedType = this.testCase.type;
   }
 
-  editInfo(){
-
+  editInfo(form: NgForm){
+    if(form.valid){
+      this.appService.updateTest(
+        this.testID,
+        null,
+        this.testCase.status,
+        null,
+        form.value.type ? form.value.type:this.testCase.type,
+        form.value.symptom);
+      this.dialogRef.close();
+    }
+    // console.log(this.appService.updateTest(this.testID,
+    //   null,
+    //   this.testCase.status,
+    //   null,
+    //   form.value.type ? form.value.type:this.testCase.type,
+    //   form.value.symptom));
   }
 
   type: Type[] = [

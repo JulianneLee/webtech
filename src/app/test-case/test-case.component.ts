@@ -82,12 +82,11 @@ export class TestCaseComponent implements AfterViewInit {
 
   openDialogEdit(id): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
-
       width: '100%',
     });
     dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.dataTestCase.data = this.appService.getPatientTest();
     });
   }
 
