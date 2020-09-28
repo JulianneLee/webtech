@@ -7,13 +7,17 @@ export class AppService {
   private users: model.User[] = [];
   private tests: model.Test[] = [];
   private patientTests: model.PatientTest[] = [];
-  private currentUser: model.User;
+  private currentUserID;
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
     this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
     this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', null);
     this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
+    this.setCurrentUserID(1); //admin
+    // this.setCurrentUserID(2); //manager
+    // this.setCurrentUserID(3); //tester
+    // this.setCurrentUserID(4); //patient
   }
 
   getManagers(){
@@ -29,18 +33,15 @@ export class AppService {
   }
 
   getCurrentUser(){
-    return this.currentUser;
+    return this.users.find(x => x.userID == this.currentUserID);
   }
 
-  setCurrentUser(userID:number, username:string, password:string, name:string, position:string, centerID:string){
-    this.currentUser = {
-      userID:userID,
-      username:username,
-      password:password,
-      name:name,
-      position:position,
-      centerID:centerID
-    }
+  setCurrentUserID(userID:number){
+    this.currentUserID = userID
+  }
+
+  logout(){
+    this.currentUserID = null;
   }
 
   getUsers(){

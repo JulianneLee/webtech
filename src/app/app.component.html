@@ -1,17 +1,22 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav [mode]="mode.value" class="nav-side">
     <div class="logo"><span class="material-icons big-icon">local_hospital</span><p class="brand">CTS</p></div>
-    <a routerLink="/testcase" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Case')"><span class="material-icons">list_alt</span>Test Case</a>
-    <hr>
-    <a routerLink="/manager" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Manager')"><span class="material-icons">supervisor_account</span>Manager</a>
-    <a routerLink="/report" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Test Report')"><span class="material-icons">style</span>Test Report</a>
-    <hr>
-    <a routerLink="/officer" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Officer')"><span class="material-icons">supervisor_account</span>Officer</a>
-    <a routerLink="/testcenter" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Center')"><span class="material-icons">store</span>Test Center</a>
-    <a routerLink="/testkit" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Kit')"><span class="material-icons">biotech</span>Test Kit</a>
-    <hr>
-    <a routerLink="/profile" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Profile')"><span class="material-icons">person</span>Profile</a>
-    <a routerLink="/testhistory" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('View Test')"><span class="material-icons">history</span>View Test</a>
+    <div *ngIf="currentUser.position == 'Tester'">
+      <a routerLink="/testcase" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Case')"><span class="material-icons">list_alt</span>Test Case</a>
+    </div>
+    <div *ngIf="currentUser.position == 'Admin'">
+      <a routerLink="/manager" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Manager')"><span class="material-icons">supervisor_account</span>Manager</a>
+      <a routerLink="/report" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Test Report')"><span class="material-icons">style</span>Test Report</a>
+    </div>
+    <div *ngIf="currentUser.position == 'Manager'">
+      <a routerLink="/officer" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Officer')"><span class="material-icons">supervisor_account</span>Officer</a>
+      <a routerLink="/testcenter" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Center')"><span class="material-icons">store</span>Test Center</a>
+      <a routerLink="/testkit" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Kit')"><span class="material-icons">biotech</span>Test Kit</a>
+    </div>
+    <div *ngIf="currentUser.position == 'Patient'">
+      <a routerLink="/profile" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Profile')"><span class="material-icons">person</span>Profile</a>
+      <a routerLink="/testhistory" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('View Test')"><span class="material-icons">history</span>View Test</a>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -21,11 +26,11 @@
       </button>
       <a>{{ headerTitle }}</a>
       <span class="nav-fill-remaining-space"></span>
-      <button mat-button color="basic" class="log floatRight">
-        <span class="material-icons">vpn_key</span> Login
+      <button mat-button color="basic" class="log floatRight" *ngIf="currentUser == null">
+        <span class="material-icons">login</span> Login
       </button>
-      <button mat-button color="basic" class="log floatRight">
-        <span class="material-icons">lock</span> Logout
+      <button mat-button color="basic" class="log floatRight" *ngIf="currentUser != null">
+        <span class="material-icons">logout</span> Logout
       </button>
     </div>
 

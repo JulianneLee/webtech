@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'webtech';
   headerTitle = 'Dashboard';
   mode = new FormControl('push');
+  currentUser = null;
 
   changeTitle(headerTitle): void {
     this.headerTitle = headerTitle;
@@ -22,5 +23,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.appService.addSampleData();
+    this.currentUser = this.appService.getCurrentUser();
+    console.log(this.appService.getCurrentUser());
   }
 }
