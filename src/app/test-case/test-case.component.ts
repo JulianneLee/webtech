@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
-import { Patient, PatientTest } from '../app-model'
+import { User, Test, PatientTest } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -25,14 +25,14 @@ export class TestCaseComponent implements AfterViewInit {
 
   tests: PatientTest[] = this.appService.getPatientTest();
   // tests: Test[] = this.appService.getTests();
-  displayedTestCaseCol: string[] = ['no', 'name', 'type', 'symptom', 'status', 'action'];
+  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'symptom', 'status', 'action'];
   dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
+  @ViewChild('table1', {read: MatSort, static: true}) sort: MatSort;
 
-  patients: Patient[] = this.appService.getPatients();
-  displayedPatientCol: string[] = ['no', 'name', 'username'];
-  dataPatient = new MatTableDataSource<Patient>(this.patients);
+  patients: User[] = this.appService.getPatients();
+  displayedPatientCol: string[] = ['patientID', 'name', 'username'];
+  dataPatient = new MatTableDataSource<User>(this.patients);
   @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
   @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
 
@@ -53,8 +53,6 @@ export class TestCaseComponent implements AfterViewInit {
     this.patients = this.appService.getPatients();
     this.tests = this.appService.getPatientTest();
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
-
-    this.appService.addPatient("Lillia", "Lillia12", "Lillia")
   }
 
   openDialogPatient(): void {
@@ -63,7 +61,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataPatient.data = this.patients;
+      this.dataPatient.data = this.appService.getPatients();
     });
   }
 
@@ -73,16 +71,19 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+<<<<<<< HEAD
       this.dataTestCase.data = this.tests;
       console.log(this.appService.getPatientTest());
       console.log(this.dataTestCase);
+=======
+      this.dataTestCase.data = this.appService.getPatientTest();
+>>>>>>> ab755cce17e92262a2ff08183eac13ddce23aa2c
     });
   }
 
   openDialogEdit(): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
       width: '100%',
-      height: '60%',
       // data: {name: this.name, animal: this.animal}
     });
 

@@ -20,7 +20,7 @@ export class AddPatientDialog {
 
   onAddPatient(form: NgForm){
     if(form.valid){
-      this.appService.addPatient(form.value.username, form.value.password, form.value.name);
+      this.appService.addUser(form.value.username, form.value.password, form.value.name, 'Patient', null);
       this.dialogRef.close();
     }
   }
