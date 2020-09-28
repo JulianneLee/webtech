@@ -128,12 +128,13 @@ export class AppService {
 
   // update test kit
   updateTestKit(id:number, stock:number){
-    this.testKits.find(x => x.kitID == id)
+    return this.testKits.find(x => x.kitID == id).stock = stock;
   }
 
   // delete test kit
   deleteTestKit(id:number){
-    return this.testKits.splice(this.testKits.findIndex(x => x.kitID == id), 1);
+    return this.testKits.find(x => x.kitID == id).status = 'Deleted';
+    // return this.testKits.splice(this.testKits.findIndex(x => x.kitID == id), 1);
   }
 
   // get test case by id

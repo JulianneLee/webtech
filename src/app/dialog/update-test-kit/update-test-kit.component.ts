@@ -9,8 +9,8 @@ import { AppService } from '../../app-service'
 })
 
 export class UpdateTestKitDialog {
-  testKitID = 0;
-  stock = 0;
+  testKitID:number = 0;
+  stock:number = 0;
 
   constructor(
     public appService: AppService,
