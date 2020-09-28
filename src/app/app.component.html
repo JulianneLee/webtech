@@ -9,7 +9,7 @@
       <a routerLink="/report" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Test Report')"><span class="material-icons">style</span>Test Report</a>
     </div>
     <div *ngIf="currentUser.position == 'Manager'">
-      <a routerLink="/officer" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Officer')"><span class="material-icons">supervisor_account</span>Officer</a>
+      <a routerLink="/officer" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Tester')"><span class="material-icons">supervisor_account</span>Tester</a>
       <a routerLink="/testcenter" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Center')"><span class="material-icons">store</span>Test Center</a>
       <a routerLink="/testkit" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Kit')"><span class="material-icons">biotech</span>Test Kit</a>
     </div>

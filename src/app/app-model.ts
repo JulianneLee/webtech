@@ -7,7 +7,7 @@ export class User {
   centerID: string;
 }
 
-export interface TestCase {
+export class TestCase {
   testID: string;
   patientID: string;
   type: string;
@@ -17,9 +17,17 @@ export interface TestCase {
   status: string;
 }
 
-export interface TestCenter {
+export class TestCenter {
   centerID: string;
   name: string;
+}
+
+export class TestKit {
+  kitID: number;
+  name: string;
+  stock: number;
+  status: string;
+  centerID: number;
 }
 
 export interface PatientTest {
@@ -29,4 +37,11 @@ export interface PatientTest {
   symptom: string;
   testCreated: string;
   status: string;
+}
+
+export interface TestKitViewModel {
+  kitID: number;
+  name: string;
+  stock: number;
+  centerName: string;
 }

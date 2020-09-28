@@ -1,6 +1,7 @@
-import {Component, Inject} from '@angular/core';
-
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component } from '@angular/core'
+import { NgForm } from '@angular/forms'
+import { MatDialogRef } from '@angular/material/dialog';
+import { AppService } from '../../app-service'
 
 @Component({
   selector: 'dialog-update-test-kit',
@@ -8,16 +9,26 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 
 export class UpdateTestKitDialog {
+  testKitID = 0;
+  stock = 0;
+
   constructor(
-    public dialogRef: MatDialogRef<UpdateTestKitDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public appService: AppService,
+    public dialogRef: MatDialogRef<UpdateTestKitDialog>
+  ){}
+
+  ngOnInit(){
+    this.stock = this.appService.getTestKitStockById(this.testKitID);
+  }
 
   onClose(): void {
     this.dialogRef.close();
   }
-}
 
-export interface DialogData {
-  animal: string;
-  name: string;
+  onUpdateTestKit(form: NgForm){
+    if(form.valid){
+      this.appService.updateTestKit(this.testKitID, form.value.stock);
+      this.dialogRef.close();
+    }
+  }
 }
