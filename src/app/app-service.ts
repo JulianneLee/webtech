@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 export class AppService {
   private users: model.User[] = [];
   private testCases: model.TestCase[] = [];
-  private patientTests: model.PatientTest[] = [];
   private testCenters: model.TestCenter[] = [];
-  private currentUserID;
+  private testKits: model.TestKit[] = [];
+  private currentUserID = null;
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
@@ -63,12 +63,8 @@ export class AppService {
   // add user
   addUser(username:string, password:string, name:string, position:string, centerID:number){
     const user: model.User = {
-      userID:(this.getUsers().length + 1),
-      username:username,
-      password:password,
-      name:name,
-      position:position,
-      centerID:centerID,
+      userID:(this.getUsers().length + 1), username:username, password:password,
+      name:name, position:position, centerID:centerID,
     };
     this.users.push(user);
   }
@@ -98,6 +94,51 @@ export class AppService {
       patientID:patientID, type:type, symptom:symptom, officerID:officerID,
       testCreated: new Date().toString(), status: 'Pending', result:null, resultCreated:null}
     this.testCases.push(test);
+  }
+
+  // get all test kits
+  getTestKit(){
+    return this.testKits;
+  }
+
+  // get test kit stock by id
+  getTestKitStockById(id:number){
+    return this.testKits.find(x => x.kitID == id).stock;
+  }
+
+  // get all test kits that have active status with center name
+  getTestKitCenter(){
+    let kit = this.getTestKit().filter(x => x.status == 'Active');
+    let center = this.getTestCenter();
+    let kitCenter = [];
+
+    for(let i = 0; i < kit.length; i++){
+      let centerName = center.find(x => x.centerID == kit[i].centerID).name;
+      kitCenter.push({
+        kitID:kit[i].kitID, name:kit[i].name, stock:kit[i].stock, centerName:centerName
+      })
+    }
+    return kitCenter;
+  }
+
+  // add test kits
+  addTestKit(name:string, stock:number, centerID:number){
+    const testKit: model.TestKit = {
+      kitID: this.getTestKit().length + 1,
+      name:name, stock:stock, centerID:centerID, status:'Active'
+    }
+    this.testKits.push(testKit);
+  }
+
+  // update test kit
+  updateTestKit(id:number, stock:number){
+    return this.testKits.find(x => x.kitID == id).stock = stock;
+  }
+
+  // delete test kit
+  deleteTestKit(id:number){
+    return this.testKits.find(x => x.kitID == id).status = 'Deleted';
+    // return this.testKits.splice(this.testKits.findIndex(x => x.kitID == id), 1);
   }
 
   // get test case by id

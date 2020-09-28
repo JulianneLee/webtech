@@ -1,22 +1,15 @@
 <h1 mat-dialog-title>Update Stock</h1>
-
-<div mat-dialog-content>
-  <form>
+<form (submit)="onUpdateTestKit(updateTestKitForm)" #updateTestKitForm="ngForm">
+  <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Stock</mat-label>
-      <input matInput
-        type="number"
-        name="stock"
-        ngModel
-        required
-        min="0"
-        placeholder="Ex. 10">
+      <input matInput type="number" value="{{ stock }}" name="stock" ngModel
+        required min="0" placeholder="Ex. 10" #stock="ngModel">
+      <mat-error *ngIf="stock.invalid">Please enter stock number</mat-error>
     </mat-form-field>
-  </form>
-</div>
-
-<div mat-dialog-actions class="floatRight">
-  <button mat-button (click)="onClose()">Close</button>
-  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
-</div>
-
+  </div>
+  <div mat-dialog-actions class="floatRight">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+  </div>
+</form>

@@ -24,6 +24,14 @@ export interface TestCenter {
   name: string;
 }
 
+export class TestKit {
+  kitID: number;
+  name: string;
+  stock: number;
+  status: string;
+  centerID: number;
+}
+
 export interface PatientTest {
   testID: number;
   name: string;
@@ -31,4 +39,11 @@ export interface PatientTest {
   symptom: string;
   testCreated: string;
   status: string;
+}
+
+export interface TestKitViewModel {
+  kitID: number;
+  name: string;
+  stock: number;
+  centerName: string;
 }

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
 
+import { AppService } from '../app-service';
+import { TestKitViewModel } from '../app-model';
 import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
 import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.component';
 
@@ -14,8 +16,9 @@ import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.c
 })
 
 export class TestKitComponent implements AfterViewInit {
-  displayedColumns: string[] = ['no', 'kitID', 'name', 'stock', 'action'];
-  dataSource = new MatTableDataSource<TestKit>(TESTKIT);
+  testCenters: TestKitViewModel[] = this.appService.getTestKitCenter();
+  displayedColumns: string[] = ['kitID', 'name', 'stock', 'centerName', 'action'];
+  dataSource = new MatTableDataSource<TestKitViewModel>(this.testCenters);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,27 +28,39 @@ export class TestKitComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  animal: string;
-  name: string;
-
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public appService: AppService
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddTestKitDialog, {
       width: '300px',
     });
-  }
 
-  openDialogUpdate(): void {
-    const dialogRef = this.dialog.open(UpdateTestKitDialog, {
-      width: '300px',
+    dialogRef.afterClosed().subscribe(result => {
+      this.dataSource.data = this.appService.getTestKitCenter();
     });
   }
 
-  onDelete(): void {
+  openDialogUpdate(id:number): void {
+    const dialogRef = this.dialog.open(UpdateTestKitDialog, {
+      width: '300px',
+    });
+
+    dialogRef.componentInstance.testKitID = id;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.dataSource.data = this.appService.getTestKitCenter();
+    });
   }
 
-  applyFilterTestKit(event: Event) {
+  onDelete(id:number): void {
+    if(this.appService.deleteTestKit(id))
+      this.dataSource.data = this.appService.getTestKitCenter();
+  }
+
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -54,17 +69,3 @@ export class TestKitComponent implements AfterViewInit {
     }
   }
 }
-
-export interface TestKit {
-  no: number;
-  name: string;
-  kitID: string;
-  stock: number;
-}
-
-const TESTKIT: TestKit[] = [
-  {no: 1, kitID: 'KIT001', name: 'KIT 1', stock: 773},
-  {no: 2, kitID: 'KIT332', name: 'KIT 2', stock: 345},
-  {no: 3, kitID: 'KIT052', name: 'KIT 3', stock: 523},
-];
-

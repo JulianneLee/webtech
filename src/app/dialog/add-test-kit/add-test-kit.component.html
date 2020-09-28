@@ -1,38 +1,28 @@
 <h1 mat-dialog-title>Add Test Kit</h1>
-
-<div mat-dialog-content>
-  <form>
+<form (submit)="onAddTestKit(addTestKitForm)" #addTestKitForm="ngForm">
+  <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Test Center</mat-label>
-      <mat-select required>
-        <mat-option value="">Test Center 1</mat-option>
-        <mat-option value="">Test Center 2</mat-option>
+      <mat-select mat-select required name="centerID" ngModel #centerID="ngModel">
+        <mat-option value="{{ center.centerID }}" *ngFor="let center of centers">
+          {{ center.name }}
+        </mat-option>
       </mat-select>
+      <mat-error *ngIf="centerID.invalid">Please select test center</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput
-        type="text"
-        name="name"
-        ngModel
-        required
-        placeholder="Name">
+      <input matInput type="text" name="name" ngModel required placeholder="Name" #name="ngModel">
+      <mat-error *ngIf="name.invalid">Please enter name</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Stock</mat-label>
-      <input matInput
-        type="number"
-        name="stock"
-        ngModel
-        required
-        min="0"
-        placeholder="Ex. 10">
+      <input matInput type="number" name="stock" ngModel required min="0"
+        placeholder="Ex. 10" #stock="ngModel">
+      <mat-error *ngIf="stock.invalid">Please enter stock number</mat-error>
     </mat-form-field>
-  </form>
-</div>
-
-<div mat-dialog-actions class="floatRight">
-  <button mat-button (click)="onClose()">Close</button>
-  <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
-</div>
-
+  </div>
+  <div mat-dialog-actions class="floatRight">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-button mat-raised-button color="accent" cdkFocusInitial type="submit">Add</button>
+  </div>
+</form>
