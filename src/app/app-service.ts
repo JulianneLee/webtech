@@ -19,7 +19,7 @@ export class AppService {
     // this.setCurrentUserID(1); //admin
     // this.setCurrentUserID(2); //manager
     // this.setCurrentUserID(3); //tester
-    this.setCurrentUserID(4); //patient
+    // this.setCurrentUserID(4); //patient
     this.addTest(4, 'Suspected', 'flu', 3);
     this.addTest(4, 'Close Contact', 'fever', 3);
 
@@ -35,6 +35,17 @@ export class AppService {
   // set current login user ID
   setCurrentUserID(userID:number){
     this.currentUserID = userID
+  }
+
+  getUserLogin(username: string, password: string){
+    let user: model.User;
+    user = this.users.find(x => x.username == username && x.password == password);
+
+    if(user){
+      this.setCurrentUserID(user.userID);
+    }
+
+    return user;
   }
 
   // logout

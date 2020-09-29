@@ -26,7 +26,7 @@ import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
 import { UpdateTestDialog } from './dialog/update-test/update-test.component'
 import { TestHistoryComponent } from './test-history/test-history.component'
 import { ViewTestResultDialog } from './dialog/view-test-result/view-test-result.component'
-
+import { LoginComponent } from './dialog/login/login.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +49,7 @@ import { ViewTestResultDialog } from './dialog/view-test-result/view-test-result
     UpdateTestDialog,
     TestHistoryComponent,
     ViewTestResultDialog,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

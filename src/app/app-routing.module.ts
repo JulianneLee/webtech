@@ -7,6 +7,7 @@ import { TestKitComponent } from './test-kit/test-kit.component'
 import { TestCenterComponent } from './test-center/test-center.component'
 import { ReportComponent } from './report/report.component'
 import { TestHistoryComponent } from './test-history/test-history.component'
+import { IndexComponent } from './index/index.component'
 
 const routes: Routes = [
   { path: 'testcase', component: TestCaseComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'testcenter', component: TestCenterComponent},
   { path: 'report', component: ReportComponent},
   { path: 'testhistory', component: TestHistoryComponent},
+  { path: 'index', component: IndexComponent },
 ];
 
 @NgModule({
@@ -39,4 +41,5 @@ export const routingComponents = [
   TestKitComponent,
   TestCenterComponent,
   ReportComponent,
+  IndexComponent,
 ]
