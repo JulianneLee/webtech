@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AppService } from './app-service'
@@ -17,11 +17,9 @@ export class AppComponent {
   headerTitle = 'CTS';
   mode = new FormControl('push');
   currentUser = null;
-  indexPage = true;
 
-  changeTitle(headerTitle): void {
+  changeTitle(headerTitle:string): void {
     this.headerTitle = headerTitle;
-    this.indexPage = false;
   }
 
   constructor(
@@ -34,15 +32,17 @@ export class AppComponent {
   ngOnInit(){
     this.appService.addSampleData();
     this.currentUser = this.appService.getCurrentUser();
+    this.router.navigate(['/index']);
   }
 
   openDialogLogin(){
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '400px',
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.currentUser = this.appService.getCurrentUser();
+      this.headerTitle = "Home";
     });
   }
 
@@ -50,6 +50,7 @@ export class AppComponent {
     this.appService.logout();
     this.currentUser = this.appService.getCurrentUser();
     this.snackBar.open("You have logged out.", "close", {duration: 2000,});
-    this.router.navigate(['/index'])
+    this.router.navigate(['/index']);
+    this.headerTitle = "Home";
   }
 }

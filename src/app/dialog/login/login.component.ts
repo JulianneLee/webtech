@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { Router, ActivatedRoute } from '@angular/router'
 import { AppService } from '../../app-service'
 import { User } from '../../app-model'
 import { MatDialogRef, MatDialog } from '@angular/material/dialog'
@@ -33,13 +32,14 @@ export class LoginComponent {
     this.user = this.appService.getUserLogin(form.value.username, form.value.password);
     if(form.valid){
       if(this.user){
-        this.snackBar.open("Welcome " + this.user.username, "close", {
-          duration: 2000,
+        this.snackBar.open("Welcome " + this.user.name, "close", {
+          duration: 3000
         });
         this.dialogRef.close();
       } else {
-        this.snackBar.open("Invalid Username or Password! ", "close", {
-          duration: 5000, });
+        this.snackBar.open("Invalid Username or Password!", "close", {
+          duration: 5000
+        });
       }
 
     }

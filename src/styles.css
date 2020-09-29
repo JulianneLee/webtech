@@ -34,3 +34,19 @@ mat-panel-title {
   font-weight: 500;
   font-size: 15px;
 }
+
+.marginTop10 {
+  margin-top: 10px;
+}
+
+.complete{
+  color:green;
+}
+
+.pending{
+  color:blue;
+}
+
+.panel {
+  margin: 10px 20px 0;
+}

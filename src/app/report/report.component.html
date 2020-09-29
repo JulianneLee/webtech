@@ -1,28 +1,36 @@
-<mat-accordion multi = "true">
-  <mat-expansion-panel *ngFor="let report of reports" >
-    <mat-expansion-panel-header>
-      <mat-panel-title>{{ report.centerName }}</mat-panel-title>
-      <mat-panel-description>Created By: {{ report.managerName }}</mat-panel-description>
-    </mat-expansion-panel-header>
+<div class="panel">
+  <mat-accordion multi = "true">
+    <mat-expansion-panel *ngFor="let report of reports" >
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ report.centerName }}</mat-panel-title>
+        <mat-panel-description>Created By: {{ report.managerName }}</mat-panel-description>
+      </mat-expansion-panel-header>
 
-    <div>
-      <table *ngIf="report.testCases">
-        <tr>
-          <th>Test ID</th>
-          <th>Patient</th>
-          <th>Tester</th>
-          <th>Created Date</th>
-          <th>Status</th>
-        </tr>
-        <tr *ngFor="let testCase of report.testCases">
-          <td>{{ testCase.testID }}</td>
-          <td>{{ testCase.patientName }}</td>
-          <td>{{ testCase.officerName }}</td>
-          <td>{{ testCase.testCreated | date : "medium" }}</td>
-          <td>{{ testCase.status }}</td>
-        </tr>
-      </table>
-    </div>
-  </mat-expansion-panel>
-
-</mat-accordion>
+      <div>
+        <table class="mat-table cdk-table" *ngIf="report.testCases">
+          <tr class="mat-row cdk-row">
+            <th class="mat-header-cell cdk-header-cell">Test ID</th>
+            <th class="mat-header-cell cdk-header-cell">Patient</th>
+            <th class="mat-header-cell cdk-header-cell">Tester</th>
+            <th class="mat-header-cell cdk-header-cell">Created Date</th>
+            <th class="mat-header-cell cdk-header-cell">Status</th>
+          </tr>
+          <tr class="mat-row cdk-row" *ngFor="let testCase of report.testCases">
+            <td class="mat-cell cdk-cell">
+              {{ testCase.testID }}</td>
+            <td class="mat-cell cdk-cell">
+              {{ testCase.patientName }}</td>
+            <td class="mat-cell cdk-cell">
+              {{ testCase.officerName }}</td>
+            <td class="mat-cell cdk-cell">
+              {{ testCase.testCreated | date : "medium" }}</td>
+            <td class="mat-cell cdk-cell"
+              [ngClass]="{'complete' : testCase.status === 'Completed',
+                          'pending' : testCase.status === 'Pending'}">
+              {{ testCase.status }}</td>
+          </tr>
+        </table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
