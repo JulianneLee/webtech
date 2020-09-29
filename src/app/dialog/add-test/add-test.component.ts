@@ -36,6 +36,7 @@ export class AddTestDialog {
         this.appService.getCurrentUser() ? this.appService.getCurrentUser().userID : null
         );
       this.dialogRef.close();
+
     }
   }
 

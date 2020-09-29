@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog'
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog'
 import { MatSort } from '@angular/material/sort'
 
 import { AppService } from '../app-service'
@@ -80,7 +80,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  openDialogEdit(id): void {
+  openDialogEdit(id:number): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
       width: '100%',
     });
@@ -90,14 +90,13 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  openDialogUpdateTest(): void {
+  openDialogUpdateTest(id:number): void {
     const dialogRef = this.dialog.open(UpdateTestDialog, {
-      width: '100%',
-      // data: {name: this.name, animal: this.animal}
+      width: '400px',
     });
-
+    dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.dataTestCase.data = this.appService.getPatientTest();
     });
   }
 

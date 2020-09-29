@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<hr style="margin-bottom: 20px;" >
+<div mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Test ID</mat-label>
+      <input matInput
+      readonly
+      name="testID"
+      value="{{ testCase.testID }}"
+      type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Test Created</mat-label>
+      <input matInput
+        type="text"
+        name="testCreated"
+        readonly
+        value="{{ testCase.testCreated }}">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Patient Type</mat-label>
+      <input matInput
+        type="text"
+        name="type"
+        readonly
+        value="{{ testCase.type }}">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Symptom</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        name="symptom"
+        [(ngModel)]="testCase.symptom"
+        readonly></textarea>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="title.match('Completed Test')">
+      <mat-label>Result</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        name="result"
+        [(ngModel)]="testCase.result"
+        readonly></textarea>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="title.match('Completed Test')">
+      <mat-label>Result Created</mat-label>
+      <input matInput
+        type="text"
+        name="resultCreated"
+        readonly
+        value="{{ testCase.resultCreated }}">
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions class="floatRight">
+  <button mat-raised-button (click)="onClose()">Close</button>
+</div>

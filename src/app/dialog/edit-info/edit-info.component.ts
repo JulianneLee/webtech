@@ -22,6 +22,8 @@ export class EditInfoDialog {
   testCase: TestCase;
   user: string;
   tester: string;
+  date: string;
+
 
   constructor(
     public dialogRef: MatDialogRef<EditInfoDialog>,
@@ -37,7 +39,6 @@ export class EditInfoDialog {
     this.user = this.appService.getUserByID(this.testCase.patientID);
     this.tester = this.appService.getUserByID(this.testCase.officerID);
 
-    console.log(this.testCase.symptom)
     this.selectedType = this.testCase.type;
   }
 
@@ -52,12 +53,8 @@ export class EditInfoDialog {
         form.value.symptom);
       this.dialogRef.close();
     }
-    // console.log(this.appService.updateTest(this.testID,
-    //   null,
-    //   this.testCase.status,
-    //   null,
-    //   form.value.type ? form.value.type:this.testCase.type,
-    //   form.value.symptom));
+    console.log(this.testCase.type)
+    console.log(this.testCase.symptom)
   }
 
   type: Type[] = [

@@ -22,6 +22,9 @@ export class AppService {
     this.addTest(4, 'Suspected', 'flu', 3);
     this.addTest(4, 'Close Contact', 'fever', 3);
     this.addTest(4, 'Suspected', 'flu', 5);
+    this.updateTest(1, 'Required to visit the doctor', 'Completed',
+    new Date().toString(), 'Suspected', 'flu');
+
     this.setCurrentUserID(1); //admin
     // this.setCurrentUserID(2); //manager
     // this.setCurrentUserID(3); //tester
@@ -167,7 +170,7 @@ export class AppService {
     return patientTest;
   }
 
-  //
+  // update test
   updateTest(id:number, result:string, status:string, resultCreated:string,
     type:string, symptom:string){
     let upTest = this.getTestByID(id);
@@ -216,5 +219,13 @@ export class AppService {
       });
     });
     return centerTestCases;
+  }
+
+  getTestPending(){
+    return this.testCases.filter(x => x.status == 'Pending' && x.patientID == this.getCurrentUser().userID);
+  }
+
+  getTestCompleted(){
+    return this.testCases.filter(x => x.status == 'Completed' && x.patientID == this.getCurrentUser().userID);
   }
 }

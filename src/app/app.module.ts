@@ -25,7 +25,7 @@ import { AddOfficerDialog } from './dialog/add-officer/add-officer.component';
 import { EditInfoDialog } from './dialog/edit-info/edit-info.component'
 import { UpdateTestDialog } from './dialog/update-test/update-test.component'
 import { TestHistoryComponent } from './test-history/test-history.component'
-import { ViewPendingDialog } from './dialog/view-pending/view-pending.component'
+import { ViewTestResultDialog } from './dialog/view-test-result/view-test-result.component'
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { ViewPendingDialog } from './dialog/view-pending/view-pending.component'
     EditInfoDialog,
     UpdateTestDialog,
     TestHistoryComponent,
-    ViewPendingDialog,
+    ViewTestResultDialog,
   ],
   imports: [
     BrowserModule,
