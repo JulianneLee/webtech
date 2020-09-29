@@ -11,8 +11,7 @@ import { TestCase } from '../app-model'
 
 @Component({
   selector: 'app-test-history',
-  templateUrl: 'test-history.component.html',
-  styleUrls: ['test-history.component.css'],
+  templateUrl: 'test-history.component.html'
 })
 
 export class TestHistoryComponent implements AfterViewInit{
