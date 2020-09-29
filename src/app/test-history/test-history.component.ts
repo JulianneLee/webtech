@@ -5,7 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 
-import { ViewPendingDialog } from '../dialog/view-pending/view-pending.component'
+import { ViewTestResultDialog } from '../dialog/view-test-result/view-test-result.component'
+import { AppService } from '../app-service'
+import { TestCase } from '../app-model'
 
 @Component({
   selector: 'app-test-history',
@@ -14,13 +16,16 @@ import { ViewPendingDialog } from '../dialog/view-pending/view-pending.component
 })
 
 export class TestHistoryComponent implements AfterViewInit{
-  displayedTestHisPen: string[] = ['no', 'testDate', 'symptom', 'action'];
-  dataTestHisPen = new MatTableDataSource<TestHisPenElement>(TESTHISPEN);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
-  displayedTestHisComp: string[] = ['no', 'testDate', 'symptom', 'action'];
-  dataTestHisComp = new MatTableDataSource<TestHisCompElement>(TESTHISCOMP);
+  testPen: TestCase[] = [];
+  displayedTestHisPen: string[] = ['testID', 'testDate', 'type', 'action'];
+  dataTestHisPen = new MatTableDataSource<TestCase>();
+  @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
+  @ViewChild('table1', {read: MatSort, static: true}) sort: MatSort;
+
+  testComp: TestCase[] = [];
+  displayedTestHisComp: string[] = ['testID', 'testDate', 'type', 'action'];
+  dataTestHisComp = new MatTableDataSource<TestCase>();
   @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
   @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
 
@@ -32,13 +37,23 @@ export class TestHistoryComponent implements AfterViewInit{
     this.dataTestHisComp.paginator = this.additionalPaginator;
   }
 
-  constructor(public dialog: MatDialog) {}
+  ngOnInit(){
+    this.testPen = this.appService.getTestPending();
+    this.dataTestHisPen = new MatTableDataSource<TestCase>(this.testPen);
 
-  openDialogViewPending(): void {
-    const dialogRef = this.dialog.open(ViewPendingDialog, {
-      width: '100%'
+    this.testComp = this.appService.getTestCompleted();
+    this.dataTestHisComp = new MatTableDataSource<TestCase>(this.testComp);
+  }
+
+  constructor(public dialog: MatDialog,
+    public appService: AppService) {}
+
+  openDialogViewPending(id:number): void {
+    const dialogRef = this.dialog.open(ViewTestResultDialog, {
+      width: '500px'
     });
 
+    dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -62,26 +77,3 @@ export class TestHistoryComponent implements AfterViewInit{
     }
   }
 }
-
-export interface TestHisPenElement {
-  no: number;
-  testDate: string;
-  symptom: string;
-}
-
-const TESTHISPEN: TestHisPenElement[] = [
-  {no: 1, testDate: '27/07/2020', symptom: "testing"},
-  {no: 2, testDate: '10/08/2020', symptom: "testing"},
-  {no: 3, testDate: '5/09/2020', symptom: "testing"}
-];
-
-export interface TestHisCompElement {
-  no: number;
-  testDate: string;
-  symptom: string;
-}
-
-const TESTHISCOMP: TestHisCompElement[] = [
-  {no: 1, testDate: '04/07/2020', symptom: "testing"},
-  {no: 2, testDate: '10/09/2020', symptom: "testing"}
-];
