@@ -25,7 +25,7 @@ export class AppService {
     this.updateTest(1, 'Required to visit the doctor', 'Completed',
     new Date().toString(), 'Suspected', 'flu');
 
-    this.setCurrentUserID(1); //admin
+    // this.setCurrentUserID(1); //admin
     // this.setCurrentUserID(2); //manager
     // this.setCurrentUserID(3); //tester
     // this.setCurrentUserID(4); //patient
