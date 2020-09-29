@@ -20,7 +20,7 @@ export class AddTestCenterDialog {
 
   onAddTestCenter(form: NgForm){
     if(form.valid){
-      this.appService.addTestCenter(form.value.name)
+      this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
       this.dialogRef.close();
     }
   }

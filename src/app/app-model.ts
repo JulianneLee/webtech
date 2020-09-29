@@ -22,6 +22,7 @@ export interface TestCase {
 export interface TestCenter {
   centerID: number;
   name: string;
+  managerID: number;
 }
 
 export class TestKit {
@@ -46,4 +47,19 @@ export interface TestKitViewModel {
   name: string;
   stock: number;
   centerName: string;
+}
+
+export interface GenerateReport {
+  centerID: number;
+  centerName: string;
+  managerName: string;
+  testCases: TestCaseViewModel[];
+}
+
+export interface TestCaseViewModel {
+  testID: number;
+  patientName: string;
+  officerName: string;
+  testCreated: string;
+  status: string;
 }

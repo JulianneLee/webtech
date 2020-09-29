@@ -15,10 +15,16 @@ export class AppService {
     this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
     this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', 1);
     this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
-    this.addTestCenter('Center 1');
-    // this.setCurrentUserID(1); //admin
+    this.addUser('tester2', 'tester2', 'Tester 2', 'Tester', 2);
+    this.addUser('manager2', 'manager2', 'Manager 2', 'Manager', null);
+    this.addTestCenter('Center 1', 2);
+    this.addTestCenter('Center 2', 6);
+    this.addTest(4, 'Suspected', 'flu', 3);
+    this.addTest(4, 'Close Contact', 'fever', 3);
+    this.addTest(4, 'Suspected', 'flu', 5);
+    this.setCurrentUserID(1); //admin
     // this.setCurrentUserID(2); //manager
-    this.setCurrentUserID(3); //tester
+    // this.setCurrentUserID(3); //tester
     // this.setCurrentUserID(4); //patient
   }
 
@@ -75,10 +81,11 @@ export class AppService {
   }
 
   // add test center
-  addTestCenter(name:string){
+  addTestCenter(name:string, id:number){
     const testCenter: model.TestCenter = {
       centerID:this.getTestCenter().length + 1,
-      name:name
+      name:name,
+      managerID:id
     };
     this.testCenters.push(testCenter);
   }
@@ -171,5 +178,43 @@ export class AppService {
     upTest.symptom = symptom;
 
     return upTest;
+  }
+
+  // generate report
+  generateReport(){
+    let reports: model.GenerateReport[] = [];
+    let centers = this.testCenters;
+
+    for(let i = 0; i < centers.length; i++){
+      let centerTestCases: model.TestCaseViewModel[]
+        = this.getTestCasesWithCenterID(centers[i].centerID);
+      reports.push({
+        centerID:centers[i].centerID,
+        centerName:centers[i].name,
+        managerName:this.users.find(x => x.userID == centers[i].managerID).name,
+        testCases:centerTestCases
+      })
+    }
+    return reports;
+  }
+
+  // get test cases with center ID
+  getTestCasesWithCenterID(id:number){
+    let officer = this.users.filter(x => x.centerID == id);
+    let centerTestCases:model.TestCaseViewModel[] = [];
+
+    officer.forEach(o => {
+      let testsByTester = this.testCases.filter(x => x.officerID == o.userID);
+      testsByTester.forEach(tc => {
+        centerTestCases.push({
+          testID:tc.testID,
+          patientName:this.users.find(x => x.userID == tc.patientID).name,
+          officerName:o.name,
+          testCreated:tc.testCreated,
+          status:tc.status
+        });
+      });
+    });
+    return centerTestCases;
   }
 }

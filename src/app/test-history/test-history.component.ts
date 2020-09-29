@@ -9,8 +9,7 @@ import { ViewPendingDialog } from '../dialog/view-pending/view-pending.component
 
 @Component({
   selector: 'app-test-history',
-  templateUrl: 'test-history.component.html',
-  styleUrls: ['test-history.component.css'],
+  templateUrl: 'test-history.component.html'
 })
 
 export class TestHistoryComponent implements AfterViewInit{

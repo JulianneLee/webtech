@@ -28,4 +28,8 @@ export class AppComponent {
     this.currentUser = this.appService.getCurrentUser();
     console.log(this.appService.getCurrentUser());
   }
+
+  logout(): void {
+    this.appService.logout();
+  }
 }
