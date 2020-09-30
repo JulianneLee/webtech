@@ -24,10 +24,11 @@
 }
 
 .map {
-  margin-top: 20px;
+  padding-top: 20px;
   text-align: center;
   width: 100%;
   position: fixed;
+  background-color: rgb(247, 247, 247);
 }
 
 .mat-card-title-group {
@@ -42,12 +43,13 @@
 .mat-card-subtitle {
   font-size: 16px;
   color: black;
+  font-style: italic;
 }
 
 .mat-card-title {
-  color: brown;
+  color: rgb(0, 0, 189);
 }
 
 .card {
-  background: #e1e9f7;
+  background: #edf3ff;
 }
