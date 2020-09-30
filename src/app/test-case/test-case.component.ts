@@ -52,10 +52,8 @@ export class TestCaseComponent implements AfterViewInit {
     this.tests = this.appService.getPatientTest();
     this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
 
-
     this.patients = this.appService.getPatients();
     this.dataPatient = new MatTableDataSource<User>(this.patients);
-
 
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
   }

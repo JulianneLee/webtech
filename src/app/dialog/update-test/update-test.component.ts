@@ -13,6 +13,7 @@ import { TestCase } from '../../app-model'
 
 export class UpdateTestDialog {
   testID:number = 0;
+  title: string;
   testCase: TestCase;
 
   constructor(
@@ -26,6 +27,14 @@ export class UpdateTestDialog {
 
   ngOnInit(){
     this.testCase = this.appService.getTestByID(this.testID);
+
+    //if else statement for the title
+    if(this.testCase.status == "Pending"){
+      this.title = "Update Test Result"
+    } else {
+      this.title = "View Test Result"
+    }
+
     console.log(this.testCase);
     console.log(this.testCase.type);
     console.log(this.testCase.symptom);

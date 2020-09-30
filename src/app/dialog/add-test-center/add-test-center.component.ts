@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar'
+
 import { AppService } from '../../app-service'
 
 @Component({
@@ -11,7 +13,8 @@ import { AppService } from '../../app-service'
 export class AddTestCenterDialog {
   constructor(
     public appService: AppService,
-    public dialogRef: MatDialogRef<AddTestCenterDialog>
+    public dialogRef: MatDialogRef<AddTestCenterDialog>,
+    public snackBar: MatSnackBar
   ){}
 
   onClose(): void {
@@ -21,6 +24,7 @@ export class AddTestCenterDialog {
   onAddTestCenter(form: NgForm){
     if(form.valid){
       this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
+      this.snackBar.open("Test Center has been successfully added.", "close", {duration: 2000,});
       this.dialogRef.close();
     }
   }
