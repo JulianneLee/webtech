@@ -15,7 +15,6 @@
         <a routerLink="/testkit" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Manage Test Kit')"><span class="material-icons">biotech</span>Test Kit</a>
       </div>
       <div *ngIf="currentUser.position == 'Patient'">
-        <a routerLink="/profile" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('Profile')"><span class="material-icons">person</span>Profile</a>
         <a routerLink="/testhistory" routerLinkActive="active" mat-button (click)="sidenav.toggle(); changeTitle('View Test')"><span class="material-icons">history</span>View Test</a>
       </div>
       <div *ngIf="currentUser.position != 'Patient'">
