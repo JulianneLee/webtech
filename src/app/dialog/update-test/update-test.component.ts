@@ -13,7 +13,6 @@ import { TestCase } from '../../app-model'
 
 export class UpdateTestDialog {
   testID:number = 0;
-
   testCase: TestCase;
 
   constructor(

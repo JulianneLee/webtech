@@ -122,33 +122,3 @@ export class TestCaseComponent implements AfterViewInit {
     this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
   }
 }
-
-// export interface TestCaseElement {
-//   no: number;
-//   name: string;
-//   type: string;
-//   symptom: string;
-//   status: string;
-// }
-
-// const TESTCASE: TestCaseElement[] = [
-//   {no: 1, name: 'Alex', type: "Returnee", symptom: "testing", status: "Pending"},
-//   {no: 2, name: 'Lillia', type: "Quarantined", symptom: "testing", status: "Completed"},
-//   {no: 3, name: 'Samira', type: "Infected", symptom: "testing", status: "Pending"},
-//   {no: 4, name: 'Yone', type: "Suspected", symptom: "testing", status: "Completed"},
-//   {no: 5, name: 'Lux', type: "Infected", symptom: "testing", status: "Pending"}
-// ];
-
-// export interface PatientElement {
-//   no: number;
-//   name: string;
-//   username: string;
-// }
-
-// const PATIENT: PatientElement[] = [
-//   {no: 1, name: 'Lillia12', username: "Lillia"},
-//   {no: 2, name: 'YoneYas', username: "Yone"},
-//   {no: 3, name: 'Alex12', username: "Alex"},
-//   {no: 4, name: 'SamiraS', username: "Samira"},
-//   {no: 5, name: 'LuxEzreal', username: "Lux"}
-// ];
