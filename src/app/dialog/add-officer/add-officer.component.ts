@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { AppService } from '../../app-service'
 import { TestCenter } from '../../app-model'
 
@@ -15,7 +17,8 @@ export class AddOfficerDialog {
 
   constructor(
     public appService: AppService,
-    public dialogRef: MatDialogRef<AddOfficerDialog>
+    public dialogRef: MatDialogRef<AddOfficerDialog>,
+    public snackBar: MatSnackBar
   ){}
 
   ngOnInit(){
@@ -35,6 +38,7 @@ export class AddOfficerDialog {
         'Tester',
         form.value.centerID
       )
+      this.snackBar.open("Tester has been successfully added.", "close", {duration: 2000,});
       this.dialogRef.close();
     }
   }

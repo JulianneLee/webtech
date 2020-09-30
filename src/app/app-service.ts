@@ -48,7 +48,6 @@ export class AppService {
     if(user){
       this.setCurrentUserID(user.userID);
     }
-
     return user;
   }
 
@@ -254,10 +253,12 @@ export class AppService {
     };
   }
 
+  // get pending result
   getTestPending(){
     return this.testCases.filter(x => x.status == 'Pending' && x.patientID == this.getCurrentUser().userID);
   }
 
+  // get completed result
   getTestCompleted(){
     return this.testCases.filter(x => x.status == 'Completed' && x.patientID == this.getCurrentUser().userID);
   }
