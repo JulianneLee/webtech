@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core'
+import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 import { AppService } from '../../app-service'
 import { TestCase } from '../../app-model'
@@ -17,7 +18,8 @@ export class UpdateTestDialog {
 
   constructor(
     public dialogRef: MatDialogRef<UpdateTestDialog>,
-    public appService: AppService) {}
+    public appService: AppService,
+    public snackBar: MatSnackBar) {}
 
     onClose(): void {
     this.dialogRef.close();
@@ -31,13 +33,11 @@ export class UpdateTestDialog {
   }
 
   updateTest(form:NgForm){
-    // if(form.valid){
-    //   this.appService.updateTest(this.testID, form.value.result, "Completed",
-    //   new Date().toString(), this.testCase.type, this.testCase.symptom);
-    //   this.dialogRef.close();
-    // }
-
-    console.log(this.appService.updateTest(this.testID, form.value.result, "Completed",
-    new Date().toString(), this.testCase.type, this.testCase.symptom));
+    if(form.valid){
+      this.appService.updateTest(this.testID, form.value.result, "Completed",
+      new Date().toString(), this.testCase.type, this.testCase.symptom);
+      this.snackBar.open("You have updated the result.", "close", {duration: 2000,});
+      this.dialogRef.close();
+    }
   }
 }

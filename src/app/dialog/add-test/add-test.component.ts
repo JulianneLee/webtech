@@ -1,10 +1,10 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar'
+
 import { AppService } from '../../app-service'
 import { User } from '../../app-model'
-
-
 
 @Component({
   selector: 'dialog-add-patient',
@@ -16,7 +16,8 @@ export class AddTestDialog {
 
   constructor(
     public appService: AppService,
-    public dialogRef: MatDialogRef<AddTestDialog>){}
+    public dialogRef: MatDialogRef<AddTestDialog>,
+    public snackBar: MatSnackBar){}
 
     onClose(): void {
     this.dialogRef.close();
@@ -35,6 +36,7 @@ export class AddTestDialog {
         form.value.symptom,
         this.appService.getCurrentUser() ? this.appService.getCurrentUser().userID : null
         );
+      this.snackBar.open("Test has been successfully added.", "close", {duration: 2000,});
       this.dialogRef.close();
 
     }

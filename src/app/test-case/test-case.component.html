@@ -47,7 +47,6 @@
   <hr>
   <div>
     <h2 mat-dialog-title>Test Case</h2>
-    <!-- <div class="mat-elevation-z8"> -->
 
       <mat-form-field>
         <mat-label>Filter</mat-label>
@@ -110,30 +109,28 @@
 
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
     </div>
-  <!-- </div> -->
 
   <div>
     <h2 mat-dialog-title>Patient</h2>
-    <!-- <div class="mat-elevation-z8"> -->
       <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilterPatient($event)" placeholder="e.g. Mia" #input>
       </mat-form-field>
       <table mat-table [dataSource]="dataPatient" matSort #table2="matSort">
 
-        <!-- Test ID Column -->
+        <!-- Patient ID Column -->
         <ng-container matColumnDef="patientID">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient ID </th>
           <td mat-cell *matCellDef="let patient"> {{patient.userID}} </td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- Username Column -->
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
           <td mat-cell *matCellDef="let patient"> {{patient.username}} </td>
         </ng-container>
 
-        <!-- Patient Type Column -->
+        <!-- Patient Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>
           <td mat-cell *matCellDef="let patient"> {{patient.name}} </td>

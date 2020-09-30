@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core'
+import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 import { AppService } from '../../app-service'
 import { TestCase } from '../../app-model'
@@ -27,7 +28,8 @@ export class EditInfoDialog {
 
   constructor(
     public dialogRef: MatDialogRef<EditInfoDialog>,
-    public appService: AppService) {}
+    public appService: AppService,
+    public snackBar: MatSnackBar) {}
 
 
   onClose(): void {
@@ -53,8 +55,7 @@ export class EditInfoDialog {
         form.value.symptom);
       this.dialogRef.close();
     }
-    console.log(this.testCase.type)
-    console.log(this.testCase.symptom)
+    this.snackBar.open("You have update the test's information.", "close", {duration: 2000,});
   }
 
   type: Type[] = [
