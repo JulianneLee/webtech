@@ -16,9 +16,9 @@ import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.c
 })
 
 export class TestKitComponent implements AfterViewInit {
-  testCenters: TestKitViewModel[] = this.appService.getTestKitCenter();
+  testCenters: TestKitViewModel[] = [];
   displayedColumns: string[] = ['kitID', 'name', 'stock', 'centerName', 'action'];
-  dataSource = new MatTableDataSource<TestKitViewModel>(this.testCenters);
+  dataSource = new MatTableDataSource<TestKitViewModel>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -26,6 +26,11 @@ export class TestKitComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnInit(){
+    this.testCenters = this.appService.getTestKitCenter();
+    this.dataSource = new MatTableDataSource<TestKitViewModel>(this.testCenters);
   }
 
   constructor(

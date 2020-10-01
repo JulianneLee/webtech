@@ -15,9 +15,9 @@ import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.c
 })
 
 export class TestCenterComponent implements AfterViewInit {
-  testCenters: TestCenter[] = this.appService.getTestCenter();
+  testCenters: TestCenter[] = [];
   displayedColumns: string[] = ['centerID', 'name'];
-  dataSource = new MatTableDataSource<TestCenter>(this.testCenters);
+  dataSource = new MatTableDataSource<TestCenter>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,6 +25,11 @@ export class TestCenterComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnInit(){
+    this.testCenters = this.appService.getTestCenter();
+    this.dataSource = new MatTableDataSource<TestCenter>(this.testCenters);
   }
 
   constructor(
