@@ -21,6 +21,7 @@ export class AddTestCenterDialog {
     this.dialogRef.close();
   }
 
+  // pass form value to addTestCenter function
   onAddTestCenter(form: NgForm){
     if(form.valid){
       this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
