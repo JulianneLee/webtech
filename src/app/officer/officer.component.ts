@@ -15,9 +15,9 @@ import { AddOfficerDialog } from '../dialog/add-officer/add-officer.component';
 })
 
 export class OfficerComponent implements AfterViewInit {
-  managers: User[] = this.appService.getTesters();
+  testers: User[] = [];
   displayedColumns: string[] = ['id', 'username', 'name', 'position'];
-  dataSource = new MatTableDataSource<User>(this.managers);
+  dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -27,14 +27,15 @@ export class OfficerComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnInit(){
+    this.testers = this.appService.getTesters();
+    this.dataSource = new MatTableDataSource<User>(this.testers);
+  }
+
   constructor(
     public dialog: MatDialog,
     public appService: AppService,
     ) {}
-
-  ngOnInit(){
-    this.managers = this.appService.getTesters();
-  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddOfficerDialog, {

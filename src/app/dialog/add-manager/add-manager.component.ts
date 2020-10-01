@@ -22,6 +22,7 @@ export class AddManagerDialog {
     this.dialogRef.close();
   }
 
+  // pass form value to addUser function
   onAddManager(form: NgForm){
     if(form.valid){
       this.appService.addUser(
