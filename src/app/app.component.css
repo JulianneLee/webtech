@@ -76,6 +76,6 @@
 }
 
 .nav-container {
-  min-height: 600px;
+  min-height: 100vh;
   margin-top: 15px;
 }
