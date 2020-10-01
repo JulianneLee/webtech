@@ -76,7 +76,7 @@
 }
 
 .nav-container {
-  min-height: 100vh;
+  height: 100vh;
   margin-top: 15px;
   background-color: rgb(247, 247, 247);
 }
