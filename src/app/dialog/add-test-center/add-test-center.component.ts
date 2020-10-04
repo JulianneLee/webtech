@@ -28,15 +28,12 @@ export class AddTestCenterDialog {
   // pass form value to addTestCenter function
   onAddTestCenter(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.testCenter.length; i++){
-        if(this.testCenter.find(x => x.name == form.value.name)){
-        } else{
-          this.msg = 'Test Center has been successfully added.'
-          this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
-          this.dialogRef.close();
-        }
+      if(this.testCenter.find(x => x.name != form.value.name)){
+        this.msg = 'Test Center has been successfully added.'
+        this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
+        this.dialogRef.close();
       }
-      this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
+      this.snackBar.open(this.msg, "close", {duration: 2000,});
   }
 }

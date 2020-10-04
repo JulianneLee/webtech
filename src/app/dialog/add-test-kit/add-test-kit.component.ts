@@ -13,7 +13,7 @@ import { TestCenter, TestKit } from '../../app-model'
 
 export class AddTestKitDialog {
   centers: TestCenter [] = [];
-  testKit: TestKit [] = [];
+  testKits: TestKit [] = [];
   msg: string;
 
   constructor(
@@ -24,7 +24,7 @@ export class AddTestKitDialog {
 
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
-    this.testKit = this.appService.getTestKit();
+    this.testKits = this.appService.getTestKit();
     console.log(this.appService.getTestKit());
     this.msg = 'This Test Kit name have been created. ' +
       'Please use another name or edit the stock.';
@@ -37,16 +37,13 @@ export class AddTestKitDialog {
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.testKit.length; i++){
-        if(this.testKit.find(x => x.name == form.value.name)){
-        } else {
-          this.msg = 'Test Kit has been successfully added.'
-          this.appService.addTestKit(form.value.name,
-            form.value.stock, form.value.centerID);
-          this.dialogRef.close();
-        }
+      if(this.testKits.find(x => x.name != form.value.name)){
+        this.msg = 'Test Kit has been successfully added.'
+        this.appService.addTestKit(form.value.name,
+          form.value.stock, form.value.centerID);
+        this.dialogRef.close();
       }
-      this.snackBar.open(this.msg, "close", {duration: 4000,});
     }
+      this.snackBar.open(this.msg, "close", {duration: 4000,});
   }
 }

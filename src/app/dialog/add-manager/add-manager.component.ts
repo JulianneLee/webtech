@@ -35,22 +35,18 @@ export class AddManagerDialog {
   // pass form value to addUser function
   onAddManager(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.users.length; i++){
-        if(this.users.find(x => x.username == form.value.username)){
-        } else {
-          this.msg = 'Manager has been successfully added.'
-          this.appService.addUser(
-            form.value.username,
-            form.value.password,
-            form.value.name,
-            'Manager',
-            null
-          )
-          this.dialogRef.close();
-        }
+      if(this.users.find(x => x.username != form.value.username)){
+        this.msg = 'Manager has been successfully added.'
+        this.appService.addUser(form.value.username,
+          form.value.password,
+          form.value.name,
+          'Manager',
+          null
+        )
+        this.dialogRef.close();
       }
-      this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
+      this.snackBar.open(this.msg, "close", {duration: 2000,});
   }
 }
 
