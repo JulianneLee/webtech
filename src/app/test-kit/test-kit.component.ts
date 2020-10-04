@@ -48,6 +48,7 @@ export class TestKitComponent implements AfterViewInit {
     });
   }
 
+  // open dialog and pass selected testkit to update
   openDialogUpdate(id:number): void {
     const dialogRef = this.dialog.open(UpdateTestKitDialog, {
       width: '300px',
@@ -60,6 +61,7 @@ export class TestKitComponent implements AfterViewInit {
     });
   }
 
+  // delete test kit
   onDelete(id:number): void {
     if(this.appService.deleteTestKit(id))
       this.dataSource.data = this.appService.getTestKitCenter();

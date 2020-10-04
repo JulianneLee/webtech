@@ -33,6 +33,7 @@ export class AddOfficerDialog {
     this.dialogRef.close();
   }
 
+  // pass form value to addUser function
   onAddTester(form: NgForm){
     if(form.valid){
       for(let i = 0; i < this.users.length; i++){

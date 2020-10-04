@@ -34,6 +34,7 @@ export class AddTestKitDialog {
     this.dialogRef.close();
   }
 
+  // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
       for(let i = 0; i < this.testKit.length; i++){

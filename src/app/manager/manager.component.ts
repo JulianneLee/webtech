@@ -15,9 +15,9 @@ import { AddManagerDialog } from '../dialog/add-manager/add-manager.component';
 })
 
 export class ManagerComponent implements AfterViewInit {
-  managers: User[] = this.appService.getManagers();
+  managers: User[] = [];
   displayedColumns: string[] = ['id', 'username', 'name', 'position'];
-  dataSource = new MatTableDataSource<User>(this.managers);
+  dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,6 +25,11 @@ export class ManagerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnInit(){
+    this.managers = this.appService.getManagers();
+    this.dataSource = new MatTableDataSource<User>(this.managers);
   }
 
   constructor(
@@ -42,6 +47,7 @@ export class ManagerComponent implements AfterViewInit {
     });
   }
 
+  // filter search
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

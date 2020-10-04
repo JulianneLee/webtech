@@ -96,10 +96,7 @@ export class AppService {
   // add test center
   addTestCenter(name:string, id:number){
     const testCenter: model.TestCenter = {
-      centerID:this.getTestCenter().length + 1,
-      name:name,
-      managerID:id
-    };
+      centerID:this.getTestCenter().length + 1, name:name, managerID:id};
     this.testCenters.push(testCenter);
   }
 
@@ -234,15 +231,12 @@ export class AppService {
   // dynamic sorting
   compare(key, order = 'asc') {
     return function innerSort(a, b) {
-
       // element not exists
       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
         return 0;
       }
-
       const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
       const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
-
       let position = 0;
       if (varA > varB) {
         position = 1;

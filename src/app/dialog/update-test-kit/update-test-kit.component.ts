@@ -30,12 +30,12 @@ export class UpdateTestKitDialog {
     this.dialogRef.close();
   }
 
+  // pass form value
   onUpdateTestKit(form: NgForm){
     if(form.valid){
       this.appService.updateTestKit(this.testKitID, form.value.stock);
       this.snackBar.open("You have updated the test kit.", "close", {duration: 2000,});
       this.dialogRef.close();
     }
-
   }
 }

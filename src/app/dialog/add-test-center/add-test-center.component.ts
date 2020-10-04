@@ -25,11 +25,7 @@ export class AddTestCenterDialog {
     this.dialogRef.close();
   }
 
-  ngOnInit(){
-    this.testCenter = this.appService.getTestCenter();
-    this.msg = 'This center name have been created.';
-  }
-
+  // pass form value to addTestCenter function
   onAddTestCenter(form: NgForm){
     if(form.valid){
       for(let i = 0; i < this.testCenter.length; i++){

@@ -32,6 +32,7 @@ export class AddManagerDialog {
     this.msg = 'This username have been created.';
   }
 
+  // pass form value to addUser function
   onAddManager(form: NgForm){
     if(form.valid){
       for(let i = 0; i < this.users.length; i++){
