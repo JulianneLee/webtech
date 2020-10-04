@@ -36,17 +36,21 @@ export class AddOfficerDialog {
   // pass form value to addUser function
   onAddTester(form: NgForm){
     if(form.valid){
-      if(this.users.find(x => x.username != form.value.username)){
-        this.msg = 'Tester has been successfully added.'
-        this.appService.addUser(form.value.username,
-          form.value.password,
-          form.value.name,
-          'Tester',
-          form.value.centerID
-        )
-        this.dialogRef.close();
+      for(let i = 0; i < this.users.length; i++){
+        if(this.users.find(x => x.username == form.value.username)){
+        } else {
+          this.msg = 'Tester has been successfully added.'
+          this.appService.addUser(
+            form.value.username,
+            form.value.password,
+            form.value.name,
+            'Tester',
+            form.value.centerID
+          )
+          this.dialogRef.close();
         }
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
+    }
   }
 }

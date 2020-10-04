@@ -37,13 +37,14 @@ export class AddTestKitDialog {
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-      if(this.testKits.find(x => x.name != form.value.name)){
-        this.msg = 'Test Kit has been successfully added.'
-        this.appService.addTestKit(form.value.name,
-          form.value.stock, form.value.centerID);
-        this.dialogRef.close();
+        if(this.testKits.find(x => x.name == form.value.name)){
+        } else {
+          this.msg = 'Test Kit has been successfully added.'
+          this.appService.addTestKit(form.value.name,
+            form.value.stock, form.value.centerID);
+          this.dialogRef.close();
+        }
       }
-    }
       this.snackBar.open(this.msg, "close", {duration: 4000,});
   }
 }
