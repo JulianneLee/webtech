@@ -41,8 +41,6 @@ export class LoginComponent {
           duration: 5000
         });
       }
-
     }
-
   }
 }

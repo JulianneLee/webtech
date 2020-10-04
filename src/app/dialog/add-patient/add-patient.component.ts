@@ -1,8 +1,10 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { AppService } from '../../app-service'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AppService } from '../../app-service'
+import { User } from '../../app-model';
 
 @Component({
   selector: 'dialog-add-patient',
@@ -11,20 +13,35 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class AddPatientDialog {
   hide = true;
+  users: User[] = [];
+  msg: string;
+
   constructor(
     public appService: AppService,
     public dialogRef: MatDialogRef<AddPatientDialog>,
     public snackBar: MatSnackBar) {}
 
-    onClose(): void {
+  onClose(): void {
     this.dialogRef.close();
+  }
+
+  ngOnInit(){
+    this.users = this.appService.getUsers();
+    this.msg = 'This username have been created.';
   }
 
   onAddPatient(form: NgForm){
     if(form.valid){
-      this.appService.addUser(form.value.username, form.value.password, form.value.name, 'Patient', null);
-      this.snackBar.open("Patient has been successfully added.", "close", {duration: 2000,});
-      this.dialogRef.close();
+      for(let i = 0; i < this.users.length; i++){
+        if(this.users.find(x => x.username == form.value.username)){
+        } else {
+          this.msg = 'Patient has been successfully added.'
+          this.appService.addUser(form.value.username, form.value.password,
+            form.value.name, 'Patient', null);
+          this.dialogRef.close();
+        }
+      }
+      this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
   }
 }

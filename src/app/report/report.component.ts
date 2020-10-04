@@ -16,12 +16,7 @@ import { TestCaseViewModel, GenerateReport } from '../app-model';
 export class ReportComponent implements AfterViewInit {
   reports: GenerateReport[] = [];
 
-  // managers: TestCaseViewModel[] = this.appService.getManagers();
   displayedColumns: string[] = ['testID', 'patient', 'tester', 'date', 'status'];
-  // dataSource = new MatTableDataSource<TestCaseViewModel>(this.managers);
-
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(){
     this.reports = this.appService.generateReport();

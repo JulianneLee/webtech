@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'
 
 import { AppService } from '../../app-service'
+import { TestCenter } from '../../app-model';
 
 @Component({
   selector: 'dialog-add-test-center',
@@ -11,6 +12,9 @@ import { AppService } from '../../app-service'
 })
 
 export class AddTestCenterDialog {
+  testCenter: TestCenter[] = [];
+  msg: string;
+
   constructor(
     public appService: AppService,
     public dialogRef: MatDialogRef<AddTestCenterDialog>,
@@ -21,11 +25,22 @@ export class AddTestCenterDialog {
     this.dialogRef.close();
   }
 
+  ngOnInit(){
+    this.testCenter = this.appService.getTestCenter();
+    this.msg = 'This center name have been created.';
+  }
+
   onAddTestCenter(form: NgForm){
     if(form.valid){
-      this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
-      this.snackBar.open("Test Center has been successfully added.", "close", {duration: 2000,});
-      this.dialogRef.close();
+      for(let i = 0; i < this.testCenter.length; i++){
+        if(this.testCenter.find(x => x.name == form.value.name)){
+        } else{
+          this.msg = 'Test Center has been successfully added.'
+          this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
+          this.dialogRef.close();
+        }
+      }
+      this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
   }
 }

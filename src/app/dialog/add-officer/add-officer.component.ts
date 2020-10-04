@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AppService } from '../../app-service'
-import { TestCenter } from '../../app-model'
+import { TestCenter, User } from '../../app-model'
 
 @Component({
   selector: 'dialog-add-officer',
@@ -13,7 +13,9 @@ import { TestCenter } from '../../app-model'
 
 export class AddOfficerDialog {
   centers: TestCenter [] = [];
+  users: User [] = [];
   hide = true;
+  msg: string;
 
   constructor(
     public appService: AppService,
@@ -22,7 +24,9 @@ export class AddOfficerDialog {
   ){}
 
   ngOnInit(){
-    this.centers = this.appService.getTestCenter()
+    this.centers = this.appService.getTestCenter();
+    this.users = this.appService.getUsers();
+    this.msg = 'This username have been created.';
   }
 
   onClose(): void {
@@ -31,15 +35,21 @@ export class AddOfficerDialog {
 
   onAddTester(form: NgForm){
     if(form.valid){
-      this.appService.addUser(
-        form.value.username,
-        form.value.password,
-        form.value.name,
-        'Tester',
-        form.value.centerID
-      )
-      this.snackBar.open("Tester has been successfully added.", "close", {duration: 2000,});
-      this.dialogRef.close();
+      for(let i = 0; i < this.users.length; i++){
+        if(this.users.find(x => x.username == form.value.username)){
+        } else {
+          this.msg = 'Tester has been successfully added.'
+          this.appService.addUser(
+            form.value.username,
+            form.value.password,
+            form.value.name,
+            'Tester',
+            form.value.centerID
+          )
+          this.dialogRef.close();
+        }
+      }
+      this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
   }
 }
