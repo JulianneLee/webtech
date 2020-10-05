@@ -25,9 +25,6 @@ export class AddTestKitDialog {
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
     this.testKits = this.appService.getTestKit();
-    console.log(this.appService.getTestKit());
-    this.msg = 'This Test Kit name have been created. ' +
-      'Please use another name or edit the stock.';
   }
 
   onClose(): void {
@@ -37,14 +34,16 @@ export class AddTestKitDialog {
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-        if(this.testKits.find(x => x.name == form.value.name)){
-        } else {
-          this.msg = 'Test Kit has been successfully added.'
-          this.appService.addTestKit(form.value.name,
-            form.value.stock, form.value.centerID);
-          this.dialogRef.close();
-        }
+      if(this.testKits.find(x => x.name == form.value.name)){
+        this.msg = 'This Test Kit name exists! ' +
+                    'Please use another name or edit the stock.';
+      } else {
+        this.msg = 'Test Kit has been successfully added.'
+        this.appService.addTestKit(form.value.name,
+          form.value.stock, form.value.centerID);
+        this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 4000,});
+    }
   }
 }

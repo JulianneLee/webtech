@@ -12,8 +12,8 @@ import { TestCenter } from '../../app-model';
 })
 
 export class AddTestCenterDialog {
-  testCenter: TestCenter[] = [];
-  msg: string = 'The Test Center is existed. Please input another name.';
+  centers: TestCenter[] = [];
+  msg: string;
 
   constructor(
     public appService: AppService,
@@ -25,16 +25,19 @@ export class AddTestCenterDialog {
     this.dialogRef.close();
   }
 
+  ngOnInit(){
+    this.centers = this.appService.getTestCenter();
+  }
+
   // pass form value to addTestCenter function
   onAddTestCenter(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.testCenter.length; i++){
-        if(this.testCenter.find(x => x.name == form.value.name)){
-        } else{
-          this.msg = 'Test Center has been successfully added.'
-          this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
-          this.dialogRef.close();
-        }
+      if(this.centers.find(x => x.name == form.value.name)){
+        this.msg = 'Test Center name exist!'
+      } else{
+        this.msg = 'Test Center has been successfully added.'
+        this.appService.addTestCenter(form.value.name, this.appService.getCurrentUser().userID)
+        this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
     }

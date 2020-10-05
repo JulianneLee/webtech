@@ -27,20 +27,18 @@ export class AddPatientDialog {
 
   ngOnInit(){
     this.users = this.appService.getUsers();
-    this.msg = 'This username have been created.';
   }
 
   // add patient
   onAddPatient(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.users.length; i++){
-        if(this.users.find(x => x.username == form.value.username)){
-        } else {
-          this.msg = 'Patient has been successfully added.'
-          this.appService.addUser(form.value.username, form.value.password,
-            form.value.name, 'Patient', null);
-          this.dialogRef.close();
-        }
+      if(this.users.find(x => x.username == form.value.username)){
+        this.msg = 'Username exists!';
+      } else {
+        this.msg = 'Patient has been successfully added.'
+        this.appService.addUser(form.value.username, form.value.password,
+          form.value.name, 'Patient', null);
+        this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
     }

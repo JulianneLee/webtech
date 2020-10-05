@@ -26,7 +26,6 @@ export class AddOfficerDialog {
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
     this.users = this.appService.getUsers();
-    this.msg = 'This username have been created.';
   }
 
   onClose(): void {
@@ -36,19 +35,18 @@ export class AddOfficerDialog {
   // pass form value to addUser function
   onAddTester(form: NgForm){
     if(form.valid){
-      for(let i = 0; i < this.users.length; i++){
-        if(this.users.find(x => x.username == form.value.username)){
-        } else {
-          this.msg = 'Tester has been successfully added.'
-          this.appService.addUser(
-            form.value.username,
-            form.value.password,
-            form.value.name,
-            'Tester',
-            form.value.centerID
-          )
-          this.dialogRef.close();
-        }
+      if(this.users.find(x => x.username == form.value.username)){
+        this.msg = 'Username exists!';
+      } else {
+        this.msg = 'Tester has been successfully added.'
+        this.appService.addUser(
+          form.value.username,
+          form.value.password,
+          form.value.name,
+          'Tester',
+          form.value.centerID
+        )
+        this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
     }
