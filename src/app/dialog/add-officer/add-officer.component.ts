@@ -23,13 +23,13 @@ export class AddOfficerDialog {
     public snackBar: MatSnackBar
   ){}
 
+  onClose(): void {
+    this.dialogRef.close();
+  }
+
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
     this.users = this.appService.getUsers();
-  }
-
-  onClose(): void {
-    this.dialogRef.close();
   }
 
   // pass form value to addUser function

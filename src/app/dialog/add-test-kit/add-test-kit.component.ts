@@ -22,19 +22,19 @@ export class AddTestKitDialog {
     public snackBar: MatSnackBar
   ){}
 
+  onClose(): void {
+    this.dialogRef.close();
+  }
+
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
     this.testKits = this.appService.getTestKit();
   }
 
-  onClose(): void {
-    this.dialogRef.close();
-  }
-
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-      if(this.testKits.find(x => x.name == form.value.name)){
+      if(this.testKits.find(x => x.name == form.value.name && x.status != "Deleted")){
         this.msg = 'This Test Kit name exists! ' +
                     'Please use another name or edit the stock.';
       } else {
