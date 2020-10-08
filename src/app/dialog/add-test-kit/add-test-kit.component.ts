@@ -34,7 +34,9 @@ export class AddTestKitDialog {
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-      if(this.testKits.find(x => x.name == form.value.name && x.status != "Deleted")){
+      if(this.testKits.find(x => x.name == form.value.name &&
+          x.centerID == form.value.centerID &&
+          x.status != "Deleted")){
         this.msg = 'This Test Kit name exists! ' +
                     'Please use another name or edit the stock.';
       } else {
