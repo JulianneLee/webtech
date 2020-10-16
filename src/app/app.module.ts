@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { DemoMaterialModule } from './material-module';
@@ -27,6 +28,7 @@ import { UpdateTestDialog } from './dialog/update-test/update-test.component'
 import { TestHistoryComponent } from './test-history/test-history.component'
 import { ViewTestResultDialog } from './dialog/view-test-result/view-test-result.component'
 import { LoginComponent } from './dialog/login/login.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +59,7 @@ import { LoginComponent } from './dialog/login/login.component'
     AppRoutingModule,
     DemoMaterialModule,
     FormsModule,
+    HttpClientModule,
   ],
   entryComponents: [
     AddPatientDialog,
