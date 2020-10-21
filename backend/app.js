@@ -2,14 +2,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose")
-const models = require('models.js')
-
-const User = models.User
-const TestKit = models.TestKit
+const models = require('./models')
 
 const app = express()
 
-// mongoose.connect("mongodb+srv://max:XMGMGpGYA7ZP3xVK@cluster0.ozjrv.mongodb.net/node_angular?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://admin:admin@cluster0.jyb5k.mongodb.net/cts?retryWrites=true&w=majority")
   .then(() => {
     console.log('Connected to database');
   })
@@ -21,22 +18,35 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Header", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
   next();
+})
+
+app.post('/api/users', (req, res, next) => {
+  const user = new models({
+    username: req.body.username,
+    password: req.body.password,
+    name: req.body.name,
+    position: req.body.position,
+    centerID: req.body.centerID
+  });
+  user.save();
+
+  console.log(user);
+  res.status(201).json({
+    message:'User added successfully'
+  });
 });
 
-app.post('/api/user', (req, res, next) => {
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content
-  });
-  post.save();
-
-  console.log(post);
-  res.status(201).json({
-    message:'Post added successfully'
-  });
+app.get('/api/users', (req, res, next) => {
+  models.find().then(documents => {
+    // console.log(users);
+    res.status(200).json({
+      message: 'Post fetched successfully',
+      users: documents
+    });
+  })
 });
 
 module.exports = app;

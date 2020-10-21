@@ -26,7 +26,7 @@ export class AddPatientDialog {
   }
 
   ngOnInit(){
-    this.users = this.appService.getUsers();
+    // this.users = this.appService.getUsers();
   }
 
   // add patient

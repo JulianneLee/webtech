@@ -30,7 +30,8 @@ export class AppComponent {
   ){}
 
   ngOnInit(){
-    this.appService.addSampleData();
+    // this.appService.addSampleData();
+    this.appService.getUsers();
     this.currentUser = this.appService.getCurrentUser();
     this.router.navigate(['/index']);
   }

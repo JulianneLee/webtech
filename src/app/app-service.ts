@@ -1,5 +1,9 @@
 import * as model from './app-model';
+
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs'
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn:'root'})
 
@@ -9,27 +13,28 @@ export class AppService {
   private testCenters: model.TestCenter[] = [];
   private testKits: model.TestKit[] = [];
   private currentUserID = null;
+  private userUpdated = new Subject<model.User[]>();
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
     this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
-    this.addUser('tester1', 'tester1', 'Tester 1', 'Tester', 1);
     this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
-    this.addUser('tester2', 'tester2', 'Tester 2', 'Tester', 2);
     this.addUser('manager2', 'manager2', 'Manager 2', 'Manager', null);
-    this.addTestCenter('Center 1', 2);
-    this.addTestCenter('Center 2', 6);
-    this.addTest(4, 'Suspected', 'flu', 3);
-    this.addTest(4, 'Close Contact', 'fever', 3);
-    this.addTest(4, 'Suspected', 'flu', 5);
-    this.updateTest(1, 'Required to visit the doctor', 'Completed',
-    new Date().toString(), 'Suspected', 'flu');
+    // this.addTestCenter('Center 1', 2);
+    // this.addTestCenter('Center 2', 6);
+    // this.addTest(4, 'Suspected', 'flu', 3);
+    // this.addTest(4, 'Close Contact', 'fever', 3);
+    // this.addTest(4, 'Suspected', 'flu', 5);
+    // this.updateTest(1, 'Required to visit the doctor', 'Completed',
+    // new Date().toString(), 'Suspected', 'flu');
 
     // this.setCurrentUserID(1); //admin
     // this.setCurrentUserID(2); //manager
     // this.setCurrentUserID(3); //tester
     // this.setCurrentUserID(4); //patient
   }
+
+  constructor(private http:HttpClient){}
 
   // get current login user detail
   getCurrentUser(){
@@ -76,16 +81,44 @@ export class AppService {
 
   // get all users
   getUsers(){
-    return this.users;
+    this.http.get<{message: string, users: any}>('http://localhost:3000/api/users')
+      .pipe(map((userData) => {
+        return userData.users.map(user => {
+          return {
+            username: user.username,
+            password: user.password,
+            name: user.password,
+            position: user.password,
+            centerID: user.password,
+            userID: user._id
+          };
+        });
+      }))
+
+      .subscribe(transformedPosts => {
+        this.users = transformedPosts;
+        this.userUpdated.next([...this.users])
+      });
+  }
+
+  getUserUpdatedListener(){
+    return this.userUpdated.asObservable();
   }
 
   // add user
-  addUser(username:string, password:string, name:string, position:string, centerID:number){
+  addUser(username:string, password:string, name:string, position:string, centerID: string){
     const user: model.User = {
-      userID:(this.getUsers().length + 1), username:username, password:password,
-      name:name, position:position, centerID:centerID,
+      userID:null, username:username, password:password,
+      name:name, position:position, centerID:centerID
     };
-    this.users.push(user);
+
+    this.http
+    .post<{message:string}>('http://localhost:3000/api/users', user)
+    .subscribe((responseData) => {
+      console.log(responseData.message);
+      this.users.push(user);
+      this.userUpdated.next([...this.users]);
+    });
   }
 
   // get all test centers
@@ -191,42 +224,42 @@ export class AppService {
   }
 
   // generate report
-  generateReport(){
-    let reports: model.GenerateReport[] = [];
-    let centers = this.testCenters;
+  // generateReport(){
+  //   let reports: model.GenerateReport[] = [];
+  //   let centers = this.testCenters;
 
-    for(let i = 0; i < centers.length; i++){
-      let centerTestCases: model.TestCaseViewModel[]
-        = this.getTestCasesWithCenterID(centers[i].centerID);
-      reports.push({
-        centerID:centers[i].centerID,
-        centerName:centers[i].name,
-        managerName:this.users.find(x => x.userID == centers[i].managerID).name,
-        testCases:centerTestCases
-      })
-    }
-    return reports;
-  }
+  //   for(let i = 0; i < centers.length; i++){
+  //     let centerTestCases: model.TestCaseViewModel[]
+  //       = this.getTestCasesWithCenterID(centers[i].centerID);
+  //     reports.push({
+  //       centerID:centers[i].centerID,
+  //       centerName:centers[i].name,
+  //       managerName:this.users.find(x => x.userID == centers[i].managerID).name,
+  //       testCases:centerTestCases
+  //     })
+  //   }
+  //   return reports;
+  // }
 
   // get test cases with center ID
-  getTestCasesWithCenterID(id:number){
-    let officer = this.users.filter(x => x.centerID == id);
-    let centerTestCases:model.TestCaseViewModel[] = [];
+  // getTestCasesWithCenterID(id:number){
+  //   let officer = this.users.filter(x => x.centerID == id);
+  //   let centerTestCases:model.TestCaseViewModel[] = [];
 
-    officer.forEach(o => {
-      let testsByTester = this.testCases.filter(x => x.officerID == o.userID);
-      testsByTester.forEach(tc => {
-        centerTestCases.push({
-          testID:tc.testID,
-          patientName:this.users.find(x => x.userID == tc.patientID).name,
-          officerName:o.name,
-          testCreated:tc.testCreated,
-          status:tc.status
-        });
-      });
-    });
-    return centerTestCases.sort(this.compare('status', 'desc'));
-  }
+  //   officer.forEach(o => {
+  //     let testsByTester = this.testCases.filter(x => x.officerID == o.userID);
+  //     testsByTester.forEach(tc => {
+  //       centerTestCases.push({
+  //         testID:tc.testID,
+  //         patientName:this.users.find(x => x.userID == tc.patientID).name,
+  //         officerName:o.name,
+  //         testCreated:tc.testCreated,
+  //         status:tc.status
+  //       });
+  //     });
+  //   });
+  //   return centerTestCases.sort(this.compare('status', 'desc'));
+  // }
 
   // dynamic sorting
   compare(key, order = 'asc') {

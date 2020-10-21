@@ -4,7 +4,7 @@ export class User {
   password: string;
   name: string;
   position: string;
-  centerID: number;
+  centerID: string;
 }
 
 export interface TestCase {

@@ -29,7 +29,7 @@ export class AddOfficerDialog {
 
   ngOnInit(){
     this.centers = this.appService.getTestCenter();
-    this.users = this.appService.getUsers();
+    // this.users = this.appService.getUsers();
   }
 
   // pass form value to addUser function

@@ -15,7 +15,7 @@ export class ReportComponent {
   displayedColumns: string[] = ['testID', 'patient', 'tester', 'date', 'status'];
 
   ngOnInit(){
-    this.reports = this.appService.generateReport();
+    // this.reports = this.appService.generateReport();
     console.log(this.reports)
   }
 
