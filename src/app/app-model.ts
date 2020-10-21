@@ -7,7 +7,7 @@ export class User {
   centerID: string;
 }
 
-export interface TestCase {
+export class TestCase {
   testID: number;
   patientID: number;
   type: string;
@@ -19,7 +19,7 @@ export interface TestCase {
   resultCreated: string;
 }
 
-export interface TestCenter {
+export class TestCenter {
   centerID: number;
   name: string;
   managerID: number;

@@ -87,9 +87,9 @@ export class AppService {
           return {
             username: user.username,
             password: user.password,
-            name: user.password,
-            position: user.password,
-            centerID: user.password,
+            name: user.name,
+            position: user.position,
+            centerID: user.centerID,
             userID: user._id
           };
         });
@@ -99,6 +99,8 @@ export class AppService {
         this.users = transformedPosts;
         this.userUpdated.next([...this.users])
       });
+
+    return this.users;
   }
 
   getUserUpdatedListener(){

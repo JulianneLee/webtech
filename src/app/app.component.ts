@@ -43,6 +43,7 @@ export class AppComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       this.currentUser = this.appService.getCurrentUser();
+      console.log(this.currentUser)
       this.headerTitle = "Home";
     });
   }

@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 })
 
 app.post('/api/users', (req, res, next) => {
-  const user = new models({
+  const user = new models.User({
     username: req.body.username,
     password: req.body.password,
     name: req.body.name,
@@ -40,7 +40,7 @@ app.post('/api/users', (req, res, next) => {
 });
 
 app.get('/api/users', (req, res, next) => {
-  models.find().then(documents => {
+  models.User.find().then(documents => {
     // console.log(users);
     res.status(200).json({
       message: 'Post fetched successfully',
@@ -48,5 +48,7 @@ app.get('/api/users', (req, res, next) => {
     });
   })
 });
+
+
 
 module.exports = app;
