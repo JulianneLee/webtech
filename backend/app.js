@@ -2,11 +2,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose")
+const models = require('models.js')
 
-const User = require('./models/user')
-const TestKit = require('./models/testKit')
-const TestCenter = require('./models/testCenter')
-const TestCase = require('./models/testCase')
+const User = models.User
+const TestKit = models.TestKit
 
 const app = express()
 
