@@ -53,8 +53,8 @@ app.post('/api/users', (req, res, next) => {
 app.get('/api/users', (req, res, next) => {
   User.find().then(documents => {
     res.status(200).json({
-      message: 'User fetched successfully',
-      users: documents
+      message: 'Users fetched successfully',
+      results: documents
     });
   })
 });

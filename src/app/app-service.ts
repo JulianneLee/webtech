@@ -14,6 +14,7 @@ export class AppService {
   private testKits: model.TestKit[] = [];
   private currentUserID = null;
   private userUpdated = new Subject<model.User[]>();
+  private testCenterUpdated = new Subject<model.TestCenter[]>();
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
@@ -81,26 +82,24 @@ export class AppService {
 
   // get all users
   getUsers(){
-    this.http.get<{message: string, users: any}>('http://localhost:3000/api/users')
-      .pipe(map((userData) => {
-        return userData.users.map(user => {
+    this.http.get<{message: string, results: any}>('http://localhost:3000/api/users')
+      .pipe(map((data) => {
+        return data.results.map(item => {
           return {
-            username: user.username,
-            password: user.password,
-            name: user.name,
-            position: user.position,
-            centerID: user.centerID,
-            userID: user._id
+            username: item.username,
+            password: item.password,
+            name: item.name,
+            position: item.position,
+            centerID: item.centerID,
+            userID: item._id
           };
         });
       }))
 
-      .subscribe(transformedPosts => {
-        this.users = transformedPosts;
+      .subscribe(transformedData => {
+        this.users = transformedData;
         this.userUpdated.next([...this.users])
       });
-
-    return this.users;
   }
 
   getUserUpdatedListener(){
@@ -125,13 +124,26 @@ export class AppService {
 
   // get all test centers
   getTestCenter(){
-    return this.testCenters;
+    this.http.get<{message: string, results: any}>('http://localhost:3000/api/testCenters')
+      .pipe(map((data) => {
+        return data.results.map(item => {
+          return {
+            name: item.name,
+            managerID: item.managerID
+          };
+        });
+      }))
+
+      .subscribe(transformedData => {
+        this.testCenters = transformedData;
+        this.testCenterUpdated.next([...this.testCenters])
+      });
   }
 
   // add test center
   addTestCenter(name:string, id:number){
     const testCenter: model.TestCenter = {
-      centerID:this.getTestCenter().length + 1, name:name, managerID:id};
+      centerID:this.testCenters.length + 1, name:name, managerID:id};
     this.testCenters.push(testCenter);
   }
 
@@ -161,7 +173,7 @@ export class AppService {
   // get all test kits that have active status with center name
   getTestKitCenter(){
     let kit = this.getTestKit().filter(x => x.status == 'Active');
-    let center = this.getTestCenter();
+    let center = this.testCenters;
     let kitCenter = [];
 
     for(let i = 0; i < kit.length; i++){
