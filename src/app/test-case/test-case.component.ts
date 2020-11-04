@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog'
 import { MatSort } from '@angular/material/sort'
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../app-service'
 import { User, PatientTest } from '../app-model'
@@ -22,6 +23,7 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
 
 export class TestCaseComponent implements AfterViewInit {
   breakpoint: number;
+  usersSub: Subscription;
 
   tests: PatientTest[] = [];
   displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
@@ -49,13 +51,17 @@ export class TestCaseComponent implements AfterViewInit {
     ) {}
 
   ngOnInit(){
+    this.usersSub = this.appService.getUserUpdatedListener()
+    .subscribe((users: User[]) => {
+      this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients(users));
+    })
+
     this.tests = this.appService.getPatientTest();
     this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
 
-    this.patients = this.appService.getPatients();
-    this.dataPatient = new MatTableDataSource<User>(this.patients);
+    // this.patients = this.appService.getPatients();
+    // this.dataPatient = new MatTableDataSource<User>(this.patients);
 
-    this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
   }
 
   openDialogPatient(): void {
@@ -64,7 +70,10 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataPatient.data = this.appService.getPatients();
+      this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.dataPatient.data = this.appService.getPatients(users);
+      })
     });
   }
 

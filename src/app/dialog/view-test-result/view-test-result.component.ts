@@ -10,7 +10,7 @@ import { TestCase } from '../../app-model'
 })
 
 export class ViewTestResultDialog {
-  testID: number = 0;
+  testID: string;
   testCase: TestCase;
   title: string
 

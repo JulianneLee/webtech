@@ -74,8 +74,8 @@ export class AppService {
     return users.filter(x => x.position == 'Tester');
   }
 
-  getPatients(){
-    return this.users.filter(x => x.position == 'Patient');
+  getPatients(users: model.User[]){
+    return users.filter(x => x.position == 'Patient');
   }
 
   //get user by id
@@ -254,7 +254,7 @@ export class AppService {
 
   // return list of joined tables on test case and user
   getPatientTest(){
-    let patients = this.getPatients();
+    let patients = this.getPatients(this.users);
     let tests = this.testCases;
     let patientTest = [];
 
