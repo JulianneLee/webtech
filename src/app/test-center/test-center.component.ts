@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
+import { Subscription } from 'rxjs';
 
 import { AppService } from '../app-service';
 import { TestCenter } from '../app-model';
@@ -16,6 +17,7 @@ import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.c
 
 export class TestCenterComponent implements AfterViewInit {
   testCenters: TestCenter[] = [];
+  testCentersSub: Subscription;
   displayedColumns: string[] = ['centerID', 'name'];
   dataSource = new MatTableDataSource<TestCenter>();
 
@@ -28,7 +30,8 @@ export class TestCenterComponent implements AfterViewInit {
   }
 
   ngOnInit(){
-    this.testCenters = this.appService.getTestCenter();
+    this.appService.getTestCenter();
+    this.refreshData();
     this.dataSource = new MatTableDataSource<TestCenter>(this.testCenters);
   }
 
@@ -37,13 +40,21 @@ export class TestCenterComponent implements AfterViewInit {
     public appService: AppService
   ) {}
 
+  refreshData(){
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+        this.testCenters = testCenters;
+      })
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(AddTestCenterDialog, {
       width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data = this.appService.getTestCenter();
+      this.refreshData();
+      this.dataSource.data = this.testCenters;
     });
   }
 

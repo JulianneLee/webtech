@@ -15,6 +15,8 @@ export class AppService {
   private currentUserID = null;
   private userUpdated = new Subject<model.User[]>();
   private testCenterUpdated = new Subject<model.TestCenter[]>();
+  private testCaseUpdated = new Subject<model.TestCase[]>();
+  private testKitUpdated = new Subject<model.TestKit[]>();
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
@@ -140,11 +142,26 @@ export class AppService {
       });
   }
 
+  getTestCenterUpdatedListener(){
+    return this.testCenterUpdated.asObservable();
+  }
+
   // add test center
   addTestCenter(name:string, id:number){
     const testCenter: model.TestCenter = {
       centerID:this.testCenters.length + 1, name:name, managerID:id};
-    this.testCenters.push(testCenter);
+
+    this.http
+    .post<{message:string}>('http://localhost:3000/api/testCenters', testCenter)
+    .subscribe((responseData) => {
+      console.log(responseData.message);
+      this.testCenters.push(testCenter);
+      this.testCenterUpdated.next([...this.testCenters]);
+    });
+  }
+
+  getTestCaseUpdatedListener(){
+    return this.testCaseUpdated.asObservable();
   }
 
   // get all test cases
@@ -158,6 +175,10 @@ export class AppService {
       patientID:patientID, type:type, symptom:symptom, officerID:officerID,
       testCreated: new Date().toString(), status: 'Pending', result:null, resultCreated:null}
     this.testCases.push(test);
+  }
+
+  getTestKitUpdatedListener(){
+    return this.testKitUpdated.asObservable();
   }
 
   // get all test kits

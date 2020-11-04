@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Subscription } from 'rxjs';
 
 import { AppService } from '../../app-service'
 import { TestCenter } from '../../app-model';
@@ -12,8 +13,9 @@ import { TestCenter } from '../../app-model';
 })
 
 export class AddTestCenterDialog {
-  centers: TestCenter[] = [];
+  testCenters: TestCenter[] = [];
   msg: string;
+  testCentersSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -26,13 +28,21 @@ export class AddTestCenterDialog {
   }
 
   ngOnInit(){
-    this.centers = this.appService.getTestCenter();
+    this.appService.getTestCenter();
+    this.refreshData();
+  }
+
+  refreshData(){
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+        this.testCenters = testCenters;
+      })
   }
 
   // pass form value to addTestCenter function
   onAddTestCenter(form: NgForm){
     if(form.valid){
-      if(this.centers.find(x => x.name == form.value.name)){
+      if(this.testCenters.find(x => x.name == form.value.name)){
         this.msg = 'Test Center name exist!'
       } else{
         this.msg = 'Test Center has been successfully added.'
