@@ -59,6 +59,15 @@ app.get('/api/users', (req, res, next) => {
   })
 });
 
+app.get('/api/testCenters', (req, res, next) => {
+  TestCenter.find().then(documents => {
+    res.status(200).json({
+      message: 'Test Centers fetched successfully',
+      results: documents
+    });
+  })
+});
+
 app.post('/api/testCenters', (req, res, next) => {
   const testCenter = new TestCenter({
     name: req.body.name,
@@ -67,7 +76,7 @@ app.post('/api/testCenters', (req, res, next) => {
   testCenter.save().then(result => {
     res.status(200).json({
       message: 'Test Center added successfully',
-      testCenterId: result._id
+      id: result._id
     });
   });
 });
@@ -83,13 +92,9 @@ app.post('/api/testCases', (req, res, next) => {
     resultCreated: req.body.resultCreated
   });
   testCase.save().then(result => {
-    res.status(201).json({
+    res.status(200).json({
       message: 'Test Case created',
-      result:result
-    })
-  }).catch(err => {
-    res.status(500).json({
-      error:err
+      id: result._id
     })
   })
 })

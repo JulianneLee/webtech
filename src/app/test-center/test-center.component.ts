@@ -16,7 +16,6 @@ import { AddTestCenterDialog } from '../dialog/add-test-center/add-test-center.c
 })
 
 export class TestCenterComponent implements AfterViewInit {
-  testCenters: TestCenter[] = [];
   testCentersSub: Subscription;
   displayedColumns: string[] = ['centerID', 'name'];
   dataSource = new MatTableDataSource<TestCenter>();
@@ -31,8 +30,10 @@ export class TestCenterComponent implements AfterViewInit {
 
   ngOnInit(){
     this.appService.getTestCenter();
-    this.refreshData();
-    this.dataSource = new MatTableDataSource<TestCenter>(this.testCenters);
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+        this.dataSource = new MatTableDataSource<TestCenter>(testCenters);
+      })
   }
 
   constructor(
@@ -40,21 +41,16 @@ export class TestCenterComponent implements AfterViewInit {
     public appService: AppService
   ) {}
 
-  refreshData(){
-    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
-      .subscribe((testCenters: TestCenter[]) => {
-        this.testCenters = testCenters;
-      })
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(AddTestCenterDialog, {
       width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshData();
-      this.dataSource.data = this.testCenters;
+      this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+        this.dataSource.data = testCenters;
+      })
     });
   }
 

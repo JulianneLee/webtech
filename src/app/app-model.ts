@@ -1,5 +1,5 @@
 export class User {
-  userID: number;
+  userID: string;
   username: string;
   password: string;
   name: string;
@@ -8,11 +8,11 @@ export class User {
 }
 
 export class TestCase {
-  testID: number;
-  patientID: number;
+  testID: string;
+  patientID: string;
   type: string;
   symptom: string;
-  officerID: number;
+  officerID: string;
   testCreated: string;
   status: string;
   result: string;
@@ -20,21 +20,21 @@ export class TestCase {
 }
 
 export class TestCenter {
-  centerID: number;
+  centerID: string;
   name: string;
-  managerID: number;
+  managerID: string;
 }
 
 export class TestKit {
-  kitID: number;
+  kitID: string;
   name: string;
   stock: number;
   status: string;
-  centerID: number;
+  centerID: string;
 }
 
 export interface PatientTest {
-  testID: number;
+  testID: string;
   name: string;
   type: string;
   symptom: string;
@@ -43,21 +43,21 @@ export interface PatientTest {
 }
 
 export interface TestKitViewModel {
-  kitID: number;
+  kitID: string;
   name: string;
   stock: number;
   centerName: string;
 }
 
 export interface GenerateReport {
-  centerID: number;
+  centerID: string;
   centerName: string;
   managerName: string;
   testCases: TestCaseViewModel[];
 }
 
 export interface TestCaseViewModel {
-  testID: number;
+  testID: string;
   patientName: string;
   officerName: string;
   testCreated: string;

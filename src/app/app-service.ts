@@ -46,7 +46,7 @@ export class AppService {
   }
 
   // set current login user ID
-  setCurrentUserID(userID:number){
+  setCurrentUserID(userID:string){
     this.currentUserID = userID
   }
 
@@ -79,7 +79,7 @@ export class AppService {
   }
 
   //get user by id
-  getUserByID(id:number){
+  getUserByID(id:string){
     return this.users.find(x => x.userID == id).name
   }
 
@@ -117,9 +117,9 @@ export class AppService {
     };
 
     this.http
-    .post<{message:string}>('http://localhost:3000/api/users', user)
+    .post<{message:string, id:string}>('http://localhost:3000/api/users', user)
     .subscribe((responseData) => {
-      console.log(responseData.message);
+      user.userID = responseData.id;
       this.users.push(user);
       this.userUpdated.next([...this.users]);
     });
@@ -131,6 +131,7 @@ export class AppService {
       .pipe(map((data) => {
         return data.results.map(item => {
           return {
+            centerID: item._id,
             name: item.name,
             managerID: item.managerID
           };
@@ -148,17 +149,15 @@ export class AppService {
   }
 
   // add test center
-  addTestCenter(name:string, id:number){
-    const testCenter: model.TestCenter = {
-      centerID:this.testCenters.length + 1, name:name, managerID:id};
-
+  addTestCenter(name:string, id:string){
+    const testCenter: model.TestCenter = {centerID:null, name:name, managerID:id};
     this.http
-    .post<{message:string}>('http://localhost:3000/api/testCenters', testCenter)
-    .subscribe((responseData) => {
-      console.log(responseData.message);
-      this.testCenters.push(testCenter);
-      this.testCenterUpdated.next([...this.testCenters]);
-    });
+      .post<{message:string, id:string}>('http://localhost:3000/api/testCenters', testCenter)
+      .subscribe((responseData) => {
+        testCenter.centerID = responseData.id;
+        this.testCenters.push(testCenter);
+        this.testCenterUpdated.next([...this.testCenters]);
+      });
   }
 
   getTestCaseUpdatedListener(){
@@ -192,8 +191,8 @@ export class AppService {
   }
 
   // add test case
-  addTest(patientID:number, type:string, symptom:string, officerID:number){
-    const test: model.TestCase = {testID:this.getTests().length + 1,
+  addTest(patientID:string, type:string, symptom:string, officerID:string){
+    const test: model.TestCase = {testID:null,
       patientID:patientID, type:type, symptom:symptom, officerID:officerID,
       testCreated: new Date().toString(), status: 'Pending', result:null, resultCreated:null}
     this.testCases.push(test);
@@ -210,7 +209,7 @@ export class AppService {
 
   // get test kit stock by id
   getTestKitStockById(id:number){
-    return this.testKits.find(x => x.kitID == id);
+    return this.testKits.find(x => x.kitID == id.toString());
   }
 
   // get all test kits that have active status with center name
@@ -231,26 +230,26 @@ export class AppService {
   // add test kits
   addTestKit(name:string, stock:number, centerID:number){
     const testKit: model.TestKit = {
-      kitID: this.getTestKit().length + 1,
-      name:name, stock:stock, centerID:centerID, status:'Active'
+      kitID: null,
+      name:name, stock:stock, centerID:centerID.toString(), status:'Active'
     }
     this.testKits.push(testKit);
   }
 
   // update test kit
   updateTestKit(id:number, stock:number){
-    return this.testKits.find(x => x.kitID == id).stock = stock;
+    return this.testKits.find(x => x.kitID == id.toString()).stock = stock;
   }
 
   // delete test kit
   deleteTestKit(id:number){
-    return this.testKits.find(x => x.kitID == id).status = 'Deleted';
+    return this.testKits.find(x => x.kitID == id.toString()).status = 'Deleted';
     // return this.testKits.splice(this.testKits.findIndex(x => x.kitID == id), 1);
   }
 
   // get test case by id
   getTestByID(id:number){
-    return this.testCases.find(s => s.testID == id);
+    return this.testCases.find(s => s.testID == id.toString());
   }
 
   // return list of joined tables on test case and user

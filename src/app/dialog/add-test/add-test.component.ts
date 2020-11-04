@@ -36,7 +36,7 @@ export class AddTestDialog {
         form.value.patientID,
         form.value.type,
         form.value.symptom,
-        this.appService.getCurrentUser() ? this.appService.getCurrentUser().userID : null
+        this.appService.getCurrentUser().userID
         );
       this.snackBar.open("Test has been successfully added.", "close", {duration: 2000,});
       this.dialogRef.close();
