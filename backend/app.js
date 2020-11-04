@@ -2,7 +2,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose")
-const models = require('./models')
+
+const User = require('./models/User')
 
 const app = express()
 
@@ -40,7 +41,7 @@ app.post('/api/users', (req, res, next) => {
 });
 
 app.get('/api/users', (req, res, next) => {
-  models.User.find().then(documents => {
+  User.find().then(documents => {
     // console.log(users);
     res.status(200).json({
       message: 'Post fetched successfully',
