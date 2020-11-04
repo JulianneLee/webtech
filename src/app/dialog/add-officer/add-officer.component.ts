@@ -13,11 +13,12 @@ import { TestCenter, User } from '../../app-model'
 })
 
 export class AddOfficerDialog {
-  centers: TestCenter [] = [];
+  testCenters: TestCenter [] = [];
   users: User [] = [];
   hide = true;
   msg: string;
   usersSub: Subscription;
+  testCentersSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -31,11 +32,14 @@ export class AddOfficerDialog {
 
   ngOnInit(){
     this.appService.getTestCenter();
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+        this.testCenters = testCenters;
+      })
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
         this.users = users;
       })
-    // this.users = this.appService.getUsers();
   }
 
   // pass form value to addUser function
