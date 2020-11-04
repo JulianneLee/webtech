@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs'
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router'
 
 @Injectable({providedIn:'root'})
 
@@ -37,7 +38,7 @@ export class AppService {
     // this.setCurrentUserID(4); //patient
   }
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private router:Router){}
 
   // get current login user detail
   getCurrentUser(){
@@ -166,6 +167,27 @@ export class AppService {
 
   // get all test cases
   getTests(){
+    this.http.get<{message: string, results: any}>('http://localhost:3000/api/testCases')
+      .pipe(map((data) => {
+        return data.results.map(item => {
+          return {
+            testID: item._id,
+            patientID: item.,
+            type: item.type,
+            symptom: item.symptom,
+            officerID: item.,
+            testCreated: item.testCreated,
+            status: item.status,
+            result: item.result,
+            resultCreated: item.resultCreated
+          };
+        });
+      }))
+
+      .subscribe(transformedData => {
+        this.users = transformedData;
+        this.userUpdated.next([...this.users])
+      });
     return this.testCases;
   }
 
@@ -248,14 +270,23 @@ export class AppService {
   // update test
   updateTest(id:number, result:string, status:string, resultCreated:string,
     type:string, symptom:string){
-    let upTest = this.getTestByID(id);
-    upTest.status = status;
-    upTest.resultCreated = resultCreated;
-    upTest.result = result;
-    upTest.type = type;
-    upTest.symptom = symptom;
+      //patientID, officerID, testCreated
+      const testCase: model.TestCase = {testID: id, result: result, status: status,
+      resultCreated: resultCreated, type: type, symptom: symptom}
 
-    return upTest;
+      this.http.put('http://localhost:300/api/testCases/' + id, testCase)
+        .subscribe((responseData) => {
+          console.log(responseData)
+          this.router.navigate(['/'])
+        })
+    // let upTest = this.getTestByID(id);
+    // upTest.status = status;
+    // upTest.resultCreated = resultCreated;
+    // upTest.result = result;
+    // upTest.type = type;
+    // upTest.symptom = symptom;
+
+    // return upTest;
   }
 
   // generate report
