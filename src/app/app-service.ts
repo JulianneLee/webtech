@@ -69,8 +69,8 @@ export class AppService {
     return this.users.filter(x => x.position == 'Manager');
   }
 
-  getTesters(){
-    return this.users.filter(x => x.position == 'Tester');
+  getTesters(users: model.User[]){
+    return users.filter(x => x.position == 'Tester');
   }
 
   getPatients(){

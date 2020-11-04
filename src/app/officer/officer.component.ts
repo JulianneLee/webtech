@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSort } from '@angular/material/sort'
+import { Subscription } from 'rxjs';
 
 import { AppService } from '../app-service';
 import { User } from '../app-model';
@@ -15,7 +16,7 @@ import { AddOfficerDialog } from '../dialog/add-officer/add-officer.component';
 })
 
 export class OfficerComponent implements AfterViewInit {
-  testers: User[] = [];
+  usersSub: Subscription;
   displayedColumns: string[] = ['id', 'username', 'name', 'position'];
   dataSource = new MatTableDataSource<User>();
 
@@ -28,8 +29,10 @@ export class OfficerComponent implements AfterViewInit {
   }
 
   ngOnInit(){
-    this.testers = this.appService.getTesters();
-    this.dataSource = new MatTableDataSource<User>(this.testers);
+    this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.dataSource = new MatTableDataSource<User>(this.appService.getTesters(users));
+      })
   }
 
   constructor(
@@ -43,7 +46,10 @@ export class OfficerComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        this.dataSource.data = this.appService.getTesters();
+      this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.dataSource.data = this.appService.getTesters(users);
+      })
     });
   }
 
