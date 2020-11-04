@@ -51,13 +51,14 @@ export class TestCaseComponent implements AfterViewInit {
     ) {}
 
   ngOnInit(){
+    this.appService.getUsers()
     this.usersSub = this.appService.getUserUpdatedListener()
     .subscribe((users: User[]) => {
       this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients(users));
     })
 
-    this.tests = this.appService.getPatientTest();
-    this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
+    // this.tests = this.appService.getPatientTest();
+    // this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
 
     // this.patients = this.appService.getPatients();
     // this.dataPatient = new MatTableDataSource<User>(this.patients);

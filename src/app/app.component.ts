@@ -33,6 +33,7 @@ export class AppComponent {
     // this.appService.addSampleData();
     this.appService.getUsers();
     this.currentUser = this.appService.getCurrentUser();
+    this.appService.getTests();
     this.router.navigate(['/index']);
   }
 
