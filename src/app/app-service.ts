@@ -171,10 +171,10 @@ export class AppService {
         return data.results.map(item => {
           return {
             testID: item._id,
-            patientID: item.,
+            patientID: item.patientID,
             type: item.type,
             symptom: item.symptom,
-            officerID: item.,
+            officerID: item.officerID,
             testCreated: item.testCreated,
             status: item.status,
             result: item.result,
@@ -184,10 +184,10 @@ export class AppService {
       }))
 
       .subscribe(transformedData => {
-        this.users = transformedData;
-        this.userUpdated.next([...this.users])
+        this.testCases = transformedData;
+        this.testCaseUpdated.next([...this.testCases])
       });
-    return this.testCases;
+    // return this.testCases;
   }
 
   // add test case
@@ -248,14 +248,14 @@ export class AppService {
   }
 
   // get test case by id
-  getTestByID(id:number){
-    return this.testCases.find(s => s.testID == id.toString());
+  getTestByID(id:string){
+    return this.testCases.find(s => s.testID == id);
   }
 
   // return list of joined tables on test case and user
   getPatientTest(){
     let patients = this.getPatients();
-    let tests = this.getTests();
+    let tests = this.testCases;
     let patientTest = [];
 
     for(let i = 0; i < tests.length; i++){
@@ -267,17 +267,17 @@ export class AppService {
   }
 
   // update test
-  updateTest(id:number, result:string, status:string, resultCreated:string,
+  updateTest(id:string, result:string, status:string, resultCreated:string,
     type:string, symptom:string){
       //patientID, officerID, testCreated
-      const testCase: model.TestCase = {testID: id, result: result, status: status,
-      resultCreated: resultCreated, type: type, symptom: symptom}
+      // const testCase: model.TestCase = {testID: id, result: result, status: status,
+      // resultCreated: resultCreated, type: type, symptom: symptom}
 
-      this.http.put('http://localhost:300/api/testCases/' + id, testCase)
-        .subscribe((responseData) => {
-          console.log(responseData)
-          this.router.navigate(['/'])
-        })
+      // this.http.put('http://localhost:300/api/testCases/' + id, testCase)
+      //   .subscribe((responseData) => {
+      //     console.log(responseData)
+      //     this.router.navigate(['/'])
+      //   })
     // let upTest = this.getTestByID(id);
     // upTest.status = status;
     // upTest.resultCreated = resultCreated;

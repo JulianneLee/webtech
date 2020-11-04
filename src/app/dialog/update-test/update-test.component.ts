@@ -12,7 +12,7 @@ import { TestCase } from '../../app-model'
 })
 
 export class UpdateTestDialog {
-  testID:number = 0;
+  testID:string;
   title: string;
   testCase: TestCase;
 

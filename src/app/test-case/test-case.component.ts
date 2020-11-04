@@ -78,7 +78,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  openDialogEdit(id:number): void {
+  openDialogEdit(id:string): void {
     const dialogRef = this.dialog.open(EditInfoDialog, {
       width: '100%',
     });
@@ -88,7 +88,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
   }
 
-  openDialogUpdateTest(id:number): void {
+  openDialogUpdateTest(id:string): void {
     const dialogRef = this.dialog.open(UpdateTestDialog, {
       width: '400px',
     });

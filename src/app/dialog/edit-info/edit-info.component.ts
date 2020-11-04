@@ -17,7 +17,7 @@ interface Type {
 })
 
 export class EditInfoDialog {
-  testID:number = 0;
+  testID:string;
   selectedType: string;
   testCase: TestCase;
   user: string;
