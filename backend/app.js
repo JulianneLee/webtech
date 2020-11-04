@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS, PUT");
   next();
 })
 
@@ -53,7 +53,7 @@ app.post('/api/users', (req, res, next) => {
 app.get('/api/users', (req, res, next) => {
   User.find().then(documents => {
     res.status(200).json({
-      message: 'Post fetched successfully',
+      message: 'User fetched successfully',
       users: documents
     });
   })
@@ -71,6 +71,37 @@ app.post('/api/testCenters', (req, res, next) => {
     });
   });
 });
+
+app.post('/api/testCases', (req, res, next) => {
+  const testCase = new TestCase({
+    type: req.body.type,
+    symptom: req.body.symptom,
+    officerID: req.body.officerID,
+    testCreated: req.body.testCreated,
+    status: req.body.status,
+    result: req.body.result,
+    resultCreated: req.body.resultCreated
+  });
+  testCase.save().then(result => {
+    res.status(201).json({
+      message: 'Test Case created',
+      result:result
+    })
+  }).catch(err => {
+    res.status(500).json({
+      error:err
+    })
+  })
+})
+
+app.put('/api/testCases/:id', (req, res, next) => {
+  TestCase.updateOne({_id: req.params.id}, req.body).then(result =>{
+    console.log(result);
+    res.status(200).json({
+      message: "Test Case updated!"
+    })
+  })
+})
 
 app.post('/api/user/login',(req,res,next) => {
   let fetchedUser;
