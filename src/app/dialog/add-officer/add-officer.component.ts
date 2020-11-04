@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../../app-service'
 import { TestCenter, User } from '../../app-model'
@@ -16,6 +17,7 @@ export class AddOfficerDialog {
   users: User [] = [];
   hide = true;
   msg: string;
+  usersSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -28,7 +30,11 @@ export class AddOfficerDialog {
   }
 
   ngOnInit(){
-    this.centers = this.appService.getTestCenter();
+    this.appService.getTestCenter();
+    this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.users = users;
+      })
     // this.users = this.appService.getUsers();
   }
 

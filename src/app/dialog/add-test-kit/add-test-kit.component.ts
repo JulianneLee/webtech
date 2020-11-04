@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../../app-service'
 import { TestCenter, TestKit } from '../../app-model'
@@ -15,6 +16,7 @@ export class AddTestKitDialog {
   centers: TestCenter [] = [];
   testKits: TestKit [] = [];
   msg: string;
+  testKitsSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -27,7 +29,7 @@ export class AddTestKitDialog {
   }
 
   ngOnInit(){
-    this.centers = this.appService.getTestCenter();
+    this.appService.getTestCenter();
     this.testKits = this.appService.getTestKit();
   }
 

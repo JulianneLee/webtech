@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../../app-service';
 import { User } from '../../app-model';
@@ -16,6 +17,7 @@ export class AddManagerDialog {
   check: string;
   users: User[] = [];
   msg: string;
+  usersSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -28,7 +30,11 @@ export class AddManagerDialog {
   }
 
   ngOnInit(){
-    this.users = this.appService.getUsers();
+    this.appService.getUsers();
+    this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.users = users;
+      })
   }
 
   // pass form value to addUser function

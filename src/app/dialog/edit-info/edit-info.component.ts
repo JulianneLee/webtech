@@ -18,13 +18,11 @@ interface Type {
 
 export class EditInfoDialog {
   testID:number = 0;
-
   selectedType: string;
   testCase: TestCase;
   user: string;
   tester: string;
   date: string;
-
 
   constructor(
     public dialogRef: MatDialogRef<EditInfoDialog>,

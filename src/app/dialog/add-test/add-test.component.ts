@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../../app-service'
 import { User } from '../../app-model'
@@ -13,6 +14,7 @@ import { User } from '../../app-model'
 
 export class AddTestDialog {
   patients: User [] = [];
+  testsSub: Subscription;
 
   constructor(
     public appService: AppService,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../../app-service'
 import { User } from '../../app-model';
@@ -15,6 +16,7 @@ export class AddPatientDialog {
   hide = true;
   users: User[] = [];
   msg: string;
+  usersSub: Subscription;
 
   constructor(
     public appService: AppService,
@@ -26,6 +28,10 @@ export class AddPatientDialog {
   }
 
   ngOnInit(){
+    this.usersSub = this.appService.getUserUpdatedListener()
+      .subscribe((users: User[]) => {
+        this.users = users;
+      })
     // this.users = this.appService.getUsers();
   }
 
