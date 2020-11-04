@@ -53,8 +53,8 @@ app.post('/api/users', (req, res, next) => {
 app.get('/api/users', (req, res, next) => {
   User.find().then(documents => {
     res.status(200).json({
-      message: 'Post fetched successfully',
-      users: documents
+      message: 'Users fetched successfully',
+      results: documents
     });
   })
 });
@@ -70,6 +70,15 @@ app.post('/api/testCenters', (req, res, next) => {
       testCenterId: result._id
     });
   });
+});
+
+app.get('/api/testCenters', (req, res, next) => {
+  TestCenter.find().then(documents => {
+    res.status(200).json({
+      message: 'Test Centers fetched successfully',
+      results: documents
+    });
+  })
 });
 
 app.post('/api/user/login',(req,res,next) => {
