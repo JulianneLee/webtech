@@ -47,7 +47,7 @@ export class TestHistoryComponent implements AfterViewInit{
   constructor(public dialog: MatDialog,
     public appService: AppService) {}
 
-  openDialogViewPending(id:number): void {
+  openDialogViewPending(id:string): void {
     const dialogRef = this.dialog.open(ViewTestResultDialog, {
       width: '500px'
     });

@@ -29,6 +29,7 @@ export class OfficerComponent implements AfterViewInit {
   }
 
   ngOnInit(){
+    this.appService.getUsers();
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
         this.dataSource = new MatTableDataSource<User>(this.appService.getTesters(users));
