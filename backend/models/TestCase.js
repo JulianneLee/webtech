@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const testCaseSchema = mongoose.Schema({
   patientID: {type: String, required:true},
