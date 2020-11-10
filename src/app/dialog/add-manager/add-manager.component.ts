@@ -33,7 +33,7 @@ export class AddManagerDialog {
     this.appService.getUsers();
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
-        this.users = users;
+        this.users = this.appService.getManagers();
       })
   }
 

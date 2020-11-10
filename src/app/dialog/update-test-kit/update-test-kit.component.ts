@@ -12,7 +12,7 @@ import { AppService } from '../../app-service'
 })
 
 export class UpdateTestKitDialog {
-  testKitID:number = 0;
+  testKitID:string;
   testKit: TestKit;
 
   constructor(
@@ -33,7 +33,8 @@ export class UpdateTestKitDialog {
   // pass form value
   onUpdateTestKit(form: NgForm){
     if(form.valid){
-      this.appService.updateTestKit(this.testKitID, form.value.stock);
+      this.appService.updateTestKit(
+        this.testKitID, form.value.stock, this.testKit.name, this.testKit.centerID);
       this.snackBar.open("You have updated the test kit.", "close", {duration: 2000,});
       this.dialogRef.close();
     }

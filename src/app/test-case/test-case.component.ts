@@ -54,7 +54,7 @@ export class TestCaseComponent implements AfterViewInit {
     this.appService.getUsers()
     this.usersSub = this.appService.getUserUpdatedListener()
     .subscribe((users: User[]) => {
-      this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients(users));
+      this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients());
     })
 
     // this.tests = this.appService.getPatientTest();
@@ -73,7 +73,7 @@ export class TestCaseComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
-        this.dataPatient.data = this.appService.getPatients(users);
+        this.dataPatient.data = this.appService.getPatients();
       })
     });
   }

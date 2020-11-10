@@ -31,14 +31,17 @@ export class AddOfficerDialog {
   }
 
   ngOnInit(){
+    // retrieve from data from api
     this.appService.getTestCenter();
+
+    // retrieve updated test center and user arrays
     this.testCentersSub = this.appService.getTestCenterUpdatedListener()
       .subscribe((testCenters: TestCenter[]) => {
         this.testCenters = testCenters;
       })
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
-        this.users = users;
+        this.users = this.appService.getTesters();
       })
   }
 
