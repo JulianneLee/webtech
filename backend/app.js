@@ -81,6 +81,15 @@ app.post('/api/testCenters', (req, res, next) => {
   });
 });
 
+app.get('/api/testCases', (req, res, next) => {
+  TestCase.find().then(documents => {
+    res.status(200).json({
+      message: 'Test Cases fetched successfully',
+      results: documents
+    });
+  })
+});
+
 app.post('/api/testCases', (req, res, next) => {
   const testCase = new TestCase({
     type: req.body.type,
@@ -105,6 +114,45 @@ app.put('/api/testCases/:id', (req, res, next) => {
     res.status(200).json({
       message: "Test Case updated!"
     })
+  })
+})
+
+app.get('/api/testKits', (req, res, next) => {
+  TestKit.find().then(documents => {
+    res.status(200).json({
+      message: 'Test Kits fetched successfully',
+      results: documents
+    });
+  })
+});
+
+app.post('/api/testKits', (req, res, next) => {
+  const testKit = new TestKit({
+    name: req.body.name,
+    stock: req.body.stock,
+    centerID: req.body.centerID
+  });
+  testKit.save().then(result => {
+    res.status(200).json({
+      message: 'Test Kit added successfully',
+      id: result._id
+    })
+  })
+})
+
+app.put('/api/testKits/:id', (req, res, next) => {
+  TestKit.updateOne({_id: req.params.id}, req.body).then(result =>{
+    console.log(result);
+    res.status(200).json({
+      message: "Test Kit updated!"
+    })
+  })
+})
+
+app.delete("/api/testKits/:id",(req,res,next) => {
+  TestKit.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({message: "TestKit deleted!"})
   })
 })
 

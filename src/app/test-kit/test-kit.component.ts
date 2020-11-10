@@ -4,9 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort'
+import { Subscription } from 'rxjs'
 
 import { AppService } from '../app-service';
-import { TestKitViewModel } from '../app-model';
+import { TestCenter, TestKit, TestKitViewModel } from '../app-model';
 import { AddTestKitDialog } from '../dialog/add-test-kit/add-test-kit.component';
 import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.component';
 
@@ -16,7 +17,11 @@ import { UpdateTestKitDialog } from '../dialog/update-test-kit/update-test-kit.c
 })
 
 export class TestKitComponent implements AfterViewInit {
-  testCenters: TestKitViewModel[] = [];
+  testKitsSub: Subscription;
+  testCentersSub: Subscription;
+  testKitsVM: TestKitViewModel[] = [];
+  testCenters: TestCenter[] = [];
+  testKits: TestKit[] = [];
   displayedColumns: string[] = ['kitID', 'name', 'stock', 'centerName', 'action'];
   dataSource = new MatTableDataSource<TestKitViewModel>();
 
@@ -29,8 +34,20 @@ export class TestKitComponent implements AfterViewInit {
   }
 
   ngOnInit(){
-    this.testCenters = this.appService.getTestKitCenter();
-    this.dataSource = new MatTableDataSource<TestKitViewModel>(this.testCenters);
+    // retrieve from data from api
+    this.appService.getTestCenter();
+    this.appService.getTestKit();
+
+    // retrieve updated test center and kit arrays
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+
+        this.testKitsSub = this.appService.getTestKitUpdatedListener()
+          .subscribe((testKits: TestKit[]) => {
+            this.testKitsVM = this.appService.getTestKitCenter(testKits, testCenters);
+            this.dataSource = new MatTableDataSource<TestKitViewModel>(this.testKitsVM);
+          })
+      })
   }
 
   constructor(
@@ -38,18 +55,30 @@ export class TestKitComponent implements AfterViewInit {
     public appService: AppService
   ) {}
 
+  refreshTable(){
+    this.testCentersSub = this.appService.getTestCenterUpdatedListener()
+      .subscribe((testCenters: TestCenter[]) => {
+
+        this.testKitsSub = this.appService.getTestKitUpdatedListener()
+          .subscribe((testKits: TestKit[]) => {
+            this.testKitsVM = this.appService.getTestKitCenter(testKits, testCenters);
+            this.dataSource.data = this.testKitsVM;
+          })
+      })
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(AddTestKitDialog, {
       width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data = this.appService.getTestKitCenter();
+      this.refreshTable()
     });
   }
 
   // open dialog and pass selected testkit to update
-  openDialogUpdate(id:number): void {
+  openDialogUpdate(id:string): void {
     const dialogRef = this.dialog.open(UpdateTestKitDialog, {
       width: '300px',
     });
@@ -57,14 +86,14 @@ export class TestKitComponent implements AfterViewInit {
     dialogRef.componentInstance.testKitID = id;
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data = this.appService.getTestKitCenter();
+      this.refreshTable()
     });
   }
 
   // delete test kit
-  onDelete(id:number): void {
-    if(this.appService.deleteTestKit(id))
-      this.dataSource.data = this.appService.getTestKitCenter();
+  onDelete(id:string): void {
+    this.appService.deleteTestKit(id)
+    this.refreshTable()
   }
 
   applyFilter(event: Event) {

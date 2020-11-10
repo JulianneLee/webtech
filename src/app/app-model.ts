@@ -29,7 +29,6 @@ export class TestKit {
   kitID: string;
   name: string;
   stock: number;
-  status: string;
   centerID: string;
 }
 

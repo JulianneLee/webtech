@@ -32,7 +32,7 @@ export class OfficerComponent implements AfterViewInit {
     this.appService.getUsers();
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
-        this.dataSource = new MatTableDataSource<User>(this.appService.getTesters(users));
+        this.dataSource = new MatTableDataSource<User>(this.appService.getTesters());
       })
   }
 
@@ -49,7 +49,7 @@ export class OfficerComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
-        this.dataSource.data = this.appService.getTesters(users);
+        this.dataSource.data = this.appService.getTesters();
       })
     });
   }

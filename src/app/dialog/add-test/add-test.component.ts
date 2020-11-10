@@ -26,7 +26,7 @@ export class AddTestDialog {
   }
 
   ngOnInit(){
-    this.patients = this.appService.getPatients(this.patients);
+    this.patients = this.appService.getPatients();
 
   }
 
