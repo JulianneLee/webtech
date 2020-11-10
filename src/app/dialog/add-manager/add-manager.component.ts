@@ -17,6 +17,7 @@ export class AddManagerDialog {
   check: string;
   users: User[] = [];
   msg: string;
+  errorMsg: string;
   usersSub: Subscription;
 
   constructor(
@@ -40,20 +41,28 @@ export class AddManagerDialog {
   // pass form value to addUser function
   onAddManager(form: NgForm){
     if(form.valid){
-      if(this.users.find(x => x.username == form.value.username)){
-        this.msg = 'Username exists!';
+      this.appService.addUser(
+        form.value.username,
+        form.value.password,
+        form.value.name,
+        'Manager',
+        null
+      )
+      this.errorMsg = this.appService.getError()
+      console.log(this.errorMsg)
+      this.appService.getErrorLisetener()
+        .subscribe((error) =>{
+          console.log("NOTTTTTT" + error)
+          this.errorMsg = error[0];
+        })
+      if(this.errorMsg){
+        this.msg = "Username exists!"
       } else {
-        this.msg = 'Manager has been successfully added.'
-        this.appService.addUser(
-          form.value.username,
-          form.value.password,
-          form.value.name,
-          'Manager',
-          null
-        )
+        this.msg = "Cibai"
         this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
+
     }
   }
 }

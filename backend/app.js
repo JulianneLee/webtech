@@ -44,7 +44,7 @@ app.post('/api/users', (req, res, next) => {
       id: result._id
     })
   }).catch(err => {
-    res.status(500).json({
+    return res.status(409).json({
       error:err
     })
   })

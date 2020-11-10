@@ -1,10 +1,11 @@
 import * as model from './app-model';
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs'
-import { map } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router'
+import { Config } from 'protractor';
 
 @Injectable({providedIn:'root'})
 
@@ -18,6 +19,8 @@ export class AppService {
   private testCenterUpdated = new Subject<model.TestCenter[]>();
   private testCaseUpdated = new Subject<model.TestCase[]>();
   private testKitUpdated = new Subject<model.TestKit[]>();
+  private errorUpdated = new Subject<string>();
+  private error: string;
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
@@ -118,11 +121,30 @@ export class AppService {
 
     this.http
     .post<{message:string, id:string}>('http://localhost:3000/api/users', user)
+    .pipe(catchError(this.handleError))
     .subscribe((responseData) => {
+      console.log(responseData)
+      // this.error.next(responseData.error)
       user.userID = responseData.id;
       this.users.push(user);
       this.userUpdated.next([...this.users]);
     });
+  }
+
+  handleError(httpError: HttpErrorResponse){
+    console.log(httpError.statusText);
+    this.error = httpError.statusText
+    this.errorUpdated.next(this.error)
+    return throwError(httpError);
+  }
+
+  getError(){
+    console.log("?????" + this.error)
+    return this.error
+  }
+
+  getErrorLisetener(){
+    return this.errorUpdated.asObservable();
   }
 
   // get all test centers
