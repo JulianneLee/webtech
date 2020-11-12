@@ -340,42 +340,42 @@ export class AppService {
   }
 
   // generate report
-  // generateReport(){
-  //   let reports: model.GenerateReport[] = [];
-  //   let centers = this.testCenters;
+  generateReport(){
+    let reports: model.GenerateReport[] = [];
+    let centers = this.testCenters;
 
-  //   for(let i = 0; i < centers.length; i++){
-  //     let centerTestCases: model.TestCaseViewModel[]
-  //       = this.getTestCasesWithCenterID(centers[i].centerID);
-  //     reports.push({
-  //       centerID:centers[i].centerID,
-  //       centerName:centers[i].name,
-  //       managerName:this.users.find(x => x.userID == centers[i].managerID).name,
-  //       testCases:centerTestCases
-  //     })
-  //   }
-  //   return reports;
-  // }
+    for(let i = 0; i < centers.length; i++){
+      let centerTestCases: model.TestCaseViewModel[]
+        = this.getTestCasesWithCenterID(centers[i].centerID);
+      reports.push({
+        centerID:centers[i].centerID,
+        centerName:centers[i].name,
+        managerName:this.users.find(x => x.userID == centers[i].managerID).name,
+        testCases:centerTestCases
+      })
+    }
+    return reports;
+  }
 
   // get test cases with center ID
-  // getTestCasesWithCenterID(id:number){
-  //   let officer = this.users.filter(x => x.centerID == id);
-  //   let centerTestCases:model.TestCaseViewModel[] = [];
+  getTestCasesWithCenterID(id:string){
+    let officer = this.users.filter(x => x.centerID == id);
+    let centerTestCases:model.TestCaseViewModel[] = [];
 
-  //   officer.forEach(o => {
-  //     let testsByTester = this.testCases.filter(x => x.officerID == o.userID);
-  //     testsByTester.forEach(tc => {
-  //       centerTestCases.push({
-  //         testID:tc.testID,
-  //         patientName:this.users.find(x => x.userID == tc.patientID).name,
-  //         officerName:o.name,
-  //         testCreated:tc.testCreated,
-  //         status:tc.status
-  //       });
-  //     });
-  //   });
-  //   return centerTestCases.sort(this.compare('status', 'desc'));
-  // }
+    officer.forEach(o => {
+      let testsByTester = this.testCases.filter(x => x.officerID == o.userID);
+      testsByTester.forEach(tc => {
+        centerTestCases.push({
+          testID:tc.testID,
+          patientName:this.users.find(x => x.userID == tc.patientID).name,
+          officerName:o.name,
+          testCreated:tc.testCreated,
+          status:tc.status
+        });
+      });
+    });
+    return centerTestCases.sort(this.compare('status', 'desc'));
+  }
 
   // dynamic sorting
   compare(key, order = 'asc') {

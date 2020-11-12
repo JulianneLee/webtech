@@ -25,11 +25,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-<<<<<<< HEAD
     "mongoose": "^5.10.9",
-=======
-    "mongoose": "^5.10.13",
->>>>>>> 7c76d31a2b6e7984e70080415e4ace6de5f425c5
     "mongoose-unique-validator": "^2.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
