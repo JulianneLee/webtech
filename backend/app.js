@@ -92,6 +92,7 @@ app.get('/api/testCases', (req, res, next) => {
 
 app.post('/api/testCases', (req, res, next) => {
   const testCase = new TestCase({
+    patientID: req.body.patientID,
     type: req.body.type,
     symptom: req.body.symptom,
     officerID: req.body.officerID,
@@ -101,14 +102,16 @@ app.post('/api/testCases', (req, res, next) => {
     resultCreated: req.body.resultCreated
   });
   testCase.save().then(result => {
+    console.log(result)
     res.status(200).json({
-      message: 'Test Case created',
+      message: 'Test Case created successfully',
       id: result._id
     })
   })
 })
 
 app.put('/api/testCases/:id', (req, res, next) => {
+  console.log(req.body)
   TestCase.updateOne({_id: req.params.id}, req.body).then(result =>{
     console.log(result);
     res.status(200).json({

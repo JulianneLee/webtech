@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort'
 import { Subscription } from 'rxjs'
 
 import { AppService } from '../app-service'
-import { User, PatientTest } from '../app-model'
+import { User, PatientTest, TestCase } from '../app-model'
 
 import { AddPatientDialog } from '../dialog/add-patient/add-patient.component'
 import { AddTestDialog } from '../dialog/add-test/add-test.component'
@@ -52,16 +52,10 @@ export class TestCaseComponent implements AfterViewInit {
 
   ngOnInit(){
     this.appService.getUsers()
-    this.usersSub = this.appService.getUserUpdatedListener()
-    .subscribe((users: User[]) => {
-      this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients());
-    })
+    this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients());
 
-    // this.tests = this.appService.getPatientTest();
-    // this.dataTestCase = new MatTableDataSource<PatientTest>(this.tests);
-
-    // this.patients = this.appService.getPatients();
-    // this.dataPatient = new MatTableDataSource<User>(this.patients);
+    this.appService.getTests()
+    this.dataTestCase = new MatTableDataSource<PatientTest>(this.appService.getPatientTest());
 
   }
 
@@ -84,7 +78,10 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataTestCase.data = this.appService.getPatientTest();
+      this.appService.getTestCaseUpdatedListener()
+      .subscribe((testCases: TestCase[]) => {
+        this.dataTestCase.data = this.appService.getPatientTest();
+      })
     });
   }
 
@@ -94,7 +91,10 @@ export class TestCaseComponent implements AfterViewInit {
     });
     dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
-      this.dataTestCase.data = this.appService.getPatientTest();
+      this.appService.getTestCaseUpdatedListener()
+      .subscribe((testCases: TestCase[]) => {
+        this.dataTestCase.data = this.appService.getPatientTest();
+      })
     });
   }
 
@@ -104,7 +104,10 @@ export class TestCaseComponent implements AfterViewInit {
     });
     dialogRef.componentInstance.testID = id;
     dialogRef.afterClosed().subscribe(result => {
-      this.dataTestCase.data = this.appService.getPatientTest();
+      this.appService.getTestCaseUpdatedListener()
+      .subscribe((testCases: TestCase[]) => {
+        this.dataTestCase.data = this.appService.getPatientTest();
+      })
     });
   }
 

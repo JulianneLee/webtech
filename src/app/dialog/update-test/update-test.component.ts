@@ -42,8 +42,10 @@ export class UpdateTestDialog {
 
   updateTest(form:NgForm){
     if(form.valid){
-      this.appService.updateTest(this.testID, form.value.result, "Completed",
-      new Date().toString(), this.testCase.type, this.testCase.symptom);
+
+
+      this.appService.updateTest(this.testID, this.testCase.patientID, this.testCase.officerID, form.value.result, "Completed",
+      new Date().toString(), this.testCase.type, this.testCase.symptom, this.testCase.testCreated);
       this.snackBar.open("You have updated the result.", "close", {duration: 2000,});
       this.dialogRef.close();
     }

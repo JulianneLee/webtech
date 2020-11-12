@@ -46,11 +46,14 @@ export class EditInfoDialog {
     if(form.valid){
       this.appService.updateTest(
         this.testID,
+        this.testCase.patientID,
+        this.testCase.officerID,
         null,
         this.testCase.status,
         null,
         form.value.type ? form.value.type:this.testCase.type,
-        form.value.symptom);
+        form.value.symptom,
+        this.testCase.testCreated);
       this.dialogRef.close();
     }
     this.snackBar.open("You have update the test's information.", "close", {duration: 2000,});

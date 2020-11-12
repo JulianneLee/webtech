@@ -7,8 +7,8 @@ const testCaseSchema = mongoose.Schema({
   officerID: {type: String, required:true},
   testCreated: {type: String, required:true},
   status: {type: String, required:true},
-  result: {type: String, required:true},
-  resultCreated: {type: String, required:true}
+  result: {type: String, required:false},
+  resultCreated: {type: String, required:false}
 });
 
 module.exports = mongoose.model('TestCase', testCaseSchema);

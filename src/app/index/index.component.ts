@@ -18,6 +18,7 @@ export class IndexComponent {
   testCasesSub: Subscription;
 
   ngOnInit() {
+    this.appService.getTests()
     this.testCasesSub = this.appService.getTestCaseUpdatedListener()
       .subscribe((testCases: TestCase[]) => {
         this.returnee = testCases.filter(x => x.type == 'Returnee').length;
