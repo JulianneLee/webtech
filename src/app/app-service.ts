@@ -6,6 +6,7 @@ import { Observable, Subject, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router'
 import { Config } from 'protractor';
+import { stringify } from 'querystring';
 
 @Injectable({providedIn:'root'})
 
@@ -217,7 +218,13 @@ export class AppService {
     const test: model.TestCase = {testID:null,
       patientID:patientID, type:type, symptom:symptom, officerID:officerID,
       testCreated: new Date().toString(), status: 'Pending', result:null, resultCreated:null}
-    this.testCases.push(test);
+      this.http
+        .post<{message:string, id:string}>('http://localhost:3000/api/testCases', test)
+        .subscribe((responseData) => {
+          test.testID = responseData.id;
+          this.testCases.push(test);
+          this.testCaseUpdated.next([...this.testCases]);
+        });
   }
 
   getTestKitUpdatedListener(){
@@ -317,26 +324,24 @@ export class AppService {
     return patientTest;
   }
 
+
   // update test
-  updateTest(id:string, result:string, status:string, resultCreated:string,
-    type:string, symptom:string){
-      //patientID, officerID, testCreated
-      // const testCase: model.TestCase = {testID: id, result: result, status: status,
-      // resultCreated: resultCreated, type: type, symptom: symptom}
+  updateTest(id:string, patientID:string, officerID:string, result:string, status:string,
+    resultCreated:string, type:string, symptom:string, testCreated:string){
+      const testCase: model.TestCase = {testID: id, patientID: patientID, officerID: officerID,
+        result: result, status: status, resultCreated: resultCreated,
+        type: type, symptom: symptom, testCreated: testCreated}
 
-      // this.http.put('http://localhost:300/api/testCases/' + id, testCase)
-      //   .subscribe((responseData) => {
-      //     console.log(responseData)
-      //     this.router.navigate(['/'])
-      //   })
-    // let upTest = this.getTestByID(id);
-    // upTest.status = status;
-    // upTest.resultCreated = resultCreated;
-    // upTest.result = result;
-    // upTest.type = type;
-    // upTest.symptom = symptom;
-
-    // return upTest;
+        this.http.put('http://localhost:3000/api/testCases/' + id, testCase)
+          .subscribe((responseData) => {
+            const test = this.testCases.findIndex(x => x.testID == id)
+            this.testCases[test].status = status
+            this.testCases[test].resultCreated = resultCreated
+            this.testCases[test].result = result
+            this.testCases[test].type = type
+            this.testCases[test].symptom = symptom
+            this.testCaseUpdated.next([...this.testCases])
+          })
   }
 
   // generate report
