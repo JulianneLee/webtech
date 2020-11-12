@@ -2,11 +2,9 @@ import * as model from './app-model';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs'
+import { Subject, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router'
-import { Config } from 'protractor';
-import { stringify } from 'querystring';
 
 @Injectable({providedIn:'root'})
 
@@ -22,24 +20,13 @@ export class AppService {
   private testKitUpdated = new Subject<model.TestKit[]>();
   private errorUpdated = new Subject<string>();
   private error: string;
+  private token: string;
+  private authStatusListener = new Subject<boolean>();
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
-    this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
-    this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
-    this.addUser('manager2', 'manager2', 'Manager 2', 'Manager', null);
-    // this.addTestCenter('Center 1', 2);
-    // this.addTestCenter('Center 2', 6);
-    // this.addTest(4, 'Suspected', 'flu', 3);
-    // this.addTest(4, 'Close Contact', 'fever', 3);
-    // this.addTest(4, 'Suspected', 'flu', 5);
-    // this.updateTest(1, 'Required to visit the doctor', 'Completed',
-    // new Date().toString(), 'Suspected', 'flu');
-
-    // this.setCurrentUserID(1); //admin
-    // this.setCurrentUserID(2); //manager
-    // this.setCurrentUserID(3); //tester
-    // this.setCurrentUserID(4); //patient
+    // this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
+    // this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
   }
 
   constructor(private http:HttpClient, private router:Router){}
@@ -54,18 +41,38 @@ export class AppService {
     this.currentUserID = userID
   }
 
-  getUserLogin(username: string, password: string){
-    let user: model.User;
-    user = this.users.find(x => x.username == username && x.password == password);
+  // getUserLogin(){
+  //   var token = this.getToken().split(" ")[0];
+  //   let user = this.users.find(x => x.username == token[0]);
+  //   if(user){
+  //     this.setCurrentUserID(user.userID);
+  //   }
+  //   return user;
+  // }
 
-    if(user){
-      this.setCurrentUserID(user.userID);
-    }
-    return user;
+  getUserLogin(username: string, password: string){
+    let authData: model.AuthData = {username: username, password: password};
+    this.http.post<{token:string, id:string}>('http://localhost:3000/api/users/login', authData)
+      .subscribe(response => {
+        const token = response.token;
+        this.token = token;
+        this.setCurrentUserID(response.id);
+        this.authStatusListener.next(true);
+      })
+  }
+
+  getAuthStatusListener(){
+    return this.authStatusListener.asObservable();
+  }
+
+  getToken(){
+    return this.token;
   }
 
   // logout
   logout(){
+    this.token = null;
+    this.authStatusListener.next(false);
     this.currentUserID = null;
   }
 
@@ -121,7 +128,7 @@ export class AppService {
     };
 
     this.http
-    .post<{message:string, id:string}>('http://localhost:3000/api/users', user)
+    .post<{message:string, id:string}>('http://localhost:3000/api/users/signup', user)
     .pipe(catchError(this.handleError))
     .subscribe((responseData) => {
       console.log(responseData)
@@ -140,7 +147,6 @@ export class AppService {
   }
 
   getError(){
-    console.log("?????" + this.error)
     return this.error
   }
 

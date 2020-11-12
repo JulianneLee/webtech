@@ -1,10 +1,15 @@
-export class User {
+export interface User {
   userID: string;
   username: string;
   password: string;
   name: string;
   position: string;
   centerID: string;
+}
+
+export interface AuthData {
+  username: string;
+  password: string;
 }
 
 export class TestCase {

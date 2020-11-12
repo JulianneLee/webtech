@@ -30,22 +30,24 @@ app.use((req, res, next) => {
   next();
 })
 
-app.post('/api/users', (req, res, next) => {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-    position: req.body.position,
-    centerID: req.body.centerID
-  });
-  user.save().then(result => {
-    res.status(201).json({
-      message: 'User created',
-      id: result._id
-    })
-  }).catch(err => {
-    return res.status(409).json({
-      error:err
+app.post('/api/users/signup', (req, res, next) => {
+  bcrypt.hash(req.body.password, 10).then(hash => {
+    const user = new User({
+      username: req.body.username,
+      password: hash,
+      name: req.body.name,
+      position: req.body.position,
+      centerID: req.body.centerID
+    });
+    user.save().then(result => {
+      res.status(201).json({
+        message: 'User created',
+        id: result._id
+      })
+    }).catch(err => {
+      return res.status(409).json({
+        error:err
+      })
     })
   })
 });
@@ -68,7 +70,7 @@ app.get('/api/testCenters', (req, res, next) => {
   })
 });
 
-app.post('/api/testCenters', (req, res, next) => {
+app.post('/api/testCenters', checkAuth, (req, res, next) => {
   const testCenter = new TestCenter({
     name: req.body.name,
     managerID: req.body.managerID
@@ -90,7 +92,7 @@ app.get('/api/testCases', (req, res, next) => {
   })
 });
 
-app.post('/api/testCases', (req, res, next) => {
+app.post('/api/testCases', checkAuth, (req, res, next) => {
   const testCase = new TestCase({
     patientID: req.body.patientID,
     type: req.body.type,
@@ -110,7 +112,7 @@ app.post('/api/testCases', (req, res, next) => {
   })
 })
 
-app.put('/api/testCases/:id', (req, res, next) => {
+app.put('/api/testCases/:id', checkAuth, (req, res, next) => {
   console.log(req.body)
   TestCase.updateOne({_id: req.params.id}, req.body).then(result =>{
     console.log(result);
@@ -129,7 +131,7 @@ app.get('/api/testKits', (req, res, next) => {
   })
 });
 
-app.post('/api/testKits', (req, res, next) => {
+app.post('/api/testKits', checkAuth, (req, res, next) => {
   const testKit = new TestKit({
     name: req.body.name,
     stock: req.body.stock,
@@ -143,7 +145,7 @@ app.post('/api/testKits', (req, res, next) => {
   })
 })
 
-app.put('/api/testKits/:id', (req, res, next) => {
+app.put('/api/testKits/:id', checkAuth, (req, res, next) => {
   TestKit.updateOne({_id: req.params.id}, req.body).then(result =>{
     console.log(result);
     res.status(200).json({
@@ -152,16 +154,16 @@ app.put('/api/testKits/:id', (req, res, next) => {
   })
 })
 
-app.delete("/api/testKits/:id",(req,res,next) => {
+app.delete("/api/testKits/:id", checkAuth, (req,res,next) => {
   TestKit.deleteOne({_id: req.params.id}).then(result => {
     console.log(result);
     res.status(200).json({message: "TestKit deleted!"})
   })
 })
 
-app.post('/api/user/login',(req,res,next) => {
+app.post('/api/users/login',(req,res,next) => {
   let fetchedUser;
-  User.findOne({email: req.body.email}).then(user => {
+  User.findOne({username: req.body.username}).then(user => {
     if (!user){
       return res.status(401).json({
         message: 'Auth failed'
@@ -176,12 +178,13 @@ app.post('/api/user/login',(req,res,next) => {
       })
     }
     const token = jwt.sign(
-      {email: fetchedUser.email, userId: fetchedUser._id},
+      {username: fetchedUser.username, id: fetchedUser._id},
       'secret_key',
       {expiresIn: '1h'}
     )
     res.status(200).json({
-      token: token
+      token: token,
+      id: fetchedUser._id
     })
   }).catch(err => {
     return res.status(401).json({

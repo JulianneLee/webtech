@@ -21,7 +21,7 @@ export class LoginComponent {
   ) { }
 
   ngOnInit() {
-
+    this.appService.getUsers();
   }
 
   onClose(): void {
@@ -29,18 +29,22 @@ export class LoginComponent {
   }
 
   login(form: NgForm){
-    this.user = this.appService.getUserLogin(form.value.username, form.value.password);
+    this.appService.getUserLogin(form.value.username, form.value.password);
     if(form.valid){
-      if(this.user){
-        this.snackBar.open("Welcome " + this.user.name, "close", {
-          duration: 3000
-        });
-        this.dialogRef.close();
-      } else {
-        this.snackBar.open("Invalid Username or Password!", "close", {
-          duration: 5000
-        });
-      }
+      this.appService.getAuthStatusListener()
+        .subscribe(()=>{
+          let user = this.appService.getCurrentUser()
+          if(user){
+            this.snackBar.open("Welcome " + user.name, "close", {
+              duration: 3000
+            });
+            this.dialogRef.close();
+          } else {
+            this.snackBar.open("Invalid Username or Password!", "close", {
+              duration: 5000
+            });
+          }
+        })
     }
   }
 }

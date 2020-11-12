@@ -58,7 +58,7 @@ export class AddManagerDialog {
       if(this.errorMsg){
         this.msg = "Username exists!"
       } else {
-        this.msg = "Cibai"
+        this.msg = "Manager added successfully!"
         this.dialogRef.close();
       }
       this.snackBar.open(this.msg, "close", {duration: 2000,});
