@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,29 +21,21 @@ import { UpdateTestDialog } from '../dialog/update-test/update-test.component'
   styleUrls: ['test-case.component.css'],
 })
 
-export class TestCaseComponent implements AfterViewInit {
+export class TestCaseComponent implements OnInit {
   breakpoint: number;
   usersSub: Subscription;
 
   tests: PatientTest[] = [];
   displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
   dataTestCase = new MatTableDataSource<PatientTest>();
-  @ViewChild('table1', {read: MatPaginator}) paginator: MatPaginator;
-  @ViewChild('table1', {read: MatSort, static: true}) sort: MatSort;
+  @ViewChild('tableOnePaginator', {read: MatPaginator}) paginatorOne: MatPaginator;
+  @ViewChild('tableOneSort', {read: MatSort, static: true}) sortOne: MatSort;
 
   patients: User[] = [];
   displayedPatientCol: string[] = ['patientID', 'name', 'username'];
   dataPatient = new MatTableDataSource<User>();
-  @ViewChild('table2', {read: MatPaginator}) additionalPaginator: MatPaginator;
-  @ViewChild('table2', {read: MatSort, static: true}) additionalSort: MatSort;
-
-  ngAfterViewInit() {
-    this.dataTestCase.paginator = this.paginator;
-    this.dataTestCase.sort = this.sort;
-
-    this.dataPatient.sort = this.additionalSort;
-    this.dataPatient.paginator = this.additionalPaginator;
-  }
+  @ViewChild('tableTwoPaginator', {read: MatPaginator}) paginatorTwo: MatPaginator;
+  @ViewChild('tableTwoSort', {read: MatSort, static: true}) sortTwo: MatSort;
 
   constructor(
     public dialog: MatDialog,
@@ -53,10 +45,13 @@ export class TestCaseComponent implements AfterViewInit {
   ngOnInit(){
     this.appService.getUsers()
     this.dataPatient = new MatTableDataSource<User>(this.appService.getPatients());
+    this.dataTestCase.paginator = this.paginatorOne;
+    this.dataTestCase.sort = this.sortOne;
 
     this.appService.getTests()
     this.dataTestCase = new MatTableDataSource<PatientTest>(this.appService.getPatientTest());
-
+    this.dataPatient.paginator = this.paginatorTwo;
+    this.dataPatient.sort = this.sortTwo;
   }
 
   openDialogPatient(): void {
@@ -65,7 +60,7 @@ export class TestCaseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.usersSub = this.appService.getUserUpdatedListener()
+      this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
         this.dataPatient.data = this.appService.getPatients();
       })
@@ -127,9 +122,5 @@ export class TestCaseComponent implements AfterViewInit {
     if (this.dataPatient.paginator) {
       this.dataPatient.paginator.firstPage();
     }
-  }
-
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 6;
   }
 }
