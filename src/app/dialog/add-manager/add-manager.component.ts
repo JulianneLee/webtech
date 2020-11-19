@@ -17,7 +17,6 @@ export class AddManagerDialog {
   check: string;
   users: User[] = [];
   msg: string;
-  errorMsg: string;
   usersSub: Subscription;
 
   constructor(
@@ -48,21 +47,16 @@ export class AddManagerDialog {
         'Manager',
         null
       )
-      this.errorMsg = this.appService.getError()
-      console.log(this.errorMsg)
-      this.appService.getErrorLisetener()
+      this.appService.getErrorListener()
         .subscribe((error) =>{
-          console.log("NOTTTTTT" + error)
-          this.errorMsg = error[0];
+          if(error){
+            this.msg = "Username exists!"
+          } else {
+            this.msg = "Manager added successfully!"
+            this.dialogRef.close();
+          }
+          this.snackBar.open(this.msg, "close", {duration: 2000,});
         })
-      if(this.errorMsg){
-        this.msg = "Username exists!"
-      } else {
-        this.msg = "Manager added successfully!"
-        this.dialogRef.close();
-      }
-      this.snackBar.open(this.msg, "close", {duration: 2000,});
-
     }
   }
 }

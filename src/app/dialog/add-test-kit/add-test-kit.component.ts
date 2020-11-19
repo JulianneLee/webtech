@@ -47,19 +47,21 @@ export class AddTestKitDialog {
   // pass form value
   onAddTestKit(form: NgForm){
     if(form.valid){
-      this.testKitsSub = this.appService.getTestKitUpdatedListener()
-        .subscribe((testKits: TestKit[]) => {
-          if(testKits.find(x => x.name == form.value.name &&
-            x.centerID == form.value.centerID)){
-            this.msg = 'This Test Kit name exists! ' +
-                        'Please use another name or edit the stock.';
+      this.appService.addTestKit(
+        form.value.name,
+        form.value.stock,
+        form.value.centerID
+        );
+      this.appService.getErrorListener()
+        .subscribe((error) =>{
+          if(error){
+            this.msg = "This Test Kit name exists! " +
+                        "Please use another name or edit the stock.";
           } else {
-            this.msg = 'Test Kit has been successfully added.'
-            this.appService.addTestKit(form.value.name,
-              form.value.stock, form.value.centerID);
+            this.msg = "Test Kit added successfully!"
             this.dialogRef.close();
           }
-          this.snackBar.open(this.msg, "close", {duration: 4000,});
+          this.snackBar.open(this.msg, "close", {duration: 2000,});
         })
     }
   }

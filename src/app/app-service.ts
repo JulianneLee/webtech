@@ -128,15 +128,20 @@ export class AppService {
     };
 
     this.http
-    .post<{message:string, id:string}>('http://localhost:3000/api/users/signup', user)
-    .pipe(catchError(this.handleError))
-    .subscribe((responseData) => {
-      console.log(responseData)
-      // this.error.next(responseData.error)
-      user.userID = responseData.id;
-      this.users.push(user);
-      this.userUpdated.next([...this.users]);
-    });
+    .post<{message: string, id: string}>('http://localhost:3000/api/users/signup', user)
+    .subscribe(
+      (responseData) => {
+        user.userID = responseData.id;
+        this.users.push(user);
+        this.userUpdated.next([...this.users])
+        this.error = null;
+        this.errorUpdated.next(this.error)
+      },
+      (err) => {
+        this.error = err.statusText;
+        console.log(this.error)
+        this.errorUpdated.next(this.error)
+      });
   }
 
   handleError(httpError: HttpErrorResponse){
@@ -150,7 +155,7 @@ export class AppService {
     return this.error
   }
 
-  getErrorLisetener(){
+  getErrorListener(){
     return this.errorUpdated.asObservable();
   }
 
@@ -182,11 +187,19 @@ export class AppService {
     const testCenter: model.TestCenter = {centerID:null, name:name, managerID:id};
     this.http
       .post<{message:string, id:string}>('http://localhost:3000/api/testCenters', testCenter)
-      .subscribe((responseData) => {
-        testCenter.centerID = responseData.id;
-        this.testCenters.push(testCenter);
-        this.testCenterUpdated.next([...this.testCenters]);
-      });
+      .subscribe(
+        (responseData) => {
+          testCenter.centerID = responseData.id;
+          this.testCenters.push(testCenter);
+          this.testCenterUpdated.next([...this.testCenters]);
+          this.error = null;
+          this.errorUpdated.next(this.error)
+        },
+        (err) => {
+          this.error = err.statusText;
+          console.log(this.error)
+          this.errorUpdated.next(this.error)
+        });
   }
 
   getTestCaseUpdatedListener(){
@@ -284,11 +297,19 @@ export class AppService {
     }
     this.http
       .post<{message:string, id:string}>('http://localhost:3000/api/testKits', testKit)
-      .subscribe((responseData) => {
-        testKit.kitID = responseData.id;
-        this.testKits.push(testKit);
-        this.testKitUpdated.next([...this.testKits]);
-      });
+      .subscribe(
+        (responseData) => {
+          testKit.kitID = responseData.id;
+          this.testKits.push(testKit);
+          this.testKitUpdated.next([...this.testKits]);
+          this.error = null;
+          this.errorUpdated.next(this.error)
+        },
+        (err) => {
+          this.error = err.statusText;
+          console.log(this.error)
+          this.errorUpdated.next(this.error)
+        });
   }
 
   // update test kit

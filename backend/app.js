@@ -80,7 +80,11 @@ app.post('/api/testCenters', checkAuth, (req, res, next) => {
       message: 'Test Center added successfully',
       id: result._id
     });
-  });
+  }).catch(err => {
+    return res.status(409).json({
+      error:err
+    })
+  })
 });
 
 app.get('/api/testCases', (req, res, next) => {
@@ -141,6 +145,10 @@ app.post('/api/testKits', checkAuth, (req, res, next) => {
     res.status(200).json({
       message: 'Test Kit added successfully',
       id: result._id
+    })
+  }).catch(err => {
+    return res.status(409).json({
+      error:err
     })
   })
 })

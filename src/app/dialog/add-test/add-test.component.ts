@@ -40,7 +40,6 @@ export class AddTestDialog {
         );
       this.snackBar.open("Test has been successfully added.", "close", {duration: 2000,});
       this.dialogRef.close();
-
     }
   }
 
