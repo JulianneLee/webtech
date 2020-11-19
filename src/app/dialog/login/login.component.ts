@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent {
   hide = true;
   user: User;
+  msg: string;
 
   constructor(
     private appService: AppService,
@@ -34,16 +35,16 @@ export class LoginComponent {
       this.appService.getAuthStatusListener()
         .subscribe(()=>{
           let user = this.appService.getCurrentUser()
-          if(user){
-            this.snackBar.open("Welcome " + user.name, "close", {
-              duration: 3000
-            });
-            this.dialogRef.close();
-          } else {
-            this.snackBar.open("Invalid Username or Password!", "close", {
-              duration: 5000
-            });
-          }
+          this.appService.getErrorListener()
+            .subscribe((error) =>{
+              if(error){
+                this.msg = "Invalid Username or Password!"
+              } else {
+                this.msg = "Welcome " + user.name
+                this.dialogRef.close();
+              }
+              this.snackBar.open(this.msg, "close", {duration: 3000,});
+            })
         })
     }
   }

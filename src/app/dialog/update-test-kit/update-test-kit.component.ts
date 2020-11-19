@@ -23,7 +23,6 @@ export class UpdateTestKitDialog {
 
   ngOnInit(){
     this.testKit = this.appService.getTestKitStockById(this.testKitID);
-
   }
 
   onClose(): void {

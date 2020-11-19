@@ -29,10 +29,6 @@ export class AddTestCenterDialog {
 
   ngOnInit(){
     this.appService.getTestCenter();
-    this.refreshData();
-  }
-
-  refreshData(){
     this.testCentersSub = this.appService.getTestCenterUpdatedListener()
       .subscribe((testCenters: TestCenter[]) => {
         this.testCenters = testCenters;

@@ -43,12 +43,19 @@ export class AppService {
   getUserLogin(username: string, password: string){
     let authData: model.AuthData = {username: username, password: password};
     this.http.post<{token:string, id:string}>('http://localhost:3000/api/users/login', authData)
-      .subscribe(response => {
-        const token = response.token;
-        this.token = token;
-        this.setCurrentUserID(response.id);
-        this.authStatusListener.next(true);
-      })
+      .subscribe(
+        (response) => {
+          const token = response.token;
+          this.token = token;
+          this.setCurrentUserID(response.id);
+          this.authStatusListener.next(true);
+          this.error = null;
+          this.errorUpdated.next(this.error)
+        },
+        (err) => {
+          this.error = err.statusText;
+          this.errorUpdated.next(this.error)
+        });
   }
 
   getAuthStatusListener(){
