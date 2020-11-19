@@ -12,7 +12,7 @@ export interface AuthData {
   password: string;
 }
 
-export class TestCase {
+export interface TestCase {
   testID: string;
   patientID: string;
   type: string;
@@ -24,13 +24,13 @@ export class TestCase {
   resultCreated: string;
 }
 
-export class TestCenter {
+export interface TestCenter {
   centerID: string;
   name: string;
   managerID: string;
 }
 
-export class TestKit {
+export interface TestKit {
   kitID: string;
   name: string;
   stock: number;
