@@ -2,7 +2,7 @@ import * as model from './app-model';
 
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs'
+import { Subject } from 'rxjs'
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router'
 
@@ -42,7 +42,8 @@ export class AppService {
   // login
   getUserLogin(username: string, password: string){
     let authData: model.AuthData = {username: username, password: password};
-    this.http.post<{token:string, id:string}>('http://localhost:3000/api/users/login', authData)
+    this.http
+      .post<{token:string, id:string}>('http://localhost:3000/api/users/login', authData)
       .subscribe(
         (response) => {
           const token = response.token;
@@ -360,24 +361,23 @@ export class AppService {
   // generate report
   generateReport(){
     let reports: model.GenerateReport[] = [];
-    let centers = this.testCenters;
+    let centers: model.TestCenter[] = this.testCenters;
 
-    for(let i = 0; i < centers.length; i++){
-      let centerTestCases: model.TestCaseViewModel[]
-        = this.getTestCasesWithCenterID(centers[i].centerID);
+    centers.forEach(c => {
+      let centerTestCases: model.TestCaseViewModel[] = this.getTestCasesWithCenterID(c.centerID);
       reports.push({
-        centerID:centers[i].centerID,
-        centerName:centers[i].name,
-        managerName:this.users.find(x => x.userID == centers[i].managerID).name,
+        centerID:c.centerID,
+        centerName:c.name,
+        managerName:this.getUserByID(c.managerID),
         testCases:centerTestCases
       })
-    }
+    })
     return reports;
   }
 
   // get test cases with center ID
   getTestCasesWithCenterID(id:string){
-    let officer = this.users.filter(x => x.centerID == id);
+    let officer: model.User[] = this.users.filter(x => x.centerID == id);
     let centerTestCases:model.TestCaseViewModel[] = [];
 
     officer.forEach(o => {
@@ -385,7 +385,7 @@ export class AppService {
       testsByTester.forEach(tc => {
         centerTestCases.push({
           testID:tc.testID,
-          patientName:this.users.find(x => x.userID == tc.patientID).name,
+          patientName:this.getUserByID(tc.patientID),
           officerName:o.name,
           testCreated:tc.testCreated,
           status:tc.status

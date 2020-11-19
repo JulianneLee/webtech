@@ -25,10 +25,6 @@ export class LoginComponent {
     this.appService.getUsers();
   }
 
-  onClose(): void {
-    this.dialogRef.close();
-  }
-
   login(form: NgForm){
     this.appService.getUserLogin(form.value.username, form.value.password);
     if(form.valid){
@@ -47,5 +43,9 @@ export class LoginComponent {
             })
         })
     }
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
   }
 }

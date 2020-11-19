@@ -17,7 +17,18 @@ export class ReportComponent {
   ngOnInit(){
     this.appService.getTestCenter();
     this.appService.getUsers();
-    this.reports = this.appService.generateReport();
+    this.appService.getTests();
+
+    this.appService.getTestCaseUpdatedListener()
+      .subscribe((testCases) => {
+        this.appService.getUserUpdatedListener()
+          .subscribe((users) => {
+            this.appService.getTestCenterUpdatedListener()
+              .subscribe((testCenters) => {
+                this.reports = this.appService.generateReport();
+              })
+          })
+      })
   }
 
   constructor(
