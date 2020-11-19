@@ -1,9 +1,9 @@
 import * as model from './app-model';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs'
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router'
 
 @Injectable({providedIn:'root'})
@@ -25,8 +25,6 @@ export class AppService {
 
   addSampleData(){
     this.addUser('admin', 'admin', 'Admin 1', 'Admin', null);
-    // this.addUser('manager1', 'manager1', 'Manager 1', 'Manager', null);
-    // this.addUser('patient1', 'patient1', 'Patient 1', 'Patient', null);
   }
 
   constructor(private http:HttpClient, private router:Router){}
@@ -41,15 +39,7 @@ export class AppService {
     this.currentUserID = userID
   }
 
-  // getUserLogin(){
-  //   var token = this.getToken().split(" ")[0];
-  //   let user = this.users.find(x => x.username == token[0]);
-  //   if(user){
-  //     this.setCurrentUserID(user.userID);
-  //   }
-  //   return user;
-  // }
-
+  // login
   getUserLogin(username: string, password: string){
     let authData: model.AuthData = {username: username, password: password};
     this.http.post<{token:string, id:string}>('http://localhost:3000/api/users/login', authData)
@@ -139,16 +129,8 @@ export class AppService {
       },
       (err) => {
         this.error = err.statusText;
-        console.log(this.error)
         this.errorUpdated.next(this.error)
       });
-  }
-
-  handleError(httpError: HttpErrorResponse){
-    console.log(httpError.statusText);
-    this.error = httpError.statusText
-    this.errorUpdated.next(this.error)
-    return throwError(httpError);
   }
 
   getError(){
@@ -197,7 +179,6 @@ export class AppService {
         },
         (err) => {
           this.error = err.statusText;
-          console.log(this.error)
           this.errorUpdated.next(this.error)
         });
   }
@@ -229,7 +210,6 @@ export class AppService {
         this.testCases = transformedData;
         this.testCaseUpdated.next([...this.testCases])
       });
-    // return this.testCases;
   }
 
   // add test case
@@ -307,7 +287,6 @@ export class AppService {
         },
         (err) => {
           this.error = err.statusText;
-          console.log(this.error)
           this.errorUpdated.next(this.error)
         });
   }
