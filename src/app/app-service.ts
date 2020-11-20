@@ -115,6 +115,7 @@ export class AppService {
   }
 
   getUserUpdatedListener(){
+    console.log("get")
     return this.userUpdated.asObservable();
   }
 
@@ -362,7 +363,6 @@ export class AppService {
   generateReport(){
     let reports: model.GenerateReport[] = [];
     let centers: model.TestCenter[] = this.testCenters;
-
     centers.forEach(c => {
       let centerTestCases: model.TestCaseViewModel[] = this.getTestCasesWithCenterID(c.centerID);
       reports.push({

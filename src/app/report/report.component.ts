@@ -18,16 +18,17 @@ export class ReportComponent {
     this.appService.getTestCenter();
     this.appService.getUsers();
     this.appService.getTests();
-
     this.appService.getTestCaseUpdatedListener()
-      .subscribe((testCases) => {
-        this.appService.getUserUpdatedListener()
-          .subscribe((users) => {
-            this.appService.getTestCenterUpdatedListener()
-              .subscribe((testCenters) => {
-                this.reports = this.appService.generateReport();
-              })
-          })
+      .subscribe(() => {
+        this.reports = this.appService.generateReport();
+      })
+    this.appService.getUserUpdatedListener()
+      .subscribe(() => {
+        this.reports = this.appService.generateReport();
+      })
+    this.appService.getTestCenterUpdatedListener()
+      .subscribe(() => {
+        this.reports = this.appService.generateReport();
       })
   }
 

@@ -25,17 +25,17 @@ export class TestCaseComponent implements OnInit {
   breakpoint: number;
   usersSub: Subscription;
 
-  tests: PatientTest[] = [];
-  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
-  dataTestCase = new MatTableDataSource<PatientTest>();
-  @ViewChild('tableOnePaginator', {read: MatPaginator}) paginatorOne: MatPaginator;
-  @ViewChild('tableOneSort', {read: MatSort, static: true}) sortOne: MatSort;
-
   patients: User[] = [];
   displayedPatientCol: string[] = ['patientID', 'name', 'username'];
   dataPatient = new MatTableDataSource<User>();
   @ViewChild('tableTwoPaginator', {read: MatPaginator}) paginatorTwo: MatPaginator;
   @ViewChild('tableTwoSort', {read: MatSort, static: true}) sortTwo: MatSort;
+
+  tests: PatientTest[] = [];
+  displayedTestCaseCol: string[] = ['testID', 'name', 'type', 'status', 'action'];
+  dataTestCase = new MatTableDataSource<PatientTest>();
+  @ViewChild('tableOnePaginator', {read: MatPaginator}) paginatorOne: MatPaginator;
+  @ViewChild('tableOneSort', {read: MatSort, static: true}) sortOne: MatSort;
 
   constructor(
     public dialog: MatDialog,
@@ -60,10 +60,8 @@ export class TestCaseComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.appService.getUserUpdatedListener()
-      .subscribe((users: User[]) => {
-        this.dataPatient.data = this.appService.getPatients();
-      })
+      this.appService.getUserUpdatedListener();
+      this.dataPatient.data = this.appService.getPatients();
     });
   }
 

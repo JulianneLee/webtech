@@ -28,11 +28,11 @@ export class AddPatientDialog {
   }
 
   ngOnInit(){
+    this.appService.getUsers();
     this.usersSub = this.appService.getUserUpdatedListener()
       .subscribe((users: User[]) => {
         this.users = users;
       })
-    // this.users = this.appService.getUsers();
   }
 
   // add patient
