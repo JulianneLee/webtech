@@ -115,7 +115,6 @@ export class AppService {
   }
 
   getUserUpdatedListener(){
-    console.log("get")
     return this.userUpdated.asObservable();
   }
 
